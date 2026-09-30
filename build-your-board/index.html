@@ -41,16 +41,16 @@
     .btn-secondary { background-color: var(--bg-input); color: var(--text-main); border-color: var(--border); }
     .btn-secondary:hover { background-color: #3b2a1f; }
     .btn-sm { padding: 0.3rem 0.55rem; font-size: 0.74rem; }
-    .app-workspace { display: grid; grid-template-columns: 355px minmax(0, 1fr) 300px; flex: 1; height: calc(100vh - 68px); overflow: hidden; position: relative; }
+    .app-workspace { display: grid; grid-template-columns: 355px minmax(0, 1fr) 300px; grid-template-areas: "controls preview guidance"; flex: 1; height: calc(100vh - 68px); overflow: hidden; position: relative; }
     @media (max-width: 1220px) { .app-workspace { grid-template-columns: 320px minmax(0, 1fr) 280px; } }
-    @media (max-width: 950px) { html, body { overflow: auto; height: auto; min-height: 100%; } .app-workspace { display: flex; flex-direction: column; height: auto; overflow: visible; } .panel { height: auto; overflow: visible; } .panel-left, .panel-right { border: 0; } .stage-center { min-height: 500px; height: 520px; flex-shrink: 0; } }
-    @media (max-width: 540px) { header { padding: 0.55rem 0.7rem; gap: 0.5rem; } .brand h1 { font-size: 0.95rem; } .brand span { font-size: 0.6rem; } .brand { gap: 0.45rem; } .brand-icon { width: 30px; height: 30px; } .header-actions { gap: 0.35rem; } .header-actions .btn { padding: 0.35rem 0.45rem; font-size: 0.68rem; } .panel { padding: 0.7rem; } .stage-center { height: 430px; min-height: 430px; } .stage-header { padding: 0.55rem 0.65rem; } }
+    @media (max-width: 950px) { html, body { overflow: auto; height: auto; min-height: 100%; } .app-workspace { display: flex; flex-direction: column; height: auto; overflow: visible; } .stage-center { min-height: 430px; height: 48vh; max-height: 600px; flex-shrink: 0; } .panel { height: auto; overflow: visible; } .panel-left, .panel-right { border: 0; } }
+    @media (max-width: 540px) { header { padding: 0.55rem 0.7rem; gap: 0.5rem; } .brand h1 { font-size: 0.95rem; } .brand span { font-size: 0.6rem; } .brand { gap: 0.45rem; } .brand-icon { width: 30px; height: 30px; } .header-actions { gap: 0.35rem; } .header-actions .btn { padding: 0.35rem 0.45rem; font-size: 0.68rem; } .panel { padding: 0.7rem; } .stage-center { height: 48vh; min-height: 360px; max-height: 520px; } .stage-header { padding: 0.55rem 0.65rem; } .dimension-hud { max-width: calc(100% - 1rem); white-space: nowrap; font-size: 0.68rem; padding: 0.3rem 0.65rem; } }
     @media (max-width: 400px) { .brand span, .header-actions .back-link { display: none; } .brand h1 { font-size: 0.8rem; white-space: nowrap; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }
     .panel { background: var(--bg-surface); overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.95rem; height: 100%; }
-    .panel-left { border-right: 1px solid var(--border); }
-    .panel-right { border-left: 1px solid var(--border); }
-    .stage-center { background: #120c08; display: flex; flex-direction: column; position: relative; overflow: hidden; height: 100%; min-height: 0; }
+    .panel-left { grid-area: controls; border-right: 1px solid var(--border); }
+    .panel-right { grid-area: guidance; border-left: 1px solid var(--border); }
+    .stage-center { grid-area: preview; background: #120c08; display: flex; flex-direction: column; position: relative; overflow: hidden; height: 100%; min-height: 0; }
     .stage-header { padding: 0.6rem 1.25rem; background: rgba(18, 12, 8, 0.9); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; z-index: 10; }
     .canvas-viewport { flex: 1; width: 100%; height: 100%; position: relative; overflow: hidden; min-height: 0; background-image: radial-gradient(#422d20 1px, transparent 1px); background-size: 20px 20px; }
     #canvasSizer { position: absolute; top: 15px; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; pointer-events: none; }
@@ -69,6 +69,8 @@
     .input-wrap .unit { position: absolute; right: 0.45rem; color: var(--text-dim); font-size: 0.72rem; pointer-events: none; }
     input[type="number"], select { width: 100%; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 0.42rem 0.55rem; border-radius: 6px; font-size: 0.8rem; outline: none; }
     .button-group-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.35rem; }
+    .pattern-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; }
+    .pattern-grid .opt-btn { min-height: 38px; }
     .opt-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; padding: 0.45rem 0.25rem; font-size: 0.7rem; font-weight: 600; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; user-select: none; }
     .opt-btn svg { width: 18px; height: 18px; stroke: var(--text-muted); fill: none; }
     .opt-btn:hover { background: #3b2a1f; }
@@ -119,6 +121,23 @@
   </header>
 
   <div class="app-workspace">
+    <!-- Center Canvas Stage -->
+    <div class="stage-center">
+      <div class="stage-header">
+        <div style="display:flex; gap:0.4rem;">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnToggleRuler">Toggle Rulers</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnRotateView">Rotate 90°</button>
+        </div>
+        <span style="font-size:0.75rem; color:var(--text-muted);" id="lblScaleDisplay">Scale</span>
+      </div>
+      <div class="canvas-viewport" id="viewportContainer">
+        <div id="canvasSizer">
+          <canvas id="cuttingBoardCanvas" role="img" aria-label="Preview of your custom cutting board"></canvas>
+        </div>
+        <div class="dimension-hud" id="hudDimensions" aria-live="polite">18.0″ × 12.0″ × 1.5″</div>
+      </div>
+    </div>
+
     <!-- Left Controls -->
     <div class="panel panel-left">
       <div class="card">
@@ -186,24 +205,16 @@
           <input type="range" id="inpCornerRadius" min="0.25" max="2.5" step="0.125" value="0.75" style="accent-color:var(--accent); width:100%;">
         </div>
         <div class="toggle-row"><div>Juice Groove</div><label class="toggle-switch" aria-label="Add a juice groove"><input type="checkbox" id="chkJuiceGroove" checked><span class="toggle-slider"></span></label></div>
-        <div class="toggle-row"><div>Rubber Bumper Feet</div><label class="toggle-switch" aria-label="Show rubber bumper feet"><input type="checkbox" id="chkFeet" checked><span class="toggle-slider"></span></label></div>
       </div>
-    </div>
-
-    <!-- Center Canvas Stage -->
-    <div class="stage-center">
-      <div class="stage-header">
-        <div style="display:flex; gap:0.4rem;">
-          <button type="button" class="btn btn-secondary btn-sm" id="btnToggleRuler">Toggle Rulers</button>
-          <button type="button" class="btn btn-secondary btn-sm" id="btnRotateView">Rotate 90°</button>
+      <div class="card">
+        <div class="card-title">Board Face Style</div>
+        <div class="pattern-grid" id="patternSelector" role="group" aria-label="Board face style">
+          <button type="button" class="opt-btn active" data-pattern="stripes" aria-pressed="true">Classic Stripes</button>
+          <button type="button" class="opt-btn" data-pattern="checkerboard" aria-pressed="false">Checkerboard</button>
+          <button type="button" class="opt-btn" data-pattern="brick" aria-pressed="false">Brick</button>
+          <button type="button" class="opt-btn" data-pattern="herringbone" aria-pressed="false">Herringbone</button>
         </div>
-        <span style="font-size:0.75rem; color:var(--text-muted);" id="lblScaleDisplay">Scale</span>
-      </div>
-      <div class="canvas-viewport" id="viewportContainer">
-        <div id="canvasSizer">
-          <canvas id="cuttingBoardCanvas" role="img" aria-label="Preview of your custom cutting board"></canvas>
-        </div>
-        <div class="dimension-hud" id="hudDimensions" aria-live="polite">18.0″ × 12.0″ × 1.5″</div>
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-top:0.55rem;">Patterns use the species selected in your strips. A second wood is added for contrast if only one species is selected.</p>
       </div>
     </div>
 
@@ -214,7 +225,8 @@
         <ol>
           <li>Set your board length and thickness.</li>
           <li>Choose woods and adjust the ribbon widths and order.</li>
-          <li>Explore edge or end grain, board shape, groove, and feet.</li>
+          <li>Choose a classic, checkerboard, brick, or herringbone face pattern.</li>
+          <li>Explore edge or end grain, board shape, and juice groove.</li>
           <li>Save a PNG of your design to share with the studio.</li>
         </ol>
         <p class="visualizer-note">This visualizer is a design preview, not a final quote or manufacturing drawing. We will confirm materials, feasibility, and pricing with you before any work begins.</p>
@@ -235,7 +247,7 @@
 
     const state = {
       length: 18.0, width: 12.0, thickness: 1.5, grainType: 'edge', shape: 'rect', cornerRadius: 0.75,
-      juiceGroove: true, rubberFeet: true, rotation: 0, showRulers: true,
+      juiceGroove: true, rotation: 0, showRulers: true, facePattern: 'stripes',
       sliceThickness: 1.50, endGrainPattern: 'flipped', alternateRings: true,
       ribbons: [
         { id: 1, wood: 'walnut', width: 2.25 }, { id: 2, wood: 'maple', width: 0.50 }, { id: 3, wood: 'cherry', width: 1.25 },
@@ -247,6 +259,8 @@
     const canvas = document.getElementById('cuttingBoardCanvas');
     const ctx = canvas.getContext('2d');
     const canvasSizer = document.getElementById('canvasSizer');
+    const resizeObserver = new ResizeObserver(renderCanvas);
+    resizeObserver.observe(canvasSizer);
 
     function recalcWidth() {
       state.width = Math.max(1.0, Math.round(state.ribbons.reduce((a, r) => a + (parseFloat(r.width) || 0), 0) * 1000) / 1000);
@@ -307,7 +321,7 @@
       const boxW = canvasSizer.clientWidth || 600;
       const boxH = canvasSizer.clientHeight || 450;
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = boxW * dpr; canvas.height = boxH * dpr;
+      canvas.width = Math.round(boxW * dpr); canvas.height = Math.round(boxH * dpr);
       canvas.style.width = boxW + 'px'; canvas.style.height = boxH + 'px';
 
       ctx.save(); ctx.scale(dpr, dpr); ctx.clearRect(0, 0, boxW, boxH);
@@ -317,7 +331,7 @@
 
       let handleLen = (state.shape === 'paddle') ? Math.min(5.0, Math.max(3.5, bL * 0.25)) : 0;
       const totalL = bL + handleLen;
-      const scale = Math.min((boxW - 90) / totalL, (boxH - 90) / bW);
+      const scale = Math.max(1, Math.min((boxW - 60) / totalL, (boxH - 60) / bW));
       document.getElementById('lblScaleDisplay').textContent = `Scale: 1″ = ${scale.toFixed(1)}px`;
 
       const pxW = bL * scale, pxH = bW * scale;
@@ -338,8 +352,80 @@
 
       if (state.grainType === 'end') {
         renderEndGrainBlocks(ctx, ox, oy, bL, bW, scale, handleLen);
-      } else {
+      } else if (state.facePattern === 'stripes') {
         renderEdgeGrainStrips(ctx, ox, oy, bL, bW, scale, handleLen);
+      } else {
+        renderFacePattern(ctx, ox, oy, pxW + handleLen * scale, pxH, scale);
+      }
+
+      function renderFacePattern(ctx, x, y, width, height, scale) {
+        const palette = [...new Set(state.ribbons.map(ribbon => ribbon.wood))]
+          .map(woodId => WOODS[woodId])
+          .filter(Boolean);
+        if (palette.length === 1) {
+          palette.push(WOODS[palette[0].id === 'maple' ? 'walnut' : 'maple']);
+        }
+        if (palette.length === 0) palette.push(WOODS.walnut, WOODS.maple);
+
+        ctx.fillStyle = palette[0].color;
+        ctx.fillRect(x, y, width, height);
+
+        if (state.facePattern === 'checkerboard') {
+          const cell = Math.max(12, 1.5 * scale);
+          for (let row = 0; row * cell < height; row++) {
+            for (let col = 0; col * cell < width; col++) {
+              const wood = palette[(row + col) % palette.length];
+              ctx.fillStyle = wood.color;
+              ctx.fillRect(x + col * cell, y + row * cell, cell, cell);
+            }
+          }
+        } else if (state.facePattern === 'brick') {
+          const brickWidth = Math.max(24, 3 * scale);
+          const brickHeight = Math.max(12, 1.25 * scale);
+          ctx.lineWidth = Math.max(1, scale * 0.035);
+          for (let row = 0, top = y; top < y + height; row++, top += brickHeight) {
+            const offset = row % 2 ? brickWidth / 2 : 0;
+            for (let left = x - offset, col = 0; left < x + width; col++, left += brickWidth) {
+              const wood = palette[(row + col) % palette.length];
+              ctx.fillStyle = wood.color;
+              ctx.fillRect(left, top, brickWidth, brickHeight);
+              ctx.strokeStyle = 'rgba(14, 9, 6, 0.45)';
+              ctx.strokeRect(left, top, brickWidth, brickHeight);
+            }
+          }
+        } else if (state.facePattern === 'herringbone') {
+          const armLength = Math.max(20, 1.6 * scale);
+          const plankWidth = Math.max(8, 0.55 * scale);
+          const pitchX = armLength * 2;
+          const pitchY = armLength * 1.5;
+          const drawPlank = (x1, y1, x2, y2, wood) => {
+            const halfWidth = plankWidth / 2;
+            const length = Math.hypot(x2 - x1, y2 - y1);
+            const offsetX = ((y2 - y1) / length) * halfWidth;
+            const offsetY = ((x1 - x2) / length) * halfWidth;
+            ctx.beginPath();
+            ctx.moveTo(x1 + offsetX, y1 + offsetY);
+            ctx.lineTo(x2 + offsetX, y2 + offsetY);
+            ctx.lineTo(x2 - offsetX, y2 - offsetY);
+            ctx.lineTo(x1 - offsetX, y1 - offsetY);
+            ctx.closePath();
+            ctx.fillStyle = wood.color;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(14, 9, 6, 0.48)';
+            ctx.lineWidth = Math.max(1, scale * 0.035);
+            ctx.stroke();
+          };
+
+          for (let row = -2, top = y - armLength; top < y + height + armLength; row++, top += pitchY) {
+            for (let col = -2, left = x - armLength; left < x + width + armLength; col++, left += pitchX) {
+              const jointX = left + armLength;
+              const jointY = top + (row % 2 ? armLength * 0.5 : 0);
+              const wood = palette[(row + col + palette.length * 2) % palette.length];
+              drawPlank(jointX - armLength, jointY + armLength, jointX, jointY, wood);
+              drawPlank(jointX, jointY, jointX + armLength, jointY + armLength, palette[(row + col + 1 + palette.length * 2) % palette.length]);
+            }
+          }
+        }
       }
 
       ctx.restore(); // end clip
@@ -373,18 +459,6 @@
         const hy = oy + pxH / 2;
         ctx.fillStyle = '#0e0906'; ctx.beginPath(); ctx.arc(hx, hy, Math.min(0.45 * scale, 18), 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = 'rgba(0,0,0,0.85)'; ctx.lineWidth = 2.5; ctx.stroke();
-      }
-
-      if (state.rubberFeet) {
-        const insetX = pxW * 0.2, insetY = pxH * 0.2, footRadius = Math.min(8, Math.max(3, scale * 0.13));
-        ctx.fillStyle = 'rgba(14, 9, 6, 0.78)';
-        ctx.strokeStyle = 'rgba(233, 196, 154, 0.5)';
-        ctx.lineWidth = 1;
-        [[ox + insetX, oy + insetY], [ox + pxW - insetX, oy + insetY],
-          [ox + insetX, oy + pxH - insetY], [ox + pxW - insetX, oy + pxH - insetY]]
-          .forEach(([x, y]) => {
-            ctx.beginPath(); ctx.arc(x, y, footRadius, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-          });
       }
 
       // Rulers
@@ -526,6 +600,19 @@
       document.getElementById('groupCornerRadius').style.display = (state.shape === 'rect' ? 'none' : 'block');
       updateAll();
     });
+    document.querySelectorAll('#patternSelector .opt-btn').forEach(b => b.onclick = (e) => {
+      e.preventDefault();
+      document.querySelectorAll('#patternSelector .opt-btn').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
+      b.classList.add('active'); b.setAttribute('aria-pressed', 'true');
+      state.facePattern = b.dataset.pattern;
+      state.grainType = 'edge';
+      document.getElementById('btnGrainEdge').classList.add('active');
+      document.getElementById('btnGrainEdge').setAttribute('aria-pressed', 'true');
+      document.getElementById('btnGrainEnd').classList.remove('active');
+      document.getElementById('btnGrainEnd').setAttribute('aria-pressed', 'false');
+      document.getElementById('boxEndGrainOptions').style.display = 'none';
+      updateAll();
+    });
     document.getElementById('btnGrainEdge').onclick = (e) => {
       e.preventDefault();
       document.getElementById('btnGrainEdge').classList.add('active'); document.getElementById('btnGrainEdge').setAttribute('aria-pressed', 'true');
@@ -538,6 +625,12 @@
       document.getElementById('btnGrainEnd').classList.add('active'); document.getElementById('btnGrainEnd').setAttribute('aria-pressed', 'true');
       document.getElementById('btnGrainEdge').classList.remove('active'); document.getElementById('btnGrainEdge').setAttribute('aria-pressed', 'false');
       state.grainType = 'end';
+      state.facePattern = 'stripes';
+      document.querySelectorAll('#patternSelector .opt-btn').forEach(x => {
+        const active = x.dataset.pattern === 'stripes';
+        x.classList.toggle('active', active);
+        x.setAttribute('aria-pressed', String(active));
+      });
       document.getElementById('boxEndGrainOptions').style.display = 'block'; updateAll();
     };
     document.getElementById('boardLength').oninput = e => { state.length = parseFloat(e.target.value) || 12; updateAll(); };
@@ -557,7 +650,6 @@
     document.getElementById('chkAlternateRings').onchange = e => { state.alternateRings = e.target.checked; updateAll(); };
     document.getElementById('inpCornerRadius').oninput = e => { state.cornerRadius = parseFloat(e.target.value); updateAll(); };
     document.getElementById('chkJuiceGroove').onchange = e => { state.juiceGroove = e.target.checked; updateAll(); };
-    document.getElementById('chkFeet').onchange = e => { state.rubberFeet = e.target.checked; updateAll(); };
     document.getElementById('btnToggleRuler').onclick = (e) => { e.preventDefault(); state.showRulers = !state.showRulers; renderCanvas(); };
     document.getElementById('btnRotateView').onclick = (e) => { e.preventDefault(); state.rotation = (state.rotation + 90) % 180; renderCanvas(); };
     document.getElementById('btnExportImage').onclick = (e) => {
