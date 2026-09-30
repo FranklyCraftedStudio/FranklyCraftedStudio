@@ -316,6 +316,7 @@
       background: var(--bg-surface);
       position: relative;
       overflow: hidden;
+      cursor: zoom-in;
     }
 
     .card-media img {
@@ -323,10 +324,39 @@
       height: 100%;
       object-fit: cover;
       transition: var(--transition);
+      display: block;
     }
 
     .card:hover .card-media img {
       transform: scale(1.05);
+    }
+
+    /* Floating View Full Photo Tag */
+    .view-zoom-hint {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(14, 9, 6, 0.85);
+      border: 1px solid var(--bronze);
+      color: var(--bronze-bright);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 9px;
+      border-radius: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+      transition: var(--transition);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card:hover .view-zoom-hint {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .card-content {
@@ -384,6 +414,81 @@
       position: absolute;
       left: 0;
       color: var(--bronze);
+    }
+
+    /* Full-Screen Image Lightbox Modal */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 9, 6, 0.94);
+      backdrop-filter: blur(14px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      cursor: zoom-out;
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-wrapper {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: default;
+    }
+
+    .lightbox-wrapper img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid var(--bronze);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--bronze-glow);
+    }
+
+    .lightbox-caption {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .lightbox-caption h4 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: var(--bronze-bright);
+      letter-spacing: 0.03em;
+    }
+
+    .lightbox-caption p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      background: transparent;
+      border: none;
+      color: var(--bronze-bright);
+      font-size: 2.2rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: var(--transition);
+    }
+
+    .lightbox-close:hover {
+      color: #fff;
+      transform: scale(1.15);
     }
 
     /* Calculator & Form Section */
@@ -615,10 +720,10 @@
     <div class="container">
       <div class="section-head">
         <h2>Studio Collections</h2>
-        <p>Hand-selected American hardwoods milled and finished for lifetime durability.</p>
+        <p>Hand-selected American hardwoods milled and finished for lifetime durability. Click any photo to view full image.</p>
       </div>
       
-      <!-- Catalog cards are loaded dynamically by the JavaScript catalog array below -->
+      <!-- Catalog cards loaded dynamically by PRODUCTS array -->
       <div class="catalog-grid" id="catalog-container"></div>
     </div>
   </section>
@@ -764,6 +869,18 @@
     </div>
   </section>
 
+  <!-- Full-Screen Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
+    <div class="lightbox-wrapper" onclick="event.stopPropagation()">
+      <button class="lightbox-close" type="button" onclick="closeLightbox(event)" aria-label="Close image preview">&times;</button>
+      <img id="lightboxImg" src="" alt="Full view preview">
+      <div class="lightbox-caption">
+        <h4 id="lightboxTitle"></h4>
+        <p id="lightboxSubtitle"></p>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -772,12 +889,10 @@
     </div>
   </footer>
 
-  <!-- SCRIPT ENGINE: Catalog Data + Live Estimator + Web3Forms Submission -->
+  <!-- SCRIPT ENGINE: Catalog Data + Lightbox + Live Estimator + Web3Forms Submission -->
   <script>
     /* ==========================================================================
        CATALOG DATA CONFIGURATION
-       To change prices or pictures, edit the entries in this PRODUCTS list.
-       Save and commit the file; your live site updates immediately!
        ========================================================================== */
     const PRODUCTS = [
       {
@@ -785,7 +900,7 @@
         name: "Classic Three-Tone End Grain Board",
         subtitle: "Black Walnut, Hard Maple, & Cherry",
         price: 150,
-        image: "images/Ombre Complete.jpg", // Path to your photo
+        image: "images/Ombre Complete.jpg",
         alt: "16x12 Walnut, Maple and Cherry edge-grain cutting board",
         specs: [
           "16\" x 12\" x 1\" Edge-Grain",
@@ -799,10 +914,10 @@
         name: "Nursery Name Sign Round",
         subtitle: "Southern Yellow Pine & Additive Script",
         price: 95,
-        image: "images/Cami Sign Complete.jpg", // Path to your photo
+        image: "images/Cami Sign Complete.jpg",
         alt: "24-inch Southern Yellow Pine nursery round sign",
         specs: [
-          "24\"  Diameter  x 1\" Solid Pine",
+          "24\" Diameter x 1\" Solid Pine",
           "Precision 3D Printed Script Lettering",
           "Keyhole & Sawtooth Hanger Installed"
         ],
@@ -813,7 +928,7 @@
         name: "Artisanal Exotic Board",
         subtitle: "Purpleheart & Maple",
         price: 110,
-        image: "images/Purple Heart Board.png", // Path to your photo
+        image: "images/Purple Heart Board.png",
         alt: "Exotic wood cutting board featuring Purpleheart and Maple Ribbons",
         specs: [
           "16\" x 12\" x 1\" Ribbon Pattern",
@@ -824,14 +939,15 @@
     ];
 
     /* ==========================================================================
-       RENDER CATALOG CARDS
+       RENDER CATALOG CARDS (With Lightbox Click Trigger)
        ========================================================================== */
     function renderCatalog() {
       const container = document.getElementById('catalog-container');
       container.innerHTML = PRODUCTS.map((item, index) => `
         <article class="card">
-          <div class="card-media">
+          <div class="card-media" onclick="openLightbox(${index})" title="Click to view full, uncropped photo">
             <img src="${item.image}" alt="${item.alt}" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 300\'><rect width=\'400\' height=\'300\' fill=\'%231f1610\'/><text x=\'200\' y=\'150\' font-size=\'16\' text-anchor=\'middle\' fill=\'%23d4a373\' font-family=\'sans-serif\'>${item.name}</text></svg>'">
+            <span class="view-zoom-hint">🔍 View Full Image</span>
           </div>
           <div class="card-content">
             <div class="card-header">
@@ -849,6 +965,40 @@
         </article>
       `).join('');
     }
+
+    /* ==========================================================================
+       LIGHTBOX LOGIC
+       ========================================================================== */
+    const lightboxModal = document.getElementById('lightboxModal');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxSubtitle = document.getElementById('lightboxSubtitle');
+
+    function openLightbox(index) {
+      const item = PRODUCTS[index];
+      if (!item) return;
+
+      lightboxImg.src = item.image;
+      lightboxImg.alt = item.alt;
+      lightboxTitle.textContent = item.name;
+      lightboxSubtitle.textContent = item.subtitle;
+
+      lightboxModal.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Lock background scrolling
+    }
+
+    function closeLightbox(e) {
+      if (e) e.stopPropagation();
+      lightboxModal.classList.remove('active');
+      document.body.style.overflow = 'auto'; // Restore background scrolling
+    }
+
+    // Keyboard support: Escape closes the image
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightboxModal.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
 
     /* ==========================================================================
        DYNAMIC ESTIMATOR LOGIC
@@ -882,10 +1032,7 @@
       widthVal.textContent = W;
       thickVal.textContent = T.toFixed(2);
 
-      // Board Feet formula: (L * W * T) / 144
       const boardFeet = (L * W * T) / 144;
-      
-      // Base milling shop fee + ($42/BF standard lumber & jointing/planing rate * species factor)
       const baseLumberPrice = 45 + (boardFeet * 40 * speciesMultiplier);
 
       let addonsPrice = 0;
@@ -911,7 +1058,6 @@
       addonsOutput.textContent = `$${addonsPrice}.00`;
       totalOutput.textContent = `$${grandTotal}.00`;
 
-      // Save state to sync with hidden form inputs
       currentCalculatedData = {
         dimensions: `${L}" x ${W}" x ${T.toFixed(2)}"`,
         species: speciesName,
@@ -938,7 +1084,6 @@
       document.getElementById('commission').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Attach calculator listeners
     [lengthRange, widthRange, thickRange, speciesSelect, checkGroove, checkFeet, checkEngraving].forEach(el => {
       el.addEventListener('input', updateCalculator);
     });
@@ -953,7 +1098,6 @@
     commissionForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // Populate hidden inputs right before sending
       document.getElementById('form-wood-species').value = currentCalculatedData.species;
       document.getElementById('form-dimensions').value = currentCalculatedData.dimensions;
       document.getElementById('form-board-feet').value = currentCalculatedData.boardFeet;
