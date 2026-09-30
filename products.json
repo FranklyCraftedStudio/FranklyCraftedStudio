@@ -1,0 +1,32 @@
+[
+  {
+    "id": "walnut-maple",
+    "name": "Classic Dual-Tone Edge-Grain",
+    "subtitle": "Black Walnut & Hard Maple",
+    "price": 145,
+    "image": "images/walnut-maple-board.webp",
+    "alt": "16x12 Black Walnut and Hard Maple edge-grain cutting board",
+    "specs": ["16\" x 12\" x 1\"", "Beveled Handles", "Mineral Oil & Beeswax"],
+    "defaults": { "length": 16, "width": 12, "thick": 1, "species": 1.0, "groove": true }
+  },
+  {
+    "id": "nursery-round",
+    "name": "Nursery Name Sign Round",
+    "subtitle": "White Oak & 3D Raised Script",
+    "price": 95,
+    "image": "images/nursery-round.webp",
+    "alt": "24-inch hardwood nursery round with raised lettering",
+    "specs": ["24\" Diameter", "Additive 3D Script Accent", "Sawtooth Hanger Included"],
+    "defaults": { "length": 24, "width": 24, "thick": 1, "species": 0.9, "groove": false }
+  },
+  {
+    "id": "exotic-brick",
+    "name": "Artisanal Brickwork Board",
+    "subtitle": "Purpleheart, Cherry & Walnut",
+    "price": 175,
+    "image": "images/exotic-brick.webp",
+    "alt": "Staggered brickwork cutting board featuring Purpleheart and Cherry",
+    "specs": ["16\" x 12\" x 1.75\"", "Non-Slip Silicone Feet", "Deep Juice Canal"],
+    "defaults": { "length": 16, "width": 12, "thick": 1.75, "species": 1.25, "groove": true }
+  }
+]

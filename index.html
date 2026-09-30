@@ -1,35 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Frankly Crafted Studio | Fine Timber Meets 3D Design</title>
-  <meta name="description" content="Handcrafted heirloom cutting boards, nursery rounds, and digital fabrication in Palos Heights, IL. Fine timber meets 3D design.">
-
-  <!-- Typography: Cinzel Decorative, Cormorant Garamond, and Inter -->
+  <meta name="description" content="Artisanal edge-grain cutting boards, nursery signs, and bespoke woodworking paired with modern additive design. Palos Heights, IL." />
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-darkest: #120b07;
-      --bg-walnut: #1c130d;
-      --bg-panel: #241912;
-      --bg-card: #2b1d14;
-      --bg-hover: #362419;
-      --border-wood: #442d1f;
-      --border-bronze: rgba(212, 163, 115, 0.35);
-      --bronze-light: #e2b77a;
+      --bg-deep: #0e0906;
+      --bg-walnut: #18100a;
+      --bg-surface: #221710;
+      --bg-card: #2c1e15;
+      --border-subtle: #422d20;
+      --bronze-glow: rgba(212, 163, 115, 0.25);
       --bronze: #d4a373;
-      --bronze-deep: #c88d58;
-      --bronze-shadow: rgba(212, 163, 115, 0.2);
-      --text-main: #fdfbf7;
-      --text-muted: #eae0d5;
-      --text-dim: #bbaea1;
-      --font-display: 'Cinzel', serif;
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
-      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --bronze-bright: #e9c49a;
+      --bronze-dark: #8c5b30;
+      --text-main: #f5ede6;
+      --text-muted: #b8a698;
+      --font-serif: 'Cinzel', serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * {
@@ -38,1299 +35,954 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      background-color: var(--bg-darkest);
-      background-image: 
-        radial-gradient(ellipse at 50% 0%, rgba(68, 45, 31, 0.35) 0%, rgba(18, 11, 7, 0.95) 70%),
-        linear-gradient(to bottom, #1c130d 0%, #120b07 100%);
+      background-color: var(--bg-deep);
       color: var(--text-main);
-      font-family: var(--font-body);
+      font-family: var(--font-sans);
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    a {
-      color: inherit;
+    /* Ambient Warmth */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 600px;
+      background: radial-gradient(circle, var(--bronze-glow) 0%, rgba(14, 9, 6, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(14, 9, 6, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
       text-decoration: none;
+      color: inherit;
     }
 
-    .container {
+    .logo-frame {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--bronze);
+      padding: 2px;
+      background: radial-gradient(circle, var(--bg-surface) 0%, var(--bg-deep) 100%);
+      box-shadow: 0 0 15px var(--bronze-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo-frame img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .brand-titles h1 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--bronze-bright);
+      line-height: 1.2;
+    }
+
+    .brand-titles span {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.75rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--bronze-bright);
+    }
+
+    .btn-nav {
+      border: 1px solid var(--bronze);
+      padding: 0.45rem 1.15rem;
+      border-radius: 30px;
+      color: var(--bronze-bright) !important;
+      background: rgba(212, 163, 115, 0.08);
+    }
+
+    .btn-nav:hover {
+      background: var(--bronze);
+      color: var(--bg-deep) !important;
+    }
+
+    /* Container */
+    .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
-    /* Bronze highlights */
-    .bronze-text {
-      background: linear-gradient(135deg, #f3d49b 0%, #d4a373 50%, #a66d38 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      color: var(--text-main);
-    }
-
-    .section-subtitle {
-      text-align: center;
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      max-width: 650px;
-      margin: 0 auto 3rem auto;
-      font-weight: 300;
-    }
-
-    .bronze-tag {
-      display: inline-block;
-      text-transform: uppercase;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      font-weight: 700;
-      color: var(--bronze-light);
-      margin-bottom: 0.5rem;
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.85rem 1.8rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #d4a373 0%, #c88d58 100%);
-      color: #120b07;
-      box-shadow: 0 4px 18px var(--bronze-shadow);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #e2b77a 0%, #d4a373 100%);
-      box-shadow: 0 6px 24px rgba(212, 163, 115, 0.35);
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      background: rgba(43, 29, 20, 0.8);
-      color: var(--text-muted);
-      border: 1px solid var(--border-bronze);
-    }
-
-    .btn-secondary:hover {
-      background: var(--bg-hover);
-      color: var(--bronze-light);
-      border-color: var(--bronze);
-      transform: translateY(-2px);
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(20, 12, 8, 0.94);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-wood);
-    }
-
-    .nav-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 80px;
-    }
-
-    .brand-link {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .nav-logo-wrapper {
-      position: relative;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      padding: 2px;
-      background: linear-gradient(135deg, #e2b77a, #a66d38);
-      box-shadow: 0 0 14px var(--bronze-shadow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .nav-logo-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      background: var(--bg-walnut);
-      display: block;
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .brand-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: var(--text-main);
-    }
-
-    .brand-sub {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--bronze);
-      font-weight: 500;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.8rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      transition: color 0.2s ease;
-      letter-spacing: 0.03em;
-    }
-
-    .nav-links a:hover {
-      color: var(--bronze-light);
-    }
-
+    /* Hero Section */
     .hero {
-      position: relative;
-      padding: 6rem 0 5rem 0;
+      padding: 5rem 0 4rem;
       text-align: center;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border-wood);
+      position: relative;
     }
 
-    .hero-badge-container {
-      margin-bottom: 2rem;
+    .hero-badge-wrap {
       display: inline-block;
+      margin-bottom: 2rem;
       position: relative;
     }
 
     .hero-logo-frame {
-      width: 128px;
-      height: 128px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
+      border: 3px solid var(--bronze);
       padding: 4px;
-      background: linear-gradient(135deg, #f3d49b, #d4a373, #8a5726);
-      box-shadow: 0 0 35px rgba(212, 163, 115, 0.35);
-      margin: 0 auto;
+      background: radial-gradient(circle, var(--bg-surface) 0%, var(--bg-deep) 100%);
+      box-shadow: 0 0 35px var(--bronze-glow);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    .hero-logo-frame:hover {
-      transform: scale(1.04);
-      box-shadow: 0 0 45px rgba(226, 183, 122, 0.5);
+      overflow: hidden;
+      margin: 0 auto;
     }
 
     .hero-logo-frame img {
       width: 100%;
       height: 100%;
-      border-radius: 50%;
       object-fit: cover;
-      background: #1c130d;
-      display: block;
+      border-radius: 50%;
     }
 
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(43, 29, 20, 0.7);
-      border: 1px solid var(--border-bronze);
-      padding: 0.4rem 1.1rem;
-      border-radius: 50px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--bronze-light);
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: 3.2rem;
-      font-weight: 800;
+    .hero h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      color: #fff;
       line-height: 1.15;
-      letter-spacing: 0.04em;
-      margin-bottom: 1.4rem;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-bottom: 1.25rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .hero h2 span {
+      background: linear-gradient(135deg, var(--bronze-bright) 0%, var(--bronze) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .hero p {
-      font-size: 1.1rem;
+      max-width: 650px;
+      margin: 0 auto 2.5rem;
+      font-size: 1.15rem;
       color: var(--text-muted);
-      max-width: 720px;
-      margin: 0 auto 2.5rem auto;
       font-weight: 300;
-      line-height: 1.7;
     }
 
     .hero-actions {
       display: flex;
       justify-content: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
+      gap: 1.25rem;
     }
 
+    /* Primary and Secondary Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.85rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--bronze-bright) 0%, var(--bronze) 100%);
+      color: var(--bg-deep);
+      box-shadow: 0 4px 20px var(--bronze-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(212, 163, 115, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--bronze);
+      color: var(--bronze-bright);
+    }
+
+    /* Section Headers */
+    .section-head {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-head h2 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--bronze-bright);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-head p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Catalog Section */
     .catalog-section {
-      padding: 5.5rem 0;
-      background: rgba(22, 14, 9, 0.5);
-      border-bottom: 1px solid var(--border-wood);
+      padding: 5rem 0;
+      border-top: 1px solid var(--border-subtle);
     }
 
-    .product-grid {
+    .catalog-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 2rem;
     }
 
-    .product-card {
+    .card {
       background: var(--bg-card);
-      border: 1px solid var(--border-bronze);
-      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      transition: var(--transition);
     }
 
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    .card:hover {
+      transform: translateY(-4px);
       border-color: var(--bronze);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    .product-art {
-      height: 200px;
-      background: radial-gradient(circle at center, #3b271b 0%, #1c130d 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .card-media {
+      width: 100%;
+      height: 240px;
+      background: var(--bg-surface);
       position: relative;
-      border-bottom: 1px solid var(--border-wood);
+      overflow: hidden;
     }
 
-    .product-icon {
-      width: 76px;
-      height: 76px;
-      color: var(--bronze);
-      opacity: 0.85;
-      transition: transform 0.3s ease;
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
     }
 
-    .product-card:hover .product-icon {
-      transform: scale(1.08);
-      color: var(--bronze-light);
+    .card:hover .card-media img {
+      transform: scale(1.05);
     }
 
-    .product-size-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(18, 11, 7, 0.85);
-      border: 1px solid var(--border-bronze);
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      font-size: 0.72rem;
-      font-family: var(--font-display);
-      color: var(--bronze-light);
-    }
-
-    .product-details {
-      padding: 1.8rem;
+    .card-content {
+      padding: 1.5rem;
+      flex: 1;
       display: flex;
       flex-direction: column;
-      flex: 1;
     }
 
-    .product-header {
+    .card-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       margin-bottom: 0.4rem;
     }
 
-    .product-title {
-      font-family: var(--font-display);
+    .card-header h3 {
+      font-family: var(--font-serif);
       font-size: 1.25rem;
-      font-weight: 700;
       color: var(--text-main);
     }
 
-    .product-price {
-      font-family: var(--font-display);
+    .card-header .price {
+      font-family: var(--font-serif);
       font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--bronze-light);
+      color: var(--bronze-bright);
+      font-weight: 700;
     }
 
-    .product-wood-type {
-      font-size: 0.78rem;
+    .species-tag {
+      font-size: 0.85rem;
       color: var(--bronze);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.9rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
       font-weight: 600;
     }
 
-    .product-desc {
-      font-size: 0.88rem;
-      color: var(--text-dim);
-      margin-bottom: 1.6rem;
-      line-height: 1.6;
-      flex-grow: 1;
+    .specs-list {
+      list-style: none;
+      margin-bottom: 1.5rem;
+      flex: 1;
     }
 
-    .calculator-section {
-      padding: 6rem 0;
-      border-bottom: 1px solid var(--border-wood);
+    .specs-list li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+      position: relative;
+      padding-left: 1.2rem;
     }
 
-    .calc-layout {
+    .specs-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--bronze);
+    }
+
+    /* Calculator & Form Section */
+    .commission-section {
+      padding: 5rem 0;
+      background: var(--bg-walnut);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .calc-container {
       display: grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap: 2.5rem;
-      background: var(--bg-panel);
-      border: 1px solid var(--border-bronze);
-      border-radius: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius);
       padding: 2.5rem;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
     }
 
-    .calc-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
+    .calc-panel h3, .form-panel h3 {
+      font-family: var(--font-serif);
+      color: var(--bronze-bright);
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
     }
 
-    .calc-group-title {
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      color: var(--bronze-light);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border-bottom: 1px solid var(--border-wood);
-      padding-bottom: 0.4rem;
-      margin-bottom: 1rem;
+    .input-row {
+      margin-bottom: 1.5rem;
     }
 
-    .slider-row {
-      margin-bottom: 1.2rem;
-    }
-
-    .slider-header {
+    .input-row label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 0.9rem;
       color: var(--text-muted);
       margin-bottom: 0.5rem;
     }
 
-    .slider-value {
-      color: var(--bronze-light);
-      font-weight: 700;
-      font-family: monospace;
-      font-size: 0.95rem;
+    .input-row label span {
+      color: var(--bronze-bright);
+      font-weight: 600;
     }
 
-    input[type=range] {
-      -webkit-appearance: none;
+    input[type="range"] {
       width: 100%;
-      height: 8px;
-      background: #180f0a;
-      border-radius: 5px;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border-subtle);
       outline: none;
-    }
-
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--bronze-light);
-      border: 2px solid var(--bg-darkest);
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(212, 163, 115, 0.6);
-      transition: transform 0.15s ease;
-    }
-
-    input[type=range]::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
-    }
-
-    .custom-select {
-      width: 100%;
-      background: #180f0a;
-      border: 1px solid var(--border-wood);
-      color: var(--text-main);
-      padding: 0.85rem 1rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      outline: none;
-      cursor: pointer;
-      transition: border-color 0.2s ease;
-    }
-
-    .custom-select:focus {
-      border-color: var(--bronze);
-    }
-
-    .checkbox-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.8rem;
-    }
-
-    .check-label {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      background: rgba(24, 15, 10, 0.6);
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-wood);
-      cursor: pointer;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      transition: all 0.2s ease;
-    }
-
-    .check-label:hover {
-      border-color: var(--border-bronze);
-      color: var(--text-main);
-    }
-
-    .check-label input[type=checkbox] {
       accent-color: var(--bronze);
-      width: 18px;
-      height: 18px;
     }
 
-    /* Calculation Receipt / Output Panel */
-    .calc-receipt {
-      background: var(--bg-card);
-      border: 1px solid var(--border-bronze);
-      border-radius: 12px;
-      padding: 2.2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-    }
-
-    .receipt-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-wood);
-      padding-bottom: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .receipt-badge {
-      background: #180f0a;
-      border: 1px solid var(--border-wood);
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      font-size: 0.78rem;
-      font-family: monospace;
-      color: var(--bronze-light);
-    }
-
-    .price-display {
-      text-align: center;
-      margin: 1rem 0 1.8rem 0;
-    }
-
-    .price-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--text-dim);
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-
-    .price-value {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: var(--bronze-light);
-      line-height: 1;
-      text-shadow: 0 0 20px var(--bronze-shadow);
-    }
-
-    .receipt-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      font-size: 0.85rem;
-      border-top: 1px solid var(--border-wood);
-      padding-top: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .receipt-row {
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-dim);
-    }
-
-    .receipt-row strong {
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    .inquiry-section {
-      padding: 6rem 0;
-      background: rgba(22, 14, 9, 0.5);
-      border-bottom: 1px solid var(--border-wood);
-    }
-
-    .form-card {
-      max-width: 750px;
-      margin: 0 auto;
-      background: var(--bg-panel);
-      border: 1px solid var(--border-bronze);
-      border-radius: 16px;
-      padding: 2.8rem;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .form-field label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .form-field input,
-    .form-field textarea {
+    select, input[type="text"], input[type="email"], textarea {
       width: 100%;
-      background: #180f0a;
-      border: 1px solid var(--border-wood);
-      border-radius: 8px;
-      padding: 0.85rem 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg-deep);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
       color: var(--text-main);
-      font-family: var(--font-body);
-      font-size: 0.9rem;
+      font-family: inherit;
+      font-size: 0.95rem;
       outline: none;
-      transition: border-color 0.2s ease;
+      transition: var(--transition);
     }
 
-    .form-field input:focus,
-    .form-field textarea:focus {
+    select:focus, input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
       border-color: var(--bronze);
     }
 
-    .form-spec-badge {
-      background: rgba(18, 11, 7, 0.8);
-      border: 1px solid var(--border-wood);
+    .addon-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .checkbox-label input {
+      accent-color: var(--bronze);
+      width: 16px;
+      height: 16px;
+    }
+
+    .summary-box {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px dashed var(--bronze);
       border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1.8rem;
-      font-size: 0.82rem;
-      color: var(--text-dim);
+    }
+
+    .summary-line {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
     }
 
-    .form-spec-badge span strong {
-      color: var(--bronze-light);
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.75rem;
+      margin-top: 0.75rem;
     }
 
-    #form-status {
-      margin-top: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      font-weight: 500;
+    .summary-total span:first-child {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--text-main);
     }
 
-    .status-success {
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.4);
-      color: #86efac;
-      padding: 1rem;
-      border-radius: 8px;
+    .summary-total .total-price {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--bronze-bright);
     }
 
-    .status-error {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      color: #fca5a5;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-
+    /* Care Guide */
     .care-section {
-      padding: 5.5rem 0;
-      border-bottom: 1px solid var(--border-wood);
+      padding: 5rem 0;
     }
 
     .care-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.8rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
     }
 
     .care-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-wood);
-      border-radius: 12px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius);
       padding: 2rem;
-      position: relative;
     }
 
-    .care-number {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      color: var(--bronze-light);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #180f0a;
-      border: 1px solid var(--border-bronze);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.2rem;
-    }
-
-    .care-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 0.6rem;
+    .care-card h4 {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: var(--bronze-bright);
+      margin-bottom: 0.75rem;
     }
 
     .care-card p {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      line-height: 1.6;
+      color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
+    /* Footer */
     footer {
+      background: var(--bg-deep);
+      border-top: 1px solid var(--border-subtle);
       padding: 3rem 0;
-      background: #0f0805;
+      text-align: center;
+      color: var(--text-muted);
       font-size: 0.85rem;
-      color: var(--text-dim);
-      border-top: 1px solid #22140d;
     }
 
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+    footer p {
+      margin-bottom: 0.5rem;
     }
 
-    /* Mobile Responsive Adjustments */
-    @media (max-width: 868px) {
-      .calc-layout {
-        grid-template-columns: 1fr;
-      }
-      .form-grid {
+    /* Mobile Responsive */
+    @media (max-width: 860px) {
+      .calc-container {
         grid-template-columns: 1fr;
       }
       .nav-links {
         display: none;
-      }
-      .hero h1 {
-        font-size: 2.3rem;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Header -->
   <header>
-    <div class="container nav-container">
-      <a href="#" class="brand-link">
-        <div class="nav-logo-wrapper">
-          <img src="logo.png" alt="Frankly Crafted Studio Logo" onerror="this.src='https://placehold.co/96x96/2b1d14/d4a373?text=FC'">
+    <div class="nav-container">
+      <a href="#" class="brand-group">
+        <div class="logo-frame">
+          <img src="logo.png" alt="Frankly Crafted Studio circular logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' stroke=\'%23d4a373\' stroke-width=\'4\' fill=\'%2318100a\'/><text x=\'50\' y=\'58\' font-size=\'32\' text-anchor=\'middle\' fill=\'%23d4a373\' font-family=\'serif\'>FC</text></svg>'">
         </div>
-        <div class="brand-text">
-          <span class="brand-title">Frankly Crafted Studio</span>
-          <span class="brand-sub">Fine Timber Meets 3D Design</span>
+        <div class="brand-titles">
+          <h1>FRANKLY CRAFTED</h1>
+          <span>Studio • Est. 2026</span>
         </div>
       </a>
-
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#catalog">Catalog</a></li>
-          <li><a href="#estimator">Estimator</a></li>
-          <li><a href="#care">Care Guide</a></li>
-          <li><a href="#inquire">Inquire</a></li>
-        </ul>
-        <a href="#inquire" class="btn btn-secondary" style="padding: 0.55rem 1.1rem; font-size: 0.75rem;">Custom Order</a>
+      <nav class="nav-links">
+        <a href="#catalog">Catalog</a>
+        <a href="#commission">Custom Estimator</a>
+        <a href="#care">Board Care</a>
+        <a href="#commission" class="btn-nav">Commission Work</a>
       </nav>
     </div>
   </header>
 
+  <!-- Hero Section -->
   <section class="hero">
     <div class="container">
-      <div class="hero-badge-container">
+      <div class="hero-badge-wrap">
         <div class="hero-logo-frame">
-          <img src="logo.png" alt="Frankly Crafted Studio Emblem" onerror="this.src='https://placehold.co/240x240/2b1d14/d4a373?text=Frankly+Crafted'">
+          <img src="logo.png" alt="Frankly Crafted Studio primary seal" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' stroke=\'%23d4a373\' stroke-width=\'4\' fill=\'%2318100a\'/><text x=\'50\' y=\'58\' font-size=\'32\' text-anchor=\'middle\' fill=\'%23d4a373\' font-family=\'serif\'>FC</text></svg>'">
         </div>
+      </div>
+      <h2>Fine Timber Meets <span>3D Design</span></h2>
+      <p>Artisanal hardwood cutting boards, nursery rounds, and bespoke heirloom goods built with heritage craftsmanship and digital precision in Palos Heights, IL.</p>
+      <div class="hero-actions">
+        <a href="#catalog" class="btn btn-primary">Browse Catalog</a>
+        <a href="#commission" class="btn btn-outline">Build Custom Board</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalog Section -->
+  <section class="catalog-section" id="catalog">
+    <div class="container">
+      <div class="section-head">
+        <h2>Studio Collections</h2>
+        <p>Hand-selected American hardwoods milled and finished for lifetime durability.</p>
       </div>
       
-      <div class="hero-eyebrow">
-        <span>Palos Heights, Illinois</span>
-        <span>•</span>
-        <span>Est. 2026</span>
-      </div>
-
-      <h1>Fine Timber Meets <span class="bronze-text">3D Design</span></h1>
-
-      <p>
-        Handcrafted edge-grain & end-grain cutting boards, nursery rounds, and heirloom timber pieces paired with precision rapid prototyping in Palos Heights, IL.
-      </p>
-
-      <div class="hero-actions">
-        <a href="#estimator" class="btn btn-primary">Estimate Custom Build</a>
-        <a href="#catalog" class="btn btn-secondary">Explore Catalog</a>
-      </div>
+      <!-- Catalog cards are loaded dynamically by the JavaScript catalog array below -->
+      <div class="catalog-grid" id="catalog-container"></div>
     </div>
   </section>
 
-  <section id="catalog" class="catalog-section">
+  <!-- Interactive Commission Estimator & Direct Order Section -->
+  <section class="commission-section" id="commission">
     <div class="container">
-      <div style="text-align: center;">
-        <span class="bronze-tag">Signature Collections</span>
-        <h2 class="section-title">Heirloom Catalog</h2>
-        <p class="section-subtitle">
-          Small-batch timber goods milled from sustainably harvested hardwoods, finished with pure food-grade mineral oil and organic beeswax butter.
-        </p>
+      <div class="section-head">
+        <h2>Custom Board Commission Estimator</h2>
+        <p>Configure your exact specifications. Board feet and pricing calculate live.</p>
       </div>
 
-      <div class="product-grid">
-        <!-- Item 1: Artisan Edge Grain -->
-        <div class="product-card">
-          <div class="product-art">
-            <span class="product-size-badge">16" × 12" × 1.25"</span>
-            <svg class="product-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <rect x="2" y="5" width="20" height="14" rx="2"/>
-              <line x1="7" y1="5" x2="7" y2="19"/>
-              <line x1="12" y1="5" x2="12" y2="19"/>
-              <line x1="17" y1="5" x2="17" y2="19"/>
-            </svg>
-          </div>
-          <div class="product-details">
-            <div class="product-header">
-              <h3 class="product-title">Artisan Edge-Grain</h3>
-              <span class="product-price">$145</span>
-            </div>
-            <div class="product-wood-type">Black Walnut & Hard Maple</div>
-            <p class="product-desc">
-              Alternating stave board edge-joined with FDA-approved waterproof adhesive. Smooth hand-sanded to 400-grit with chamfered edge profiling.
-            </p>
-            <button onclick="prefillCalculator(16, 12, 1.25, 'walnut-maple', ['groove', 'feet'])" class="btn btn-secondary">
-              Select & Customize
-            </button>
-          </div>
-        </div>
-
-        <!-- Item 2: Nursery Round -->
-        <div class="product-card">
-          <div class="product-art">
-            <span class="product-size-badge">14" Diameter</span>
-            <svg class="product-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 7v5l3 3"/>
-              <path d="M7 12h.01M17 12h.01"/>
-            </svg>
-          </div>
-          <div class="product-details">
-            <div class="product-header">
-              <h3 class="product-title">The Nursery Round</h3>
-              <span class="product-price">$95</span>
-            </div>
-            <div class="product-wood-type">Hardwood Base + 3D Lettering</div>
-            <p class="product-desc">
-              Natural timber plaque combined with custom 3D printed dimensional relief lettering and laser engraving. Perfect for newborn stats or milestones.
-            </p>
-            <button onclick="prefillCalculator(14, 14, 1.0, 'walnut-maple', ['engrave'])" class="btn btn-secondary">
-              Select & Customize
-            </button>
-          </div>
-        </div>
-
-        <!-- Item 3: Exotic Heirloom -->
-        <div class="product-card">
-          <div class="product-art">
-            <span class="product-size-badge">16" × 12" × 1.50"</span>
-            <svg class="product-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <rect x="2" y="4" width="20" height="16" rx="2"/>
-              <line x1="5" y1="4" x2="5" y2="20" stroke-width="2"/>
-              <line x1="9" y1="4" x2="9" y2="20" stroke-width="3"/>
-              <line x1="15" y1="4" x2="15" y2="20" stroke-width="3"/>
-              <line x1="19" y1="4" x2="19" y2="20" stroke-width="2"/>
-            </svg>
-          </div>
-          <div class="product-details">
-            <div class="product-header">
-              <h3 class="product-title">The Exotic Heirloom</h3>
-              <span class="product-price">$175</span>
-            </div>
-            <div class="product-wood-type">Walnut, Purpleheart & Cherry</div>
-            <p class="product-desc">
-              Vibrant deep purple grain accents framed by domestic Pennsylvania cherry and dark walnut. Built for heavy kitchen prep and luxury charcuterie display.
-            </p>
-            <button onclick="prefillCalculator(16, 12, 1.5, 'exotic', ['groove', 'feet', 'engrave'])" class="btn btn-secondary">
-              Select & Customize
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="estimator" class="calculator-section">
-    <div class="container">
-      <div style="text-align: center;">
-        <span class="bronze-tag">Interactive Workshop Math</span>
-        <h2 class="section-title">Commission Estimator</h2>
-        <p class="section-subtitle">
-          Input your exact required dimensions. Our estimator dynamically calculates the net board feet ((L × W × T) ÷ 144) and applies species multipliers and artisan details.
-        </p>
-      </div>
-
-      <div class="calc-layout">
-        <!-- Input Sliders & Addons -->
-        <div class="calc-controls">
-          <div>
-            <div class="calc-group-title">1. Specify Dimensions (Inches)</div>
-            
-            <div class="slider-row">
-              <div class="slider-header">
-                <span>Length (Inches)</span>
-                <span id="label-len" class="slider-value">16"</span>
-              </div>
-              <input type="range" id="input-len" min="10" max="24" step="1" value="16">
-            </div>
-
-            <div class="slider-row">
-              <div class="slider-header">
-                <span>Width (Inches)</span>
-                <span id="label-wid" class="slider-value">12"</span>
-              </div>
-              <input type="range" id="input-wid" min="8" max="18" step="1" value="12">
-            </div>
-
-            <div class="slider-row">
-              <div class="slider-header">
-                <span>Thickness (Inches)</span>
-                <span id="label-thk" class="slider-value">1.50"</span>
-              </div>
-              <input type="range" id="input-thk" min="1.0" max="2.5" step="0.25" value="1.50">
-            </div>
-          </div>
-
-          <div>
-            <div class="calc-group-title">2. Select Hardwood Species</div>
-            <select id="input-species" class="custom-select">
-              <option value="walnut-maple" data-rate="48" data-title="Black Walnut & Hard Maple">Black Walnut & Hard Maple (Signature Domestic)</option>
-              <option value="cherry" data-rate="54" data-title="Pennsylvania Cherry & Walnut Accent">Pennsylvania Cherry & Walnut Accent (+15%)</option>
-              <option value="exotic" data-rate="64" data-title="Exotic Purpleheart & Walnut Reserve">Purpleheart & Exotic Hardwood Reserve (+35%)</option>
-              <option value="end-grain" data-rate="74" data-title="Heavy End-Grain Chopping Block">Self-Healing End-Grain Butcher Block (+50%)</option>
+      <div class="calc-container">
+        <!-- Interactive Controls -->
+        <div class="calc-panel">
+          <h3>1. Choose Specifications</h3>
+          
+          <div class="input-row">
+            <label for="species-select">Primary Hardwood Blend</label>
+            <select id="species-select">
+              <option value="1.0" data-name="Walnut & Maple">Black Walnut & Hard Maple (Standard)</option>
+              <option value="1.1" data-name="All Black Walnut">Select Prime Black Walnut</option>
+              <option value="1.25" data-name="Exotic Accent (Purpleheart / Cherry)">Exotic Accent (Walnut, Cherry, Purpleheart)</option>
+              <option value="0.9" data-name="White Oak">White Oak (Signs / Displays)</option>
             </select>
           </div>
 
-          <div>
-            <div class="calc-group-title">3. Artisan Features & Add-ons</div>
-            <div class="checkbox-grid">
-              <label class="check-label">
-                <input type="checkbox" id="add-groove" value="25">
-                <span>Perimeter Juice Channel / Drip Groove (+<strong class="bronze-text">$25</strong>)</span>
-              </label>
-              <label class="check-label">
-                <input type="checkbox" id="add-feet" value="20" checked>
-                <span>Recessed Silicone Feet & Stainless Hardware (+<strong class="bronze-text">$20</strong>)</span>
-              </label>
-              <label class="check-label">
-                <input type="checkbox" id="add-engrave" value="35">
-                <span>Custom Laser Engraving / Scorch-Pen Artwork (+<strong class="bronze-text">$35</strong>)</span>
-              </label>
+          <div class="input-row">
+            <label for="length-range">Length: <span id="length-val">16</span> inches</label>
+            <input type="range" id="length-range" min="10" max="24" step="1" value="16">
+          </div>
+
+          <div class="input-row">
+            <label for="width-range">Width: <span id="width-val">12</span> inches</label>
+            <input type="range" id="width-range" min="8" max="18" step="1" value="12">
+          </div>
+
+          <div class="input-row">
+            <label for="thick-range">Thickness: <span id="thick-val">1.50</span> inches</label>
+            <input type="range" id="thick-range" min="0.75" max="2.25" step="0.25" value="1.5">
+          </div>
+
+          <div class="addon-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="check-groove" checked>
+              Continuous Perimeter Juice Groove (+$20)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="check-feet">
+              Recessed Non-Slip Rubber Feet with Stainless Screws (+$15)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="check-engraving">
+              Laser / Scorch-Pen Personalization Stencil (+$25)
+            </label>
+          </div>
+
+          <div class="summary-box">
+            <div class="summary-line">
+              <span>Calculated Board Feet:</span>
+              <span id="bf-output">2.00 BF</span>
+            </div>
+            <div class="summary-line">
+              <span>Milling & Lumber Base:</span>
+              <span id="base-output">$125.00</span>
+            </div>
+            <div class="summary-line">
+              <span>Selected Add-ons:</span>
+              <span id="addons-output">$20.00</span>
+            </div>
+            <div class="summary-total">
+              <span>Estimated Total:</span>
+              <span class="total-price" id="total-output">$145.00</span>
             </div>
           </div>
         </div>
 
-        <!-- Receipt & Real-time Quote Display -->
-        <div class="calc-receipt">
-          <div>
-            <div class="receipt-top">
-              <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); font-weight: 600;">Workshop Calculation</span>
-              <span id="display-bf" class="receipt-badge">2.00 BF</span>
+        <!-- Direct Email Form -->
+        <div class="form-panel">
+          <h3>2. Submit Commission Request</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+            Submitting this form routes your exact dimensions, lumber choices, and design notes straight to the studio inbox. We reply within 24 hours with a formal design mock-up and payment link.
+          </p>
+
+          <form id="commission-form" action="https://api.web3forms.com/submit" method="POST">
+            <!-- Active Web3Forms Access Key for Frankly Crafted Studio -->
+            <input type="hidden" name="access_key" value="868257ba-52ad-4a15-a6e1-01ef4e90de9c">
+            <input type="hidden" name="from_name" value="Frankly Crafted Studio Web">
+            <input type="hidden" name="subject" value="New Commission Request — Frankly Crafted Studio">
+            <input type="checkbox" name="botcheck" style="display: none;">
+
+            <!-- Synced Dynamic Fields -->
+            <input type="hidden" id="form-wood-species" name="Hardwood Selection">
+            <input type="hidden" id="form-dimensions" name="Target Dimensions (L x W x T)">
+            <input type="hidden" id="form-board-feet" name="Calculated Board Feet">
+            <input type="hidden" id="form-addons" name="Add-ons Selected">
+            <input type="hidden" id="form-total-price" name="Estimated Price Quote">
+
+            <div class="input-row">
+              <label for="cust-name">Your Full Name</label>
+              <input type="text" id="cust-name" name="Client Name" required placeholder="Frank Cerny">
             </div>
 
-            <div class="price-display">
-              <span class="price-label">Estimated Commission Quote</span>
-              <div id="display-total" class="price-value">$141</div>
+            <div class="input-row">
+              <label for="cust-email">Email Address</label>
+              <input type="email" id="cust-email" name="replyto" required placeholder="frank@example.com">
             </div>
 
-            <div class="receipt-rows">
-              <div class="receipt-row">
-                <span>Dimensions:</span>
-                <strong id="display-dims">16" × 12" × 1.50"</strong>
-              </div>
-              <div class="receipt-row">
-                <span>Species:</span>
-                <strong id="display-species">Black Walnut & Hard Maple</strong>
-              </div>
-              <div class="receipt-row">
-                <span>Timber Base Cost:</span>
-                <strong id="display-base-cost">$96</strong>
-              </div>
-              <div class="receipt-row">
-                <span>Selected Add-ons:</span>
-                <strong id="display-addons-cost">$20</strong>
-              </div>
+            <div class="input-row">
+              <label for="cust-notes">Design Notes & Personalization</label>
+              <textarea id="cust-notes" name="Commission Notes" rows="4" placeholder="Mention personalized text (e.g. 'Where Our Next Chapter Begins Est 2026'), edge bevel preference, or timeline requirements..."></textarea>
             </div>
-          </div>
 
-          <a href="#inquire" class="btn btn-primary" style="width: 100%;">
-            Transfer Specs To Inquiry Form
-          </a>
+            <button type="submit" class="btn btn-primary" style="width: 100%;" id="submit-btn">Send Commission Request</button>
+            <div id="form-status" style="margin-top: 1rem; font-size: 0.9rem; font-weight: 500;"></div>
+          </form>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="inquire" class="inquiry-section">
+  <!-- Heirloom Care Guide -->
+  <section class="care-section" id="care">
     <div class="container">
-      <div style="text-align: center;">
-        <span class="bronze-tag">Direct Studio Transmission</span>
-        <h2 class="section-title">Submit Order Inquiry</h2>
-        <p class="section-subtitle">
-          Your configured specifications from the calculator will be synchronized and transmitted straight to our workshop inbox. We review grain orientation and send an invoice with digital design proof.
-        </p>
+      <div class="section-head">
+        <h2>Heirloom Board Care</h2>
+        <p>How to protect your hardwood boards for decades of daily service.</p>
       </div>
-
-      <div class="form-card">
-        <form id="order-form" action="https://api.web3forms.com/submit" method="POST">
-          <!-- Active Web3Forms Access Key for Frankly Crafted Studio -->
-          <input type="hidden" name="access_key" value="868257ba-52ad-4a15-a6e1-01ef4e90de9c">
-          <input type="hidden" name="from_name" value="Frankly Crafted Studio Web Inquiry">
-          <input type="hidden" name="subject" value="New Custom Board Commission Inquiry — Palos Heights, IL">
-          
-          <!-- Anti-spam botcheck honeypot -->
-          <input type="checkbox" name="botcheck" style="display: none;">
-
-          <!-- Hidden Synced Calculator Fields -->
-          <input type="hidden" id="sync-species" name="Species Selection">
-          <input type="hidden" id="sync-dimensions" name="Target Dimensions (L x W x T)">
-          <input type="hidden" id="sync-boardfeet" name="Calculated Board Feet">
-          <input type="hidden" id="sync-addons" name="Selected Add-ons">
-          <input type="hidden" id="sync-quote" name="Estimated Quote ($)">
-
-          <div class="form-grid">
-            <div class="form-field">
-              <label for="client-name">Full Name *</label>
-              <input type="text" id="client-name" name="Client Name" required placeholder="e.g. Frank Cerny">
-            </div>
-
-            <div class="form-field">
-              <label for="client-email">Email Address *</label>
-              <input type="email" id="client-email" name="replyto" required placeholder="name@domain.com">
-            </div>
-          </div>
-
-          <div class="form-field">
-            <label for="client-notes">Personalization Text & Custom Requests</label>
-            <textarea id="client-notes" name="Commission Notes" rows="4" placeholder="Enter custom laser engraving inscriptions (e.g. 'The Miller Home • Est. 2026'), desired edge profile, or 3D prototyping requirements..."></textarea>
-          </div>
-
-          <div class="form-spec-badge">
-            <div>
-              <span>Current Build: <strong id="form-spec-text">16" × 12" × 1.50" (Black Walnut & Hard Maple)</strong></span>
-            </div>
-            <div>
-              <span>Est. Quote: <strong id="form-spec-quote">$141</strong></span>
-            </div>
-          </div>
-
-          <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%;">
-            Send Commission Request
-          </button>
-
-          <div id="form-status"></div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <section id="care" class="care-section">
-    <div class="container">
-      <div style="text-align: center;">
-        <span class="bronze-tag">Longevity & Preservation</span>
-        <h2 class="section-title">Heirloom Board Care</h2>
-        <p class="section-subtitle">
-          Solid hardwoods will last generations when cared for properly. Follow these four foundational guidelines.
-        </p>
-      </div>
-
       <div class="care-grid">
         <div class="care-card">
-          <div class="care-number">1</div>
-          <h3 class="care-title">Hand Wash Only</h3>
-          <p>
-            Never submerge in water or place in the dishwasher. Wash promptly with warm water and mild soap after each use, then towel dry completely.
-          </p>
+          <h4>1. Wash Promptly</h4>
+          <p>Hand wash with warm water and mild soap. Never submerge in water or place in a dishwasher, as prolonged moisture warps grain structure.</p>
         </div>
-
         <div class="care-card">
-          <div class="care-number">2</div>
-          <h3 class="care-title">Dry Vertically</h3>
-          <p>
-            Always allow the board to dry on its side or resting on its silicone feet so air circulates equally around both faces to avoid uneven moisture bowing.
-          </p>
+          <h4>2. Dry Upright</h4>
+          <p>Towel dry immediately after washing and rest the board on its edge to allow equal airflow across both sides during drying.</p>
         </div>
-
         <div class="care-card">
-          <div class="care-number">3</div>
-          <h3 class="care-title">Condition Monthly</h3>
-          <p>
-            When the timber appears dry, apply food-grade mineral oil generously, allow it to absorb overnight, and buff with beeswax wood butter.
-          </p>
-        </div>
-
-        <div class="care-card">
-          <div class="care-number">4</div>
-          <h3 class="care-title">Avoid Direct Heat</h3>
-          <p>
-            Keep your board away from stovetops, direct radiator heat, or damp window sills. Steady indoor humidity preserves tight glue joints.
-          </p>
+          <h4>3. Recondition</h4>
+          <p>Apply pure food-grade mineral oil every 3–4 weeks. Lock in luster with a natural beeswax butter once the surface begins to look dry or light.</p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
-    <div class="container footer-content">
-      <div>
-        <strong style="color: var(--text-main); font-family: var(--font-display);">Frankly Crafted Studio</strong>
-        <span> • Handcrafted in Palos Heights, IL • Est. 2026</span>
-      </div>
-      <div>
-        <span>Fine timber meets 3D design. All rights reserved.</span>
-      </div>
+    <div class="container">
+      <p>&copy; 2026 Frankly Crafted Studio. All Rights Reserved.</p>
+      <p>Palos Heights, Illinois • Built with Fine Hardwoods & Additive Fabrication</p>
     </div>
   </footer>
 
+  <!-- SCRIPT ENGINE: Catalog Data + Live Estimator + Web3Forms Submission -->
   <script>
-    // Calculator DOM Elements
-    const inputLen = document.getElementById('input-len');
-    const inputWid = document.getElementById('input-wid');
-    const inputThk = document.getElementById('input-thk');
-    const inputSpecies = document.getElementById('input-species');
-    const addGroove = document.getElementById('add-groove');
-    const addFeet = document.getElementById('add-feet');
-    const addEngrave = document.getElementById('add-engrave');
-
-    // UI Readout Displays
-    const labelLen = document.getElementById('label-len');
-    const labelWid = document.getElementById('label-wid');
-    const labelThk = document.getElementById('label-thk');
-    const displayBf = document.getElementById('display-bf');
-    const displayTotal = document.getElementById('display-total');
-    const displayDims = document.getElementById('display-dims');
-    const displaySpecies = document.getElementById('display-species');
-    const displayBaseCost = document.getElementById('display-base-cost');
-    const displayAddonsCost = document.getElementById('display-addons-cost');
-
-    // Form Sync DOM Elements
-    const syncSpecies = document.getElementById('sync-species');
-    const syncDimensions = document.getElementById('sync-dimensions');
-    const syncBoardfeet = document.getElementById('sync-boardfeet');
-    const syncAddons = document.getElementById('sync-addons');
-    const syncQuote = document.getElementById('sync-quote');
-    const formSpecText = document.getElementById('form-spec-text');
-    const formSpecQuote = document.getElementById('form-spec-quote');
-
-    // Form Submission Element
-    const orderForm = document.getElementById('order-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const formStatus = document.getElementById('form-status');
-
-    function calculateBoard() {
-      const L = parseFloat(inputLen.value);
-      const W = parseFloat(inputWid.value);
-      const T = parseFloat(inputThk.value);
-
-      // Formula: Board Feet = (L * W * T) / 144
-      const boardFeet = (L * W * T) / 144;
-
-      const selectedOption = inputSpecies.options[inputSpecies.selectedIndex];
-      const ratePerBf = parseFloat(selectedOption.getAttribute('data-rate'));
-      const speciesName = selectedOption.getAttribute('data-title');
-
-      // Base timber cost with shop setup threshold
-      const baseTimberCost = Math.max(45, boardFeet * ratePerBf);
-
-      // Add-ons computation
-      let addonsSum = 0;
-      const activeAddonsList = [];
-
-      if (addGroove.checked) {
-        addonsSum += parseFloat(addGroove.value);
-        activeAddonsList.push('Perimeter Juice Groove (+$25)');
+    /* ==========================================================================
+       CATALOG DATA CONFIGURATION
+       To change prices or pictures, edit the entries in this PRODUCTS list.
+       Save and commit the file; your live site updates immediately!
+       ========================================================================== */
+    const PRODUCTS = [
+      {
+        id: "walnut-maple",
+        name: "Classic Dual-Tone Board",
+        subtitle: "Black Walnut & Hard Maple",
+        price: 145,
+        image: "images/walnut-maple-board.webp", // Path to your photo
+        alt: "16x12 Walnut and Maple edge-grain cutting board",
+        specs: [
+          "16\" x 12\" x 1.50\" Edge-Grain",
+          "Continuous Deep Juice Groove",
+          "Hand-Rubbed Mineral Oil & Beeswax"
+        ],
+        preset: { length: 16, width: 12, thick: 1.5, speciesValue: "1.0", groove: true, feet: false, engraving: false }
+      },
+      {
+        id: "nursery-round",
+        name: "Nursery Name Sign Round",
+        subtitle: "White Oak & Additive Script",
+        price: 95,
+        image: "images/nursery-round.webp", // Path to your photo
+        alt: "12-inch White Oak nursery round sign",
+        specs: [
+          "12\" Diameter x 0.75\" Solid Oak",
+          "Precision 3D Printed Script Lettering",
+          "Keyhole & Sawtooth Hanger Installed"
+        ],
+        preset: { length: 12, width: 12, thick: 0.75, speciesValue: "0.9", groove: false, feet: false, engraving: true }
+      },
+      {
+        id: "exotic-brick",
+        name: "Artisanal Brickwork Board",
+        subtitle: "Purpleheart, Cherry & Walnut",
+        price: 175,
+        image: "images/exotic-brick.webp", // Path to your photo
+        alt: "Staggered brickwork cutting board featuring Purpleheart and Cherry",
+        specs: [
+          "16\" x 12\" x 1.75\" Staggered Pattern",
+          "Recessed Silicone Rubber Feet",
+          "Dual Finger Grips on Underside"
+        ],
+        preset: { length: 16, width: 12, thick: 1.75, speciesValue: "1.25", groove: true, feet: true, engraving: false }
       }
-      if (addFeet.checked) {
-        addonsSum += parseFloat(addFeet.value);
-        activeAddonsList.push('Silicone Feet (+$20)');
-      }
-      if (addEngrave.checked) {
-        addonsSum += parseFloat(addEngrave.value);
-        activeAddonsList.push('Laser Engraving (+$35)');
-      }
+    ];
 
-      const totalQuote = Math.round(baseTimberCost + addonsSum);
-      const dimString = `${L}" × ${W}" × ${T.toFixed(2)}"`;
-      const bfString = `${boardFeet.toFixed(2)} BF`;
-
-      // Update Calculator Panel
-      labelLen.textContent = `${L}"`;
-      labelWid.textContent = `${W}"`;
-      labelThk.textContent = `${T.toFixed(2)}"`;
-      displayBf.textContent = bfString;
-      displayTotal.textContent = `$${totalQuote}`;
-      displayDims.textContent = dimString;
-      displaySpecies.textContent = speciesName;
-      displayBaseCost.textContent = `$${Math.round(baseTimberCost)}`;
-      displayAddonsCost.textContent = `$${addonsSum}`;
-
-      // Synchronize hidden form fields for Web3Forms email delivery
-      syncSpecies.value = speciesName;
-      syncDimensions.value = dimString;
-      syncBoardfeet.value = bfString;
-      syncAddons.value = activeAddonsList.length > 0 ? activeAddonsList.join(' | ') : 'None';
-      syncQuote.value = `$${totalQuote}`;
-
-      // Update Form Live Spec Preview
-      formSpecText.textContent = `${dimString} (${speciesName})`;
-      formSpecQuote.textContent = `$${totalQuote}`;
+    /* ==========================================================================
+       RENDER CATALOG CARDS
+       ========================================================================== */
+    function renderCatalog() {
+      const container = document.getElementById('catalog-container');
+      container.innerHTML = PRODUCTS.map((item, index) => `
+        <article class="card">
+          <div class="card-media">
+            <img src="${item.image}" alt="${item.alt}" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 300\'><rect width=\'400\' height=\'300\' fill=\'%231f1610\'/><text x=\'200\' y=\'150\' font-size=\'16\' text-anchor=\'middle\' fill=\'%23d4a373\' font-family=\'sans-serif\'>${item.name}</text></svg>'">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3>${item.name}</h3>
+              <span class="price">$${item.price}</span>
+            </div>
+            <p class="species-tag">${item.subtitle}</p>
+            <ul class="specs-list">
+              ${item.specs.map(spec => `<li>${spec}</li>`).join('')}
+            </ul>
+            <button type="button" class="btn btn-outline" style="width: 100%;" onclick="applyPreset(${index})">
+              Configure or Customize
+            </button>
+          </div>
+        </article>
+      `).join('');
     }
 
-    // Prefill helper for catalog cards
-    window.prefillCalculator = function(l, w, t, speciesVal, addonsArr) {
-      inputLen.value = l;
-      inputWid.value = w;
-      inputThk.value = t;
-      inputSpecies.value = speciesVal;
+    /* ==========================================================================
+       DYNAMIC ESTIMATOR LOGIC
+       ========================================================================== */
+    const lengthRange = document.getElementById('length-range');
+    const widthRange = document.getElementById('width-range');
+    const thickRange = document.getElementById('thick-range');
+    const speciesSelect = document.getElementById('species-select');
+    const checkGroove = document.getElementById('check-groove');
+    const checkFeet = document.getElementById('check-feet');
+    const checkEngraving = document.getElementById('check-engraving');
 
-      addGroove.checked = addonsArr.includes('groove');
-      addFeet.checked = addonsArr.includes('feet');
-      addEngrave.checked = addonsArr.includes('engrave');
+    const lengthVal = document.getElementById('length-val');
+    const widthVal = document.getElementById('width-val');
+    const thickVal = document.getElementById('thick-val');
+    const bfOutput = document.getElementById('bf-output');
+    const baseOutput = document.getElementById('base-output');
+    const addonsOutput = document.getElementById('addons-output');
+    const totalOutput = document.getElementById('total-output');
 
-      calculateBoard();
+    let currentCalculatedData = {};
 
-      const estimatorSection = document.getElementById('estimator');
-      estimatorSection.scrollIntoView({ behavior: 'smooth' });
-    };
+    function updateCalculator() {
+      const L = parseFloat(lengthRange.value);
+      const W = parseFloat(widthRange.value);
+      const T = parseFloat(thickRange.value);
+      const speciesMultiplier = parseFloat(speciesSelect.value);
+      const speciesName = speciesSelect.options[speciesSelect.selectedIndex].getAttribute('data-name');
 
-    // Attach reactive input listeners
-    [inputLen, inputWid, inputThk, inputSpecies, addGroove, addFeet, addEngrave].forEach(el => {
-      el.addEventListener('input', calculateBoard);
-      el.addEventListener('change', calculateBoard);
+      lengthVal.textContent = L;
+      widthVal.textContent = W;
+      thickVal.textContent = T.toFixed(2);
+
+      // Board Feet formula: (L * W * T) / 144
+      const boardFeet = (L * W * T) / 144;
+      
+      // Base milling shop fee + ($42/BF standard lumber & jointing/planing rate * species factor)
+      const baseLumberPrice = 45 + (boardFeet * 40 * speciesMultiplier);
+
+      let addonsPrice = 0;
+      const addonsArray = [];
+
+      if (checkGroove.checked) {
+        addonsPrice += 20;
+        addonsArray.push('Juice Groove (+$20)');
+      }
+      if (checkFeet.checked) {
+        addonsPrice += 15;
+        addonsArray.push('Silicone Feet (+$15)');
+      }
+      if (checkEngraving.checked) {
+        addonsPrice += 25;
+        addonsArray.push('Laser/Stencil Engraving (+$25)');
+      }
+
+      const grandTotal = Math.round(baseLumberPrice + addonsPrice);
+
+      bfOutput.textContent = `${boardFeet.toFixed(2)} BF`;
+      baseOutput.textContent = `$${Math.round(baseLumberPrice)}.00`;
+      addonsOutput.textContent = `$${addonsPrice}.00`;
+      totalOutput.textContent = `$${grandTotal}.00`;
+
+      // Save state to sync with hidden form inputs
+      currentCalculatedData = {
+        dimensions: `${L}" x ${W}" x ${T.toFixed(2)}"`,
+        species: speciesName,
+        boardFeet: boardFeet.toFixed(2),
+        addons: addonsArray.length > 0 ? addonsArray.join(', ') : 'None',
+        quote: `$${grandTotal}.00`
+      };
+    }
+
+    function applyPreset(productIndex) {
+      const item = PRODUCTS[productIndex];
+      if (!item || !item.preset) return;
+
+      const p = item.preset;
+      lengthRange.value = p.length;
+      widthRange.value = p.width;
+      thickRange.value = p.thick;
+      speciesSelect.value = p.speciesValue;
+      checkGroove.checked = p.groove;
+      checkFeet.checked = p.feet;
+      checkEngraving.checked = p.engraving;
+
+      updateCalculator();
+      document.getElementById('commission').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Attach calculator listeners
+    [lengthRange, widthRange, thickRange, speciesSelect, checkGroove, checkFeet, checkEngraving].forEach(el => {
+      el.addEventListener('input', updateCalculator);
     });
 
-    // Handle AJAX Form Submission with Web3Forms
-    orderForm.addEventListener('submit', function(e) {
+    /* ==========================================================================
+       DIRECT FORM SUBMISSION (Web3Forms Asynchronous AJAX)
+       ========================================================================== */
+    const commissionForm = document.getElementById('commission-form');
+    const formStatus = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-btn');
+
+    commissionForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // Ensure the latest calculator state is saved
-      calculateBoard();
+      // Populate hidden inputs right before sending
+      document.getElementById('form-wood-species').value = currentCalculatedData.species;
+      document.getElementById('form-dimensions').value = currentCalculatedData.dimensions;
+      document.getElementById('form-board-feet').value = currentCalculatedData.boardFeet;
+      document.getElementById('form-addons').value = currentCalculatedData.addons;
+      document.getElementById('form-total-price').value = currentCalculatedData.quote;
 
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Transmitting Commission Specs...';
-      formStatus.innerHTML = '<span style="color: var(--bronze-light);">Connecting to Frankly Crafted workshop...</span>';
+      submitBtn.textContent = 'Transmitting to Studio...';
+      formStatus.innerHTML = '<span style="color: var(--bronze);">Sending your specifications...</span>';
 
-      const formData = new FormData(orderForm);
+      const formData = new FormData(commissionForm);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formData
       })
-      .then(async (res) => {
-        const json = await res.json();
-        if (res.status === 200) {
-          formStatus.innerHTML = '<div class="status-success">✓ Inquiry received! We will review your specs and send a digital design proof and invoice to your email within 24 hours.</div>';
-          orderForm.reset();
-          calculateBoard();
+      .then(async (response) => {
+        const json = await response.json();
+        if (response.status === 200) {
+          formStatus.innerHTML = '<span style="color: #4BB543;">✓ Commission inquiry sent directly to Frankly Crafted Studio! We will review your specs and email your design mock-up shortly.</span>';
+          commissionForm.reset();
+          updateCalculator();
         } else {
-          formStatus.innerHTML = `<div class="status-error">Error: ${json.message || 'Submission failed. Please contact us directly.'}</div>`;
+          formStatus.innerHTML = `<span style="color: #FF5252;">Submission issue: ${json.message}</span>`;
         }
       })
-      .catch((err) => {
-        formStatus.innerHTML = '<div class="status-error">Something went wrong transmitting your inquiry. Please check your internet connection.</div>';
+      .catch((error) => {
+        formStatus.innerHTML = '<span style="color: #FF5252;">Network error sending inquiry. Please email directly.</span>';
       })
       .finally(() => {
         submitBtn.disabled = false;
@@ -1338,8 +990,9 @@
       });
     });
 
-    // Run initial calculation on page load
-    calculateBoard();
+    // Run on Initial Load
+    renderCatalog();
+    updateCalculator();
   </script>
 </body>
 </html>
