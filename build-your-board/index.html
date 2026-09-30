@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Own Board | Frankly Crafted Studio</title>
+  <meta name="description" content="Design a custom cutting board with the Frankly Crafted Studio visualizer. Choose wood species, grain, shape, dimensions, and finishing details." />
+  <meta name="theme-color" content="#0e0906" />
+  <link rel="canonical" href="https://franklycraftedstudio.com/build-your-board/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-base: #0e0906;
+      --bg-surface: #18100a;
+      --bg-card: #221710;
+      --bg-input: #2c1e15;
+      --border: #422d20;
+      --accent: #d4a373;
+      --accent-hover: #e9c49a;
+      --text-main: #f5ede6;
+      --text-muted: #b8a698;
+      --text-dim: #8d7b6d;
+      --success: #9cbf8f;
+      --font-stack: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Cinzel", Georgia, serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; width: 100%; overflow: hidden; background-color: var(--bg-base); color: var(--text-main); font-family: var(--font-stack); line-height: 1.4; }
+    body { display: flex; flex-direction: column; }
+    header { background: rgba(14, 9, 6, 0.96); border-bottom: 1px solid var(--border); padding: 0.65rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; min-height: 68px; z-index: 50; }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
+    .brand-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-hover), #8c5b30); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(212, 163, 115, 0.2); flex-shrink: 0; }
+    .brand h1 { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--text-main); letter-spacing: 0.01em; line-height: 1.15; }
+    .brand span { font-size: 0.72rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; display: block; }
+    .header-actions { display: flex; gap: 0.6rem; align-items: center; }
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.15s ease; user-select: none; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent-hover), var(--accent)); color: var(--bg-base); }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background-color: var(--bg-input); color: var(--text-main); border-color: var(--border); }
+    .btn-secondary:hover { background-color: #3b2a1f; }
+    .btn-sm { padding: 0.3rem 0.55rem; font-size: 0.74rem; }
+    .app-workspace { display: grid; grid-template-columns: 355px minmax(0, 1fr) 300px; flex: 1; height: calc(100vh - 68px); overflow: hidden; position: relative; }
+    @media (max-width: 1220px) { .app-workspace { grid-template-columns: 320px minmax(0, 1fr) 280px; } }
+    @media (max-width: 950px) { html, body { overflow: auto; height: auto; min-height: 100%; } .app-workspace { display: flex; flex-direction: column; height: auto; overflow: visible; } .panel { height: auto; overflow: visible; } .panel-left, .panel-right { border: 0; } .stage-center { min-height: 500px; height: 520px; flex-shrink: 0; } }
+    @media (max-width: 540px) { header { padding: 0.55rem 0.7rem; gap: 0.5rem; } .brand h1 { font-size: 0.95rem; } .brand span { font-size: 0.6rem; } .brand { gap: 0.45rem; } .brand-icon { width: 30px; height: 30px; } .header-actions { gap: 0.35rem; } .header-actions .btn { padding: 0.35rem 0.45rem; font-size: 0.68rem; } .panel { padding: 0.7rem; } .stage-center { height: 430px; min-height: 430px; } .stage-header { padding: 0.55rem 0.65rem; } }
+    @media (max-width: 400px) { .brand span, .header-actions .back-link { display: none; } .brand h1 { font-size: 0.8rem; white-space: nowrap; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }
+    .panel { background: var(--bg-surface); overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.95rem; height: 100%; }
+    .panel-left { border-right: 1px solid var(--border); }
+    .panel-right { border-left: 1px solid var(--border); }
+    .stage-center { background: #120c08; display: flex; flex-direction: column; position: relative; overflow: hidden; height: 100%; min-height: 0; }
+    .stage-header { padding: 0.6rem 1.25rem; background: rgba(18, 12, 8, 0.9); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; z-index: 10; }
+    .canvas-viewport { flex: 1; width: 100%; height: 100%; position: relative; overflow: hidden; min-height: 0; background-image: radial-gradient(#422d20 1px, transparent 1px); background-size: 20px 20px; }
+    #canvasSizer { position: absolute; top: 15px; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; pointer-events: none; }
+    #cuttingBoardCanvas { box-shadow: 0 25px 50px -10px rgba(0,0,0,0.85); border-radius: 4px; display: block; pointer-events: auto; }
+    .dimension-hud { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); background: rgba(16, 18, 22, 0.94); border: 1px solid var(--border); border-radius: 20px; padding: 0.35rem 0.95rem; font-size: 0.78rem; font-weight: 600; color: var(--text-main); pointer-events: none; backdrop-filter: blur(6px); z-index: 15; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.95rem; flex-shrink: 0; }
+    .card-title { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.65rem; display: flex; justify-content: space-between; align-items: center; }
+    .form-group { margin-bottom: 0.75rem; }
+    .form-group:last-child { margin-bottom: 0; }
+    label { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.25rem; }
+    .sub-hint { font-size: 0.7rem; font-weight: 400; color: var(--text-muted); }
+    .grid-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; }
+    .grid-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
+    .input-wrap { position: relative; display: flex; align-items: center; }
+    .input-wrap input { width: 100%; padding-right: 1.35rem; }
+    .input-wrap .unit { position: absolute; right: 0.45rem; color: var(--text-dim); font-size: 0.72rem; pointer-events: none; }
+    input[type="number"], select { width: 100%; background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 0.42rem 0.55rem; border-radius: 6px; font-size: 0.8rem; outline: none; }
+    .button-group-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.35rem; }
+    .opt-btn { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; padding: 0.45rem 0.25rem; font-size: 0.7rem; font-weight: 600; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; user-select: none; }
+    .opt-btn svg { width: 18px; height: 18px; stroke: var(--text-muted); fill: none; }
+    .opt-btn:hover { background: #3b2a1f; }
+    .opt-btn.active { background: rgba(212, 163, 115, 0.17); border-color: var(--accent); color: var(--text-main); }
+    .opt-btn.active svg { stroke: var(--accent); }
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0; font-size: 0.78rem; }
+    .toggle-switch { position: relative; display: inline-block; width: 36px; height: 20px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--bg-input); border: 1px solid var(--border); border-radius: 20px; transition: .2s; }
+    .toggle-slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background-color: var(--text-muted); border-radius: 50%; transition: .2s; }
+    input:checked + .toggle-slider { background-color: var(--accent); border-color: var(--accent); }
+    input:checked + .toggle-slider:before { transform: translateX(16px); background-color: #fff; }
+    .ribbon-list-container { display: flex; flex-direction: column; gap: 0.4rem; max-height: 230px; overflow-y: auto; margin-top: 0.5rem; padding-right: 0.2rem; }
+    .ribbon-row { display: grid; grid-template-columns: 20px 18px 1fr 68px 46px 20px; gap: 0.35rem; align-items: center; background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.45rem; }
+    .ribbon-row:hover { background: #3b2a1f; }
+    .ribbon-idx { font-size: 0.7rem; font-weight: 700; color: var(--text-dim); text-align: center; }
+    .ribbon-swatch { width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.25); }
+    .ribbon-order-btns { display: flex; flex-direction: column; gap: 2px; }
+    .ribbon-order-btn { background: #1a110c; border: 1px solid var(--border); color: var(--text-muted); border-radius: 3px; padding: 0 3px; font-size: 0.62rem; cursor: pointer; line-height: 1.1; }
+    .ribbon-order-btn:hover { background: var(--accent); color: var(--bg-base); }
+    .btn-row-del { background: none; border: none; color: #f87171; cursor: pointer; font-size: 0.825rem; padding: 2px; }
+    .endgrain-box { background: rgba(212, 163, 115, 0.08); border: 1px solid rgba(212, 163, 115, 0.3); border-radius: 6px; padding: 0.75rem; margin-top: 0.65rem; }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent-hover); outline-offset: 2px; }
+    .back-link { color: var(--text-muted); text-decoration: none; }
+    .back-link:hover { color: var(--accent-hover); }
+    .guide-card { line-height: 1.55; }
+    .guide-card h2 { color: var(--accent-hover); font: 700 1rem var(--font-serif); margin-bottom: 0.55rem; }
+    .guide-card p, .guide-card li { color: var(--text-muted); font-size: 0.82rem; }
+    .guide-card ol { padding-left: 1.15rem; display: grid; gap: 0.45rem; }
+    .visualizer-note { margin-top: 0.75rem; padding-top: 0.7rem; border-top: 1px solid var(--border); font-size: 0.74rem !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand back-link" href="../" aria-label="Frankly Crafted Studio home">
+      <div class="brand-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="8" x2="21" y2="8"/><line x1="3" y1="13" x2="21" y2="13"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </div>
+      <div>
+        <h1>Frankly Crafted Studio</h1>
+        <span>Build Your Own Board</span>
+      </div>
+    </a>
+    <div class="header-actions">
+      <a class="btn btn-secondary btn-sm back-link" href="../">Back to Studio</a>
+      <button type="button" class="btn btn-secondary btn-sm" id="btnExportImage">Save PNG</button>
+    </div>
+  </header>
+
+  <div class="app-workspace">
+    <!-- Left Controls -->
+    <div class="panel panel-left">
+      <div class="card">
+        <div class="card-title"><span>Board Core Dimensions</span><span id="badgeAspect" style="color:var(--accent); font-weight:700;">1.50 : 1</span></div>
+        <div class="grid-row-3">
+          <div><label for="boardLength">Length</label><div class="input-wrap"><input type="number" id="boardLength" value="18.0" min="4" max="48" step="0.5"><span class="unit">″</span></div></div>
+          <div><label for="boardWidth">Total Width</label><div class="input-wrap"><input type="number" id="boardWidth" value="12.0" readonly style="color:var(--accent); font-weight:700;"><span class="unit">″</span></div></div>
+          <div><label for="boardThick">Thickness</label><div class="input-wrap"><input type="number" id="boardThick" value="1.5" min="0.5" max="4.0" step="0.125"><span class="unit">″</span></div></div>
+        </div>
+        <div class="grid-row-2" style="margin-top:0.65rem;">
+          <button type="button" class="opt-btn active" id="btnGrainEdge" aria-pressed="true">Edge Grain</button>
+          <button type="button" class="opt-btn" id="btnGrainEnd" aria-pressed="false">End Grain (Block)</button>
+        </div>
+        <!-- End Grain Options -->
+        <div class="endgrain-box" id="boxEndGrainOptions" style="display:none;">
+          <div style="font-size:0.75rem; font-weight:700; color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem;">End Grain Cross-Cut Config</div>
+          <div class="form-group">
+            <label for="inpSliceThickness">Cross-Cut Slice Width <span class="sub-hint" id="lblSliceThickness">1.50″</span></label>
+            <div class="input-wrap"><input type="number" id="inpSliceThickness" value="1.50" min="0.75" max="3.0" step="0.125"><span class="unit">″</span></div>
+          </div>
+          <div class="form-group">
+            <label for="selEndGrainPattern">Row Arrangement</label>
+            <select id="selEndGrainPattern">
+              <option value="flipped">Flipped / Alternating (Mirrors every 2nd slice 180°)</option>
+              <option value="aligned">Aligned (Straight grid pattern)</option>
+              <option value="offset">Staggered (Half-slice shift)</option>
+            </select>
+          </div>
+          <div class="toggle-row" style="padding-top:0.2rem;">
+            <span>Alternate Ring Curvature (Bark Up/Down)</span>
+            <label class="toggle-switch" aria-label="Alternate ring curvature"><input type="checkbox" id="chkAlternateRings" checked><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>Laminated Ribbons Stack</span><span id="badgeRibbonCount" style="color:var(--success); font-weight:700;">7 Strips</span></div>
+        <div style="display:flex; justify-content:space-between; gap:0.35rem; margin-bottom:0.4rem;">
+          <div style="display:flex; gap:0.3rem;">
+            <button type="button" class="btn btn-primary btn-sm" id="btnAddRibbon">+ Add Strip</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btnMirrorRibbons">⇋ Mirror</button>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnScaleWidth">Fit Width...</button>
+        </div>
+        <div style="display:flex; gap:0.25rem; margin-bottom:0.4rem;">
+          <button type="button" class="btn btn-secondary btn-sm" style="flex:1;" id="tplClassic">Classic</button>
+          <button type="button" class="btn btn-secondary btn-sm" style="flex:1;" id="tplTrio">Trio</button>
+          <button type="button" class="btn btn-secondary btn-sm" style="flex:1;" id="tplPiano">Piano</button>
+          <button type="button" class="btn btn-secondary btn-sm" style="flex:1;" id="tplExotic">Exotic</button>
+        </div>
+        <div class="ribbon-list-container" id="ribbonListEl"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>Board Shape & Routing</span></div>
+        <div class="button-group-grid" id="shapeSelector" style="margin-bottom:0.5rem;">
+          <button type="button" class="opt-btn active" data-shape="rect" aria-pressed="true">Rect</button>
+          <button type="button" class="opt-btn" data-shape="rounded" aria-pressed="false">Rounded</button>
+          <button type="button" class="opt-btn" data-shape="paddle" aria-pressed="false">Paddle</button>
+          <button type="button" class="opt-btn" data-shape="capsule" aria-pressed="false">Oval</button>
+          <button type="button" class="opt-btn" data-shape="circle" aria-pressed="false">Circle</button>
+        </div>
+        <div class="form-group" id="groupCornerRadius" style="display:none;">
+          <label for="inpCornerRadius">Corner Radius <span class="sub-hint" id="lblCornerRad">0.75″</span></label>
+          <input type="range" id="inpCornerRadius" min="0.25" max="2.5" step="0.125" value="0.75" style="accent-color:var(--accent); width:100%;">
+        </div>
+        <div class="toggle-row"><div>Juice Groove</div><label class="toggle-switch" aria-label="Add a juice groove"><input type="checkbox" id="chkJuiceGroove" checked><span class="toggle-slider"></span></label></div>
+        <div class="toggle-row"><div>Rubber Bumper Feet</div><label class="toggle-switch" aria-label="Show rubber bumper feet"><input type="checkbox" id="chkFeet" checked><span class="toggle-slider"></span></label></div>
+      </div>
+    </div>
+
+    <!-- Center Canvas Stage -->
+    <div class="stage-center">
+      <div class="stage-header">
+        <div style="display:flex; gap:0.4rem;">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnToggleRuler">Toggle Rulers</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnRotateView">Rotate 90°</button>
+        </div>
+        <span style="font-size:0.75rem; color:var(--text-muted);" id="lblScaleDisplay">Scale</span>
+      </div>
+      <div class="canvas-viewport" id="viewportContainer">
+        <div id="canvasSizer">
+          <canvas id="cuttingBoardCanvas" role="img" aria-label="Preview of your custom cutting board"></canvas>
+        </div>
+        <div class="dimension-hud" id="hudDimensions" aria-live="polite">18.0″ × 12.0″ × 1.5″</div>
+      </div>
+    </div>
+
+    <!-- Design guidance -->
+    <div class="panel panel-right">
+      <div class="card guide-card">
+        <h2>Make it yours</h2>
+        <ol>
+          <li>Set your board length and thickness.</li>
+          <li>Choose woods and adjust the ribbon widths and order.</li>
+          <li>Explore edge or end grain, board shape, groove, and feet.</li>
+          <li>Save a PNG of your design to share with the studio.</li>
+        </ol>
+        <p class="visualizer-note">This visualizer is a design preview, not a final quote or manufacturing drawing. We will confirm materials, feasibility, and pricing with you before any work begins.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const WOODS = {
+      maple: { id: 'maple', name: 'Hard Maple', color: '#EBD8B2', grainColor: '#D2BD93', endGrainColor: '#D3BA8E', endGrainRingColor: '#BA9C6D', ringSpacing: 10 },
+      walnut: { id: 'walnut', name: 'Black Walnut', color: '#4B3527', grainColor: '#342318', endGrainColor: '#39261B', endGrainRingColor: '#24160E', ringSpacing: 14 },
+      cherry: { id: 'cherry', name: 'Cherry', color: '#964C35', grainColor: '#783520', endGrainColor: '#7E3722', endGrainRingColor: '#632615', ringSpacing: 12 },
+      white_oak: { id: 'white_oak', name: 'White Oak', color: '#C2A676', grainColor: '#A78753', endGrainColor: '#AE915E', endGrainRingColor: '#90723E', ringSpacing: 10 },
+      purpleheart: { id: 'purpleheart', name: 'Purpleheart', color: '#652D4D', grainColor: '#4A1D36', endGrainColor: '#52203D', endGrainRingColor: '#3B132A', ringSpacing: 15 },
+      padauk: { id: 'padauk', name: 'Padauk', color: '#B64522', grainColor: '#8C2E13', endGrainColor: '#973315', endGrainRingColor: '#74230B', ringSpacing: 14 },
+      yellowheart: { id: 'yellowheart', name: 'Yellowheart', color: '#E2B038', grainColor: '#C29120', endGrainColor: '#C89622', endGrainRingColor: '#A57712', ringSpacing: 12 }
+    };
+
+    const state = {
+      length: 18.0, width: 12.0, thickness: 1.5, grainType: 'edge', shape: 'rect', cornerRadius: 0.75,
+      juiceGroove: true, rubberFeet: true, rotation: 0, showRulers: true,
+      sliceThickness: 1.50, endGrainPattern: 'flipped', alternateRings: true,
+      ribbons: [
+        { id: 1, wood: 'walnut', width: 2.25 }, { id: 2, wood: 'maple', width: 0.50 }, { id: 3, wood: 'cherry', width: 1.25 },
+        { id: 4, wood: 'maple', width: 4.00 }, { id: 5, wood: 'cherry', width: 1.25 }, { id: 6, wood: 'maple', width: 0.50 },
+        { id: 7, wood: 'walnut', width: 2.25 }
+      ]
+    };
+
+    const canvas = document.getElementById('cuttingBoardCanvas');
+    const ctx = canvas.getContext('2d');
+    const canvasSizer = document.getElementById('canvasSizer');
+
+    function recalcWidth() {
+      state.width = Math.max(1.0, Math.round(state.ribbons.reduce((a, r) => a + (parseFloat(r.width) || 0), 0) * 1000) / 1000);
+      document.getElementById('boardWidth').value = state.width.toFixed(3);
+    }
+
+    function renderRibbonList() {
+      const container = document.getElementById('ribbonListEl');
+      container.innerHTML = '';
+      document.getElementById('badgeRibbonCount').textContent = `${state.ribbons.length} Strips`;
+
+      state.ribbons.forEach((r, idx) => {
+        const row = document.createElement('div');
+        row.className = 'ribbon-row';
+        const w = WOODS[r.wood] || WOODS.maple;
+        row.innerHTML = `
+          <div class="ribbon-idx">#${idx + 1}</div>
+          <div class="ribbon-swatch" style="background:${w.color};"></div>
+          <select data-idx="${idx}" class="sel-wood" aria-label="Wood species for strip ${idx + 1}">
+            ${Object.values(WOODS).map(x => `<option value="${x.id}" ${x.id === r.wood ? 'selected' : ''}>${x.name}</option>`).join('')}
+          </select>
+          <div class="input-wrap">
+            <input type="number" class="inp-w" data-idx="${idx}" value="${r.width}" min="0.125" step="0.125" aria-label="Width for strip ${idx + 1} in inches">
+            <span class="unit">″</span>
+          </div>
+          <div class="ribbon-order-btns">
+            <button type="button" class="ribbon-order-btn btn-up" data-idx="${idx}" aria-label="Move strip ${idx + 1} up">▲</button>
+            <button type="button" class="ribbon-order-btn btn-dn" data-idx="${idx}" aria-label="Move strip ${idx + 1} down">▼</button>
+          </div>
+          <button type="button" class="btn-row-del" data-idx="${idx}" aria-label="Remove strip ${idx + 1}">✕</button>
+        `;
+        container.appendChild(row);
+      });
+
+      container.querySelectorAll('.sel-wood').forEach(s => s.onchange = e => {
+        state.ribbons[e.target.dataset.idx].wood = e.target.value;
+        renderRibbonList(); updateAll();
+      });
+      container.querySelectorAll('.inp-w').forEach(inp => inp.oninput = e => {
+        state.ribbons[e.target.dataset.idx].width = Math.max(0.125, parseFloat(e.target.value) || 0.125);
+        recalcWidth(); updateAll();
+      });
+      container.querySelectorAll('.btn-up').forEach(b => b.onclick = e => {
+        e.preventDefault(); const i = parseInt(e.target.dataset.idx);
+        if (i > 0) { [state.ribbons[i], state.ribbons[i - 1]] = [state.ribbons[i - 1], state.ribbons[i]]; renderRibbonList(); updateAll(); }
+      });
+      container.querySelectorAll('.btn-dn').forEach(b => b.onclick = e => {
+        e.preventDefault(); const i = parseInt(e.target.dataset.idx);
+        if (i < state.ribbons.length - 1) { [state.ribbons[i], state.ribbons[i + 1]] = [state.ribbons[i + 1], state.ribbons[i]]; renderRibbonList(); updateAll(); }
+      });
+      container.querySelectorAll('.btn-row-del').forEach(b => b.onclick = e => {
+        e.preventDefault();
+        if (state.ribbons.length > 1) { state.ribbons.splice(e.target.dataset.idx, 1); recalcWidth(); renderRibbonList(); updateAll(); }
+      });
+    }
+
+    function renderCanvas() {
+      const boxW = canvasSizer.clientWidth || 600;
+      const boxH = canvasSizer.clientHeight || 450;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = boxW * dpr; canvas.height = boxH * dpr;
+      canvas.style.width = boxW + 'px'; canvas.style.height = boxH + 'px';
+
+      ctx.save(); ctx.scale(dpr, dpr); ctx.clearRect(0, 0, boxW, boxH);
+
+      let bL = state.length, bW = state.width;
+      if (state.rotation === 90) { bL = state.width; bW = state.length; }
+
+      let handleLen = (state.shape === 'paddle') ? Math.min(5.0, Math.max(3.5, bL * 0.25)) : 0;
+      const totalL = bL + handleLen;
+      const scale = Math.min((boxW - 90) / totalL, (boxH - 90) / bW);
+      document.getElementById('lblScaleDisplay').textContent = `Scale: 1″ = ${scale.toFixed(1)}px`;
+
+      const pxW = bL * scale, pxH = bW * scale;
+      const ox = Math.round((boxW - totalL * scale) / 2);
+      const oy = Math.round((boxH - pxH) / 2);
+
+      // Shadow
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.65)'; ctx.shadowBlur = 25; ctx.shadowOffsetY = 12;
+      drawShapePath(ctx, ox, oy, bL, bW, scale, handleLen);
+      ctx.fillStyle = '#2c1e15'; ctx.fill();
+      ctx.restore();
+
+      // Clip board shape
+      ctx.save();
+      drawShapePath(ctx, ox, oy, bL, bW, scale, handleLen);
+      ctx.clip();
+
+      if (state.grainType === 'end') {
+        renderEndGrainBlocks(ctx, ox, oy, bL, bW, scale, handleLen);
+      } else {
+        renderEdgeGrainStrips(ctx, ox, oy, bL, bW, scale, handleLen);
+      }
+
+      ctx.restore(); // end clip
+
+      // Juice Groove
+      if (state.juiceGroove) {
+        const inset = 0.75 * scale;
+        const grooveW = Math.max(3, 0.35 * scale);
+        ctx.save();
+        ctx.strokeStyle = 'rgba(15,10,8,0.78)'; ctx.lineWidth = grooveW;
+        if (state.shape === 'capsule') {
+          const rx = (pxW / 2) - inset, ry = (pxH / 2) - inset;
+          if (rx > 5 && ry > 5) {
+            ctx.beginPath(); ctx.ellipse(ox + pxW/2, oy + pxH/2, rx, ry, 0, 0, Math.PI*2); ctx.stroke();
+          }
+        } else if (state.shape === 'circle') {
+          const rad = (Math.min(pxW, pxH) / 2) - inset;
+          if (rad > 5) { ctx.beginPath(); ctx.arc(ox + pxW/2, oy + pxH/2, rad, 0, Math.PI*2); ctx.stroke(); }
+        } else {
+          const gw = pxW - inset * 2, gh = pxH - inset * 2;
+          if (gw > 10 && gh > 10) {
+            ctx.beginPath(); drawRoundRectPath(ctx, ox + inset, oy + inset, gw, gh, Math.max(4, state.cornerRadius * scale - inset * 0.6)); ctx.stroke();
+          }
+        }
+        ctx.restore();
+      }
+
+      // Handle hole
+      if (state.shape === 'paddle') {
+        const hx = ox + pxW + handleLen * scale * 0.65;
+        const hy = oy + pxH / 2;
+        ctx.fillStyle = '#0e0906'; ctx.beginPath(); ctx.arc(hx, hy, Math.min(0.45 * scale, 18), 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,0.85)'; ctx.lineWidth = 2.5; ctx.stroke();
+      }
+
+      if (state.rubberFeet) {
+        const insetX = pxW * 0.2, insetY = pxH * 0.2, footRadius = Math.min(8, Math.max(3, scale * 0.13));
+        ctx.fillStyle = 'rgba(14, 9, 6, 0.78)';
+        ctx.strokeStyle = 'rgba(233, 196, 154, 0.5)';
+        ctx.lineWidth = 1;
+        [[ox + insetX, oy + insetY], [ox + pxW - insetX, oy + insetY],
+          [ox + insetX, oy + pxH - insetY], [ox + pxW - insetX, oy + pxH - insetY]]
+          .forEach(([x, y]) => {
+            ctx.beginPath(); ctx.arc(x, y, footRadius, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          });
+      }
+
+      // Rulers
+      if (state.showRulers) {
+        ctx.font = '10px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.textAlign = 'center';
+        ctx.fillText(`${state.length.toFixed(1)}″ Length`, ox + pxW / 2, oy - 10);
+        let ry = oy;
+        state.ribbons.forEach(r => {
+          ctx.textAlign = 'right';
+          ctx.fillText(`${r.width.toFixed(2)}″`, ox - 8, ry + (r.width * scale) / 2 + 3);
+          ry += r.width * scale;
+        });
+      }
+      ctx.restore();
+    }
+
+    /* Edge grain continuous stripes */
+    function renderEdgeGrainStrips(ctx, ox, oy, bL, bW, scale, handleLen) {
+      let curY = oy;
+      const totalPxLen = (bL + (handleLen || 0) + 4) * scale;
+      state.ribbons.forEach(r => {
+        const rh = r.width * scale;
+        const wood = WOODS[r.wood] || WOODS.maple;
+        ctx.fillStyle = wood.color; ctx.fillRect(ox - 2, curY, totalPxLen, rh);
+        ctx.strokeStyle = wood.grainColor; ctx.lineWidth = 1; ctx.globalAlpha = 0.35;
+        for (let j = 0; j < Math.max(2, Math.floor(rh / 10)); j++) {
+          ctx.beginPath(); ctx.moveTo(ox - 2, curY + (j * rh / 3)); ctx.lineTo(ox + totalPxLen, curY + (j * rh / 3)); ctx.stroke();
+        }
+        ctx.globalAlpha = 1.0;
+        ctx.fillStyle = 'rgba(0,0,0,0.28)'; ctx.fillRect(ox - 2, curY + rh - 0.75, totalPxLen, 0.75);
+        curY += rh;
+      });
+    }
+
+    /* Authentic Sliced & Flipped End Grain Grid */
+    function renderEndGrainBlocks(ctx, ox, oy, bL, bW, scale, handleLen) {
+      const sliceW = Math.max(0.75, state.sliceThickness || state.thickness || 1.5) * scale;
+      const totalLenPx = (bL + (handleLen || 0) + 4) * scale;
+      const numSlices = Math.ceil(totalLenPx / sliceW) + 1;
+
+      for (let s = 0; s < numSlices; s++) {
+        const sliceX = ox + (s * sliceW);
+        let sliceRibbons = state.ribbons.slice();
+        if (state.endGrainPattern === 'flipped' && s % 2 === 1) sliceRibbons.reverse();
+
+        let curY = oy;
+        if (state.endGrainPattern === 'offset' && s % 2 === 1) curY += (state.ribbons[0].width * scale * 0.5);
+
+        sliceRibbons.forEach((r, rIdx) => {
+          const rh = r.width * scale;
+          const wood = WOODS[r.wood] || WOODS.maple;
+
+          ctx.save(); ctx.beginPath(); ctx.rect(sliceX, curY, sliceW, rh); ctx.clip();
+          // Rich, finish-absorbed end grain color
+          ctx.fillStyle = wood.endGrainColor || wood.color;
+          ctx.fillRect(sliceX, curY, sliceW, rh);
+
+          // Concentric growth ring arcs (Smile vs Frown alternating)
+          const alternateBark = state.alternateRings ? ((s + rIdx) % 2 === 0) : false;
+          const rcX = sliceX + sliceW * 0.5;
+          const rcY = alternateBark ? (curY - rh * 1.8) : (curY + rh * 2.8);
+
+          ctx.strokeStyle = wood.endGrainRingColor || wood.grainColor;
+          const ringSpacing = Math.max(5, wood.ringSpacing * (scale / 22));
+          for (let rad = 8; rad < Math.max(sliceW, rh) * 4; rad += ringSpacing) {
+            ctx.lineWidth = (rad % 3 === 0) ? 1.6 : 0.85;
+            ctx.globalAlpha = (rad % 3 === 0) ? 0.6 : 0.35;
+            ctx.beginPath(); ctx.arc(rcX, rcY, rad, 0, Math.PI * 2); ctx.stroke();
+          }
+          ctx.globalAlpha = 1.0;
+
+          // Pore stippling
+          ctx.fillStyle = wood.endGrainRingColor || wood.grainColor; ctx.globalAlpha = 0.45;
+          for (let p = 0; p < Math.floor((sliceW * rh) / 70); p++) {
+            ctx.fillRect(sliceX + Math.random() * sliceW, curY + Math.random() * rh, 1.2, 1.8);
+          }
+          ctx.restore();
+
+          // Horizontal seam between ribbons
+          ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(sliceX, curY + rh - 0.75, sliceW, 0.75);
+          curY += rh;
+        });
+
+        // Vertical cross-cut seam between slices
+        ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.fillRect(sliceX + sliceW - 0.75, oy - 2, 0.75, bW * scale + 4);
+      }
+    }
+
+    function drawShapePath(c, x, y, len, wid, s, handleLen) {
+      c.beginPath(); const w = len * s, h = wid * s;
+      if (state.shape === 'rect') c.rect(x, y, w, h);
+      else if (state.shape === 'rounded') drawRoundRectPath(c, x, y, w, h, state.cornerRadius * s);
+      else if (state.shape === 'paddle') drawPaddlePath(c, x, y, len, wid, s, handleLen);
+      else if (state.shape === 'capsule') c.ellipse(x + w/2, y + h/2, w/2, h/2, 0, 0, Math.PI * 2);
+      else if (state.shape === 'circle') c.arc(x + w/2, y + h/2, Math.min(w, h)/2, 0, Math.PI * 2);
+      c.closePath();
+    }
+
+    function drawRoundRectPath(c, x, y, w, h, r) {
+      r = Math.min(r, Math.min(w, h) / 2);
+      c.moveTo(x + r, y); c.lineTo(x + w - r, y); c.arcTo(x + w, y, x + w, y + r, r);
+      c.lineTo(x + w, y + h - r); c.arcTo(x + w, y + h, x + w - r, y + h, r);
+      c.lineTo(x + r, y + h); c.arcTo(x, y + h, x, y + h - r, r);
+      c.lineTo(x, y + r); c.arcTo(x, y, x + r, y, r);
+    }
+
+    function drawPaddlePath(c, x, y, len, wid, s, handleLen) {
+      const bodyW = len * s, bodyH = wid * s;
+      const hLen = (handleLen || 4.0) * s, hWid = Math.min(1.85 * s, bodyH * 0.35);
+      const r = Math.min(state.cornerRadius * s, bodyH * 0.15), fR = Math.min(r, 16);
+      const bRight = x + bodyW, hTop = y + (bodyH - hWid) / 2, hBottom = hTop + hWid, hRight = bRight + hLen;
+
+      c.moveTo(x + r, y);
+      c.lineTo(bRight - r, y); c.arcTo(bRight, y, bRight, y + r, r);
+      c.lineTo(bRight, hTop - fR); c.arcTo(bRight, hTop, bRight + fR, hTop, fR);
+      c.lineTo(hRight - r, hTop); c.arcTo(hRight, hTop, hRight, hTop + r, r);
+      c.lineTo(hRight, hBottom - r); c.arcTo(hRight, hBottom, hRight - r, hBottom, r);
+      c.lineTo(bRight + fR, hBottom); c.arcTo(bRight, hBottom, bRight, hBottom + fR, fR);
+      c.lineTo(bRight, y + bodyH - r); c.arcTo(bRight, y + bodyH, bRight - r, y + bodyH, r);
+      c.lineTo(x + r, y + bodyH); c.arcTo(x, y + bodyH, x, y + bodyH - r, r);
+      c.lineTo(x, y + r); c.arcTo(x, y, x + r, y, r);
+    }
+
+    function updateAll() {
+      recalcWidth();
+      document.getElementById('badgeAspect').textContent = `${(state.length / (state.width || 1)).toFixed(2)} : 1`;
+      document.getElementById('hudDimensions').textContent = `${state.length.toFixed(1)}″ L × ${state.width.toFixed(2)}″ W × ${state.thickness.toFixed(2)}″ T (${state.grainType.toUpperCase()} GRAIN)`;
+      document.getElementById('groupCornerRadius').style.display = state.shape === 'rect' ? 'none' : 'block';
+      document.getElementById('lblCornerRad').textContent = `${state.cornerRadius.toFixed(2)}″`;
+
+      renderCanvas();
+    }
+
+    // Attach listeners
+    document.querySelectorAll('#shapeSelector .opt-btn').forEach(b => b.onclick = (e) => {
+      e.preventDefault();
+      document.querySelectorAll('#shapeSelector .opt-btn').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
+      b.classList.add('active'); b.setAttribute('aria-pressed', 'true'); state.shape = b.dataset.shape;
+      document.getElementById('groupCornerRadius').style.display = (state.shape === 'rect' ? 'none' : 'block');
+      updateAll();
+    });
+    document.getElementById('btnGrainEdge').onclick = (e) => {
+      e.preventDefault();
+      document.getElementById('btnGrainEdge').classList.add('active'); document.getElementById('btnGrainEdge').setAttribute('aria-pressed', 'true');
+      document.getElementById('btnGrainEnd').classList.remove('active'); document.getElementById('btnGrainEnd').setAttribute('aria-pressed', 'false');
+      state.grainType = 'edge';
+      document.getElementById('boxEndGrainOptions').style.display = 'none'; updateAll();
+    };
+    document.getElementById('btnGrainEnd').onclick = (e) => {
+      e.preventDefault();
+      document.getElementById('btnGrainEnd').classList.add('active'); document.getElementById('btnGrainEnd').setAttribute('aria-pressed', 'true');
+      document.getElementById('btnGrainEdge').classList.remove('active'); document.getElementById('btnGrainEdge').setAttribute('aria-pressed', 'false');
+      state.grainType = 'end';
+      document.getElementById('boxEndGrainOptions').style.display = 'block'; updateAll();
+    };
+    document.getElementById('boardLength').oninput = e => { state.length = parseFloat(e.target.value) || 12; updateAll(); };
+    document.getElementById('boardThick').oninput = e => {
+      state.thickness = parseFloat(e.target.value) || 1.5;
+      state.sliceThickness = state.thickness;
+      document.getElementById('inpSliceThickness').value = state.thickness.toFixed(2);
+      document.getElementById('lblSliceThickness').textContent = state.thickness.toFixed(2) + '″';
+      updateAll();
+    };
+    document.getElementById('inpSliceThickness').oninput = e => {
+      state.sliceThickness = parseFloat(e.target.value) || 1.5;
+      document.getElementById('lblSliceThickness').textContent = state.sliceThickness.toFixed(2) + '″';
+      updateAll();
+    };
+    document.getElementById('selEndGrainPattern').onchange = e => { state.endGrainPattern = e.target.value; updateAll(); };
+    document.getElementById('chkAlternateRings').onchange = e => { state.alternateRings = e.target.checked; updateAll(); };
+    document.getElementById('inpCornerRadius').oninput = e => { state.cornerRadius = parseFloat(e.target.value); updateAll(); };
+    document.getElementById('chkJuiceGroove').onchange = e => { state.juiceGroove = e.target.checked; updateAll(); };
+    document.getElementById('chkFeet').onchange = e => { state.rubberFeet = e.target.checked; updateAll(); };
+    document.getElementById('btnToggleRuler').onclick = (e) => { e.preventDefault(); state.showRulers = !state.showRulers; renderCanvas(); };
+    document.getElementById('btnRotateView').onclick = (e) => { e.preventDefault(); state.rotation = (state.rotation + 90) % 180; renderCanvas(); };
+    document.getElementById('btnExportImage').onclick = (e) => {
+      e.preventDefault(); const a = document.createElement('a'); a.download = `frankly-crafted-board.png`; a.href = canvas.toDataURL(); a.click();
+    };
+    document.getElementById('btnAddRibbon').onclick = (e) => {
+      e.preventDefault(); state.ribbons.push({ id: Date.now(), wood: 'walnut', width: 1.0 }); renderRibbonList(); updateAll();
+    };
+    document.getElementById('btnMirrorRibbons').onclick = (e) => {
+      e.preventDefault();
+      const rev = state.ribbons.slice().reverse().map(r => ({ id: Date.now() + Math.random(), wood: r.wood, width: r.width }));
+      state.ribbons = state.ribbons.concat(rev); renderRibbonList(); updateAll();
+    };
+    document.getElementById('btnScaleWidth').onclick = (e) => {
+      e.preventDefault(); const target = prompt("Target total board width (in):", state.width.toFixed(2));
+      if (!target) return;
+      const tw = parseFloat(target);
+      if (tw > 0) {
+        const cur = state.ribbons.reduce((a, r) => a + r.width, 0);
+        state.ribbons.forEach(r => r.width = Math.round(r.width * (tw / cur) * 1000) / 1000);
+        renderRibbonList(); updateAll();
+      }
+    };
+
+    // Presets
+    document.getElementById('tplClassic').onclick = (e) => {
+      e.preventDefault();
+      state.ribbons = [
+        { wood: 'walnut', width: 2.50 }, { wood: 'maple', width: 0.50 }, { wood: 'cherry', width: 1.00 },
+        { wood: 'maple', width: 4.00 }, { wood: 'cherry', width: 1.00 }, { wood: 'maple', width: 0.50 }, { wood: 'walnut', width: 2.50 }
+      ];
+      renderRibbonList(); updateAll();
+    };
+    document.getElementById('tplTrio').onclick = (e) => {
+      e.preventDefault();
+      state.ribbons = [
+        { wood: 'cherry', width: 2.0 }, { wood: 'maple', width: 1.5 }, { wood: 'walnut', width: 5.0 },
+        { wood: 'maple', width: 1.5 }, { wood: 'cherry', width: 2.0 }
+      ];
+      renderRibbonList(); updateAll();
+    };
+    document.getElementById('tplPiano').onclick = (e) => {
+      e.preventDefault();
+      state.ribbons = [
+        { wood: 'walnut', width: 1.5 }, { wood: 'maple', width: 0.25 }, { wood: 'walnut', width: 1.5 },
+        { wood: 'maple', width: 0.25 }, { wood: 'walnut', width: 1.5 }, { wood: 'maple', width: 0.25 },
+        { wood: 'walnut', width: 1.5 }
+      ];
+      renderRibbonList(); updateAll();
+    };
+    document.getElementById('tplExotic').onclick = (e) => {
+      e.preventDefault();
+      state.ribbons = [
+        { wood: 'walnut', width: 2.25 }, { wood: 'maple', width: 0.25 }, { wood: 'purpleheart', width: 0.75 },
+        { wood: 'yellowheart', width: 0.75 }, { wood: 'padauk', width: 2.00 }, { wood: 'yellowheart', width: 0.75 },
+        { wood: 'purpleheart', width: 0.75 }, { wood: 'maple', width: 0.25 }, { wood: 'walnut', width: 2.25 }
+      ];
+      renderRibbonList(); updateAll();
+    };
+
+    window.addEventListener('resize', renderCanvas);
+    window.addEventListener('DOMContentLoaded', () => { renderRibbonList(); updateAll(); });
+  </script>
+</body>
+</html>
