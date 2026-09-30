@@ -290,8 +290,9 @@
 
     .catalog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 320px));
       gap: 1.5rem;
+      justify-content: center;
     }
 
     .catalog-filters {
@@ -358,6 +359,15 @@
 
     .card:hover .card-media img {
       transform: scale(1.05);
+    }
+
+    .card[data-category="signs"] .card-media img {
+      object-fit: contain;
+      padding: 0.75rem;
+    }
+
+    .card[data-category="signs"]:hover .card-media img {
+      transform: none;
     }
 
     /* Floating View Full Photo Tag */
@@ -469,14 +479,26 @@
       grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
       gap: 2rem;
       padding: 2rem;
+      align-items: center;
+    }
+
+    .product-dialog-gallery {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .product-gallery-main {
+      display: block;
       width: 100%;
-      aspect-ratio: 4 / 3;
+      height: min(62vh, 620px);
       object-fit: contain;
+      object-position: center;
       background: var(--bg-deep);
       border-radius: 8px;
+      margin-inline: auto;
     }
 
     .product-thumbnails {
@@ -484,6 +506,8 @@
       gap: 0.65rem;
       margin-top: 0.75rem;
       overflow-x: auto;
+      justify-content: center;
+      width: 100%;
     }
 
     .product-thumbnail {
@@ -742,7 +766,7 @@
         font-size: 1.35rem;
       }
       .catalog-grid {
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 320px));
         gap: 1rem;
       }
     }
@@ -1010,6 +1034,14 @@
         subtitle: "Purpleheart & Maple",
         price: 110,
         image: "images/Purple Heart Board.png",
+        images: [
+          "images/Purple_Heart_Maple_Center_(1).jpg",
+          "images/Purple_Heart_Maple_Center_(2).jpg",
+          "images/Purple_Heart_Maple_Center_(3).jpg",
+          "images/Purple_Heart_Ribbon_1_(1).jpg",
+          "images/Purple_Heart_Ribbon_1_(2).jpg",
+          "images/Purple_Heart_Ribbon_1_(3).jpg"
+        ],
         alt: "Exotic wood cutting board featuring Purpleheart and Maple ribbons",
         specs: [
           "16\" x 12\" x 1\" Ribbon Pattern",
@@ -1131,10 +1163,10 @@
         const image = getProductImages(item)[0] || "";
         const category = item.category || "other";
         return `
-          <article class="card">
+          <article class="card" data-category="${escapeHtml(category)}">
             <button type="button" class="card-media" data-product-index="${index}"
               aria-label="View details for ${escapeHtml(item.name)}">
-              <img src="${escapeHtml(image)}" alt="${escapeHtml(item.alt || item.name)}" loading="lazy">
+              <img src="${escapeHtml(item.image || image)}" alt="${escapeHtml(item.alt || item.name)}" loading="lazy">
               <span class="view-zoom-hint">View piece details</span>
             </button>
             <div class="card-content">

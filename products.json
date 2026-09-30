@@ -52,6 +52,14 @@
     "subtitle": "Purpleheart & Maple",
     "price": 110,
     "image": "images/Purple Heart Board.png",
+    "images": [
+      "images/Purple_Heart_Maple_Center_(1).jpg",
+      "images/Purple_Heart_Maple_Center_(2).jpg",
+      "images/Purple_Heart_Maple_Center_(3).jpg",
+      "images/Purple_Heart_Ribbon_1_(1).jpg",
+      "images/Purple_Heart_Ribbon_1_(2).jpg",
+      "images/Purple_Heart_Ribbon_1_(3).jpg"
+    ],
     "alt": "Exotic wood cutting board featuring Purpleheart and Maple ribbons",
     "specs": [
       "16\" x 12\" x 1\" Ribbon Pattern",
