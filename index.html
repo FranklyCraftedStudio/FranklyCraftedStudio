@@ -60,14 +60,14 @@
     }
     .brand-title {
       font-family: var(--font-heading);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       letter-spacing: 1.5px;
       color: var(--bronze-light);
     }
+    nav { display: flex; align-items: center; gap: 1.5rem; }
     nav a {
       color: var(--text-muted);
       text-decoration: none;
-      margin-left: 1.5rem;
       font-size: 0.95rem;
       font-weight: 500;
       transition: color 0.2s;
@@ -105,16 +105,16 @@
       padding: 0.85rem 1.75rem;
       border-radius: 4px;
       text-decoration: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 20px rgba(179, 135, 76, 0.35);
     }
-    .hero-badge-wrap {
-      display: flex;
-      justify-content: center;
-    }
+    .hero-badge-wrap { display: flex; justify-content: center; }
     .hero-logo-img {
       max-width: 280px;
       width: 100%;
@@ -125,11 +125,11 @@
       background: #000;
     }
 
-    /* Products */
+    /* Sections */
     .section {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 4rem 2rem;
+      padding: 4.5rem 2rem;
     }
     .section-title {
       font-family: var(--font-heading);
@@ -143,6 +143,8 @@
       color: var(--text-muted);
       margin-bottom: 3rem;
     }
+
+    /* Products */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -158,13 +160,14 @@
     }
     .card-img {
       width: 100%;
-      height: 220px;
-      background-color: #262320;
+      height: 200px;
+      background-color: #24201d;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--bronze);
       font-family: var(--font-heading);
+      font-size: 1.1rem;
     }
     .card-body {
       padding: 1.5rem;
@@ -200,8 +203,81 @@
       border-radius: 4px;
       text-decoration: none;
       font-weight: 600;
+      cursor: pointer;
     }
     .btn-sm:hover { background: var(--bronze); color: #12100e; }
+
+    /* Interactive Estimator & Inquiry */
+    .calculator-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+    }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+      color: var(--bronze-light);
+      font-weight: 600;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      background: #12100e;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+    }
+    .form-control:focus { outline: 1px solid var(--bronze); }
+    .calc-summary {
+      background: #141210;
+      border: 1px dashed var(--bronze-dark);
+      border-radius: 6px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .calc-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .total-price {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--bronze-light);
+      text-align: right;
+      margin: 1rem 0;
+    }
+
+    /* Care Guide */
+    .care-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .care-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 6px;
+    }
+    .care-item h4 {
+      color: var(--bronze-light);
+      margin-bottom: 0.5rem;
+      font-family: var(--font-heading);
+    }
+    .care-item p { font-size: 0.9rem; color: var(--text-muted); }
 
     /* Footer */
     footer {
@@ -212,53 +288,56 @@
       font-size: 0.85rem;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 850px) {
       .hero { grid-template-columns: 1fr; text-align: center; }
+      .calculator-container { grid-template-columns: 1fr; }
       .hero-badge-wrap { margin-top: 2rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Navigation -->
   <header>
     <a href="#" class="brand">
       <img src="logo.png" alt="Frankly Crafted Studio" class="brand-logo" onerror="this.style.display='none'">
       <span class="brand-title">FRANKLY CRAFTED</span>
     </a>
     <nav>
-      <a href="#work">Featured Goods</a>
-      <a href="#custom">Custom Orders</a>
+      <a href="#work">Collections</a>
+      <a href="#estimator">Commission Calculator</a>
+      <a href="#care">Care Guide</a>
+      <a href="#inquiry" class="btn-sm">Inquire</a>
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <main>
     <section class="hero">
       <div class="hero-content">
         <h1>Fine Timber Meets <span>3D Design</span></h1>
         <p>Heirloom edge-grain cutting boards, bespoke dimensional nursery signs, and precision-engineered maker goods. Handcrafted with honest hardwoods and modern digital fabrication.</p>
-        <a href="#work" class="btn">Explore The Shop</a>
+        <a href="#estimator" class="btn">Calculate Custom Quote</a>
       </div>
       <div class="hero-badge-wrap">
         <img src="logo.png" alt="Frankly Crafted Studio Emblem" class="hero-logo-img" onerror="this.src='https://placehold.co/280x280/1c1917/b3874c?text=Frankly+Crafted'">
       </div>
     </section>
 
-    <!-- Catalog Section -->
+    <!-- Catalog -->
     <section class="section" id="work">
-      <h2 class="section-title">Studio Collections</h2>
-      <p class="section-sub">Standard runs and tailored wood goods built to last generations.</p>
+      <h2 class="section-title">Standard Collections</h2>
+      <p class="section-sub">Batch-produced runs and standard heirloom sizes.</p>
       
       <div class="product-grid">
         <div class="card">
           <div class="card-img">16×12 Edge Grain</div>
           <div class="card-body">
             <h3 class="card-title">Walnut & Hard Maple Board</h3>
-            <p class="card-desc">Deep contrasting grain patterns, precision surfaced, seasoned with organic mineral oil and beeswax.</p>
+            <p class="card-desc">Deep contrasting grain patterns, precision surfaced, seasoned with food-grade mineral oil and organic beeswax.</p>
             <div class="card-footer">
               <span class="price">$145</span>
-              <a href="#custom" class="btn-sm">Inquire</a>
+              <a href="#estimator" class="btn-sm">Customize</a>
             </div>
           </div>
         </div>
@@ -270,7 +349,7 @@
             <p class="card-desc">Hardwood backing combined with precision 3D-milled lettering and custom finish options.</p>
             <div class="card-footer">
               <span class="price">$95</span>
-              <a href="#custom" class="btn-sm">Inquire</a>
+              <a href="#inquiry" class="btn-sm">Inquire</a>
             </div>
           </div>
         </div>
@@ -278,13 +357,112 @@
         <div class="card">
           <div class="card-img">Custom Fabrication</div>
           <div class="card-body">
-            <h3 class="card-title">Bespoke Commission</h3>
-            <p class="card-desc">Custom wood dimensions, specific species selections, personalized laser engraving, or juice grooves.</p>
+            <h3 class="card-title">Exotic Accent Board</h3>
+            <p class="card-desc">Cherry, Purpleheart, and Walnut custom long-grain brickwork arrangements.</p>
             <div class="card-footer">
-              <span class="price">Variable</span>
-              <a href="#custom" class="btn-sm">Quote</a>
+              <span class="price">$175</span>
+              <a href="#estimator" class="btn-sm">Customize</a>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Commission Calculator & Inquiry -->
+    <section class="section" id="estimator">
+      <h2 class="section-title">Custom Commission Estimator</h2>
+      <p class="section-sub">Configure your custom cutting board specifications for an instant live estimate.</p>
+      
+      <div class="calculator-container">
+        <!-- Form Controls -->
+        <div>
+          <div class="form-group">
+            <label for="boardLength">Length (Inches)</label>
+            <input type="number" id="boardLength" class="form-control" value="16" min="8" max="30">
+          </div>
+          <div class="form-group">
+            <label for="boardWidth">Width (Inches)</label>
+            <input type="number" id="boardWidth" class="form-control" value="12" min="6" max="24">
+          </div>
+          <div class="form-group">
+            <label for="boardThickness">Thickness (Inches)</label>
+            <select id="boardThickness" class="form-control">
+              <option value="1.25">1.25" (Standard Edge-Grain)</option>
+              <option value="1.5">1.50" (Heft & Stability)</option>
+              <option value="1.75">1.75" (Butcher Block Grade)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="timberSpecies">Primary Hardwood Species</label>
+            <select id="timberSpecies" class="form-control">
+              <option value="1.0">Hard Maple & Cherry</option>
+              <option value="1.25">Black Walnut & Hard Maple</option>
+              <option value="1.45">Exotic Mix (Walnut, Purpleheart, Maple)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="juiceGroove"> Add Juice Groove (+$20)</label><br>
+            <label><input type="checkbox" id="laserEngrave"> Add Custom Personalization / Monogram (+$25)</label>
+          </div>
+        </div>
+
+        <!-- Live Estimate Breakdown -->
+        <div class="calc-summary">
+          <div>
+            <h3 style="font-family: var(--font-heading); color: var(--bronze-light); margin-bottom: 1rem;">Estimate Summary</h3>
+            <div class="calc-line"><span>Estimated Board Feet:</span> <strong id="bfVal">2.0 BF</strong></div>
+            <div class="calc-line"><span>Milling & Surface Labor:</span> <strong>Included</strong></div>
+            <div class="calc-line"><span>Seasoning & Finish:</span> <strong>Included</strong></div>
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 1rem 0;">
+            <div style="font-size: 0.9rem; color: var(--text-muted);">Estimated Total:</div>
+            <div class="total-price" id="calcTotal">$145.00</div>
+          </div>
+          <a href="#inquiry" class="btn" style="text-align: center;" onclick="syncQuoteToForm()">Send Inquiry With This Spec</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Direct Inquiry Form -->
+    <section class="section" id="inquiry">
+      <h2 class="section-title">Direct Order Inquiry</h2>
+      <p class="section-sub">Have a specific design or custom nursery sign in mind? Send the shop a message.</p>
+      
+      <div style="max-width: 650px; margin: 0 auto; background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 8px;">
+        <form onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="clientName">Your Name</label>
+            <input type="text" id="clientName" class="form-control" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="clientEmail">Email Address</label>
+            <input type="email" id="clientEmail" class="form-control" required placeholder="john@example.com">
+          </div>
+          <div class="form-group">
+            <label for="clientDetails">Project Details / Board Specifications</label>
+            <textarea id="clientDetails" class="form-control" rows="4" placeholder="Let us know what you'd like crafted..."></textarea>
+          </div>
+          <button type="submit" class="btn" style="width: 100%;">Submit Inquiry</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Care Guide -->
+    <section class="section" id="care">
+      <h2 class="section-title">Heirloom Board Care</h2>
+      <p class="section-sub">Proper care ensures hardwood kitchenware lasts for decades.</p>
+      
+      <div class="care-grid">
+        <div class="care-item">
+          <h4>Hand Wash Only</h4>
+          <p>Never submerge in water or place in a dishwasher. Wash gently with warm water and mild soap, then towel dry immediately.</p>
+        </div>
+        <div class="care-item">
+          <h4>Mineral Oil Baths</h4>
+          <p>When the timber begins to look dull or dry (every 3–4 weeks), apply pure food-grade mineral oil liberally and let it soak overnight.</p>
+        </div>
+        <div class="care-item">
+          <h4>Beeswax Sealing</h4>
+          <p>Top with a wood conditioner or beeswax butter to create a moisture-resistant barrier that protects against knife scoring.</p>
         </div>
       </div>
     </section>
@@ -292,8 +470,60 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2026 Frankly Crafted Studio. All rights reserved.</p>
+    <p>&copy; 2026 Frankly Crafted Studio. Palos Heights, IL. All rights reserved.</p>
   </footer>
 
+  <script>
+    // Live Calculator Logic
+    function calculateQuote() {
+      const length = parseFloat(document.getElementById('boardLength').value) || 0;
+      const width = parseFloat(document.getElementById('boardWidth').value) || 0;
+      const thickness = parseFloat(document.getElementById('boardThickness').value) || 1.25;
+      const speciesMultiplier = parseFloat(document.getElementById('timberSpecies').value) || 1.0;
+      const hasJuiceGroove = document.getElementById('juiceGroove').checked;
+      const hasLaser = document.getElementById('laserEngrave').checked;
+
+      // Board feet = (L x W x T) / 144
+      const boardFeet = (length * width * thickness) / 144;
+      document.getElementById('bfVal').innerText = boardFeet.toFixed(2) + " BF";
+
+      // Base bench fee + material calculation
+      let baseRate = 65; 
+      let materialCost = boardFeet * 32 * speciesMultiplier;
+      let total = baseRate + materialCost;
+
+      if (hasJuiceGroove) total += 20;
+      if (hasLaser) total += 25;
+
+      document.getElementById('calcTotal').innerText = "$" + Math.round(total) + ".00";
+    }
+
+    // Event listeners for calculator inputs
+    ['boardLength', 'boardWidth', 'boardThickness', 'timberSpecies', 'juiceGroove', 'laserEngrave'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calculateQuote);
+      document.getElementById(id).addEventListener('change', calculateQuote);
+    });
+
+    // Populate Inquiry Form from Calculator
+    function syncQuoteToForm() {
+      const l = document.getElementById('boardLength').value;
+      const w = document.getElementById('boardWidth').value;
+      const t = document.getElementById('boardThickness').value;
+      const total = document.getElementById('calcTotal').innerText;
+      const groove = document.getElementById('juiceGroove').checked ? "With Juice Groove" : "No Juice Groove";
+      const laser = document.getElementById('laserEngrave').checked ? "With Monogram/Personalization" : "No Engraving";
+
+      const summaryText = `Custom Board Inquiry (${total}):\nDimensions: ${l}" x ${w}" x ${t}"\nOptions: ${groove}, ${laser}`;
+      document.getElementById('clientDetails').value = summaryText;
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert("Inquiry received! We will follow up via email with a formal quote and production lead time.");
+    }
+
+    // Initial calculation run
+    calculateQuote();
+  </script>
 </body>
 </html>
