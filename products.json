@@ -2,6 +2,7 @@
   {
     "id": "walnut-maple-cherry",
     "name": "Classic Three-Tone End Grain Board",
+    "category": "boards",
     "subtitle": "Black Walnut, Hard Maple, & Cherry",
     "price": 150,
     "image": "images/Ombre Complete.jpg",
@@ -24,6 +25,7 @@
   {
     "id": "nursery-round",
     "name": "Nursery Name Sign Round",
+    "category": "signs",
     "subtitle": "Southern Yellow Pine & Additive Script",
     "price": 95,
     "image": "images/Cami Sign Complete.jpg",
@@ -46,6 +48,7 @@
   {
     "id": "exotic-wood-board",
     "name": "Artisanal Exotic Board",
+    "category": "boards",
     "subtitle": "Purpleheart & Maple",
     "price": 110,
     "image": "images/Purple Heart Board.png",
@@ -67,6 +70,7 @@
   {
     "id": "picture-box",
     "name": "Artisanal 3D Picture Keepsake Box",
+    "category": "keepsakes",
     "subtitle": "Additive Personalized Picture Shell",
     "price": 40,
     "image": "images/pic box Final.jpg",
@@ -88,6 +92,7 @@
   {
     "id": "walnut-cherry-chessboard",
     "name": "Grandmaster Walnut & Cherry Chessboard",
+    "category": "boards",
     "subtitle": "Black Walnut & Cherry",
     "price": 125,
     "image": "images/Chess Final.jpg",
