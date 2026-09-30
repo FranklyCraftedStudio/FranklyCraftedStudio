@@ -1,23 +1,47 @@
 [
   {
     "id": "walnut-maple",
-    "name": "Classic Dual-Tone Edge-Grain",
+    "name": "Classic Dual-Tone Board",
     "subtitle": "Black Walnut & Hard Maple",
     "price": 145,
     "image": "images/walnut-maple-board.webp",
-    "alt": "16x12 Black Walnut and Hard Maple edge-grain cutting board",
-    "specs": ["16\" x 12\" x 1\"", "Beveled Handles", "Mineral Oil & Beeswax"],
-    "defaults": { "length": 16, "width": 12, "thick": 1, "species": 1.0, "groove": true }
+    "alt": "16x12 Walnut and Maple edge-grain cutting board",
+    "specs": [
+      "16\" x 12\" x 1.50\" Edge-Grain",
+      "Continuous Deep Juice Groove",
+      "Hand-Rubbed Mineral Oil & Beeswax"
+    ],
+    "preset": {
+      "length": 16,
+      "width": 12,
+      "thick": 1.5,
+      "speciesValue": "1.0",
+      "groove": true,
+      "feet": false,
+      "engraving": false
+    }
   },
   {
     "id": "nursery-round",
     "name": "Nursery Name Sign Round",
-    "subtitle": "White Oak & 3D Raised Script",
+    "subtitle": "White Oak & Additive Script",
     "price": 95,
-    "image": "images/nursery-round.webp",
-    "alt": "24-inch hardwood nursery round with raised lettering",
-    "specs": ["24\" Diameter", "Additive 3D Script Accent", "Sawtooth Hanger Included"],
-    "defaults": { "length": 24, "width": 24, "thick": 1, "species": 0.9, "groove": false }
+    "image": "Cami Sign Complete.jpg",
+    "alt": "24-inch White Oak nursery round sign",
+    "specs": [
+      "24\" Diameter x 1\" Solid Pine",
+      "Precision 3D Printed Script Lettering",
+      "Keyhole & Sawtooth Hanger Installed"
+    ],
+    "preset": {
+      "length": 24,
+      "width": 24,
+      "thick": 1,
+      "speciesValue": "0.9",
+      "groove": false,
+      "feet": false,
+      "engraving": true
+    }
   },
   {
     "id": "exotic-brick",
@@ -26,7 +50,19 @@
     "price": 175,
     "image": "images/exotic-brick.webp",
     "alt": "Staggered brickwork cutting board featuring Purpleheart and Cherry",
-    "specs": ["16\" x 12\" x 1.75\"", "Non-Slip Silicone Feet", "Deep Juice Canal"],
-    "defaults": { "length": 16, "width": 12, "thick": 1.75, "species": 1.25, "groove": true }
+    "specs": [
+      "16\" x 12\" x 1.75\" Staggered Pattern",
+      "Recessed Silicone Rubber Feet",
+      "Dual Finger Grips on Underside"
+    ],
+    "preset": {
+      "length": 16,
+      "width": 12,
+      "thick": 1.75,
+      "speciesValue": "1.25",
+      "groove": true,
+      "feet": true,
+      "engraving": false
+    }
   }
 ]
