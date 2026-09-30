@@ -1,7 +1,7 @@
 [
   {
     "id": "walnut-maple-cherry",
-    "name": "Classic Three-Tone End Grain Board",
+    "name": "Classic Three-Tone Cutting Board",
     "category": "boards",
     "subtitle": "Black Walnut, Hard Maple, & Cherry",
     "price": 150,
@@ -100,6 +100,24 @@
     }
   },
   {
+    "id": "hickory-maple-cumaru-charcuterie",
+    "name": "Hickory, Maple & Cumaru Charcuterie Board",
+    "category": "boards",
+    "subtitle": "Hickory, Hard Maple & Cumaru",
+    "price": 75,
+    "image": "images/Char Board 1.jpg",
+    "images": [
+      "images/Char Board 1.jpg",
+      "images/Char Board 2.jpg"
+    ],
+    "alt": "Handcrafted hickory, maple, and Cumaru charcuterie board with a handle",
+    "specs": [
+      "Crafted from hickory, hard maple, and Cumaru",
+      "Laser engraveable with your personalized message",
+      "Charcuterie and serving board"
+    ]
+  },
+  {
     "id": "picture-box",
     "name": "Artisanal 3D Picture Keepsake Box",
     "category": "keepsakes",
@@ -110,21 +128,12 @@
     "specs": [
       "Precision Additive Multi-Tone Enclosure",
       "Four Picture Display"
-    ],
-    "preset": {
-      "length": 10,
-      "width": 8,
-      "thick": 1,
-      "speciesValue": "0.9",
-      "groove": false,
-      "feet": false,
-      "engraving": true
-    }
+    ]
   },
   {
     "id": "walnut-cherry-chessboard",
     "name": "Grandmaster Walnut & Cherry Chessboard",
-    "category": "boards",
+    "category": "games",
     "subtitle": "Black Walnut & Cherry",
     "price": 125,
     "image": "images/Chess Final.jpg",
