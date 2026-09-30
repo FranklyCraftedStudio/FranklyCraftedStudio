@@ -290,8 +290,34 @@
 
     .catalog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      gap: 1.5rem;
+    }
+
+    .catalog-filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: -1rem 0 2rem;
+    }
+
+    .filter-button {
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 0.55rem 1rem;
+      color: var(--text-muted);
+      background: var(--bg-surface);
+      font: inherit;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-button:hover,
+    .filter-button[aria-pressed="true"] {
+      color: var(--bg-deep);
+      border-color: var(--bronze);
+      background: var(--bronze);
     }
 
     .card {
@@ -312,11 +338,14 @@
 
     .card-media {
       width: 100%;
-      height: 240px;
+      aspect-ratio: 4 / 3;
       background: var(--bg-surface);
       position: relative;
       overflow: hidden;
-      cursor: zoom-in;
+      cursor: pointer;
+      border: 0;
+      padding: 0;
+      display: block;
     }
 
     .card-media img {
@@ -354,7 +383,8 @@
       gap: 4px;
     }
 
-    .card:hover .view-zoom-hint {
+    .card:hover .view-zoom-hint,
+    .card-media:focus-visible .view-zoom-hint {
       opacity: 1;
       transform: translateY(0);
     }
@@ -375,7 +405,7 @@
 
     .card-header h3 {
       font-family: var(--font-serif);
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       color: var(--text-main);
     }
 
@@ -416,79 +446,107 @@
       color: var(--bronze);
     }
 
-    /* Full-Screen Image Lightbox Modal */
-    .lightbox-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(14, 9, 6, 0.94);
-      backdrop-filter: blur(14px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
+    .product-dialog {
+      width: min(960px, calc(100% - 2rem));
+      max-width: none;
+      max-height: min(90vh, 900px);
+      overflow-y: auto;
+      padding: 0;
+      color: var(--text-main);
+      background: var(--bg-walnut);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+    }
+
+    .product-dialog::backdrop {
+      background: rgba(14, 9, 6, 0.86);
+      backdrop-filter: blur(8px);
+    }
+
+    .product-dialog-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 2rem;
       padding: 2rem;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      cursor: zoom-out;
     }
 
-    .lightbox-modal.active {
-      display: flex;
-      opacity: 1;
-    }
-
-    .lightbox-wrapper {
-      position: relative;
-      max-width: 90vw;
-      max-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: default;
-    }
-
-    .lightbox-wrapper img {
-      max-width: 100%;
-      max-height: 75vh;
+    .product-gallery-main {
+      width: 100%;
+      aspect-ratio: 4 / 3;
       object-fit: contain;
+      background: var(--bg-deep);
       border-radius: 8px;
-      border: 1px solid var(--bronze);
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--bronze-glow);
     }
 
-    .lightbox-caption {
-      margin-top: 1rem;
-      text-align: center;
+    .product-thumbnails {
+      display: flex;
+      gap: 0.65rem;
+      margin-top: 0.75rem;
+      overflow-x: auto;
     }
 
-    .lightbox-caption h4 {
-      font-family: var(--font-serif);
-      font-size: 1.3rem;
-      color: var(--bronze-bright);
-      letter-spacing: 0.03em;
-    }
-
-    .lightbox-caption p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: -45px;
-      right: 0;
-      background: transparent;
-      border: none;
-      color: var(--bronze-bright);
-      font-size: 2.2rem;
+    .product-thumbnail {
+      width: 68px;
+      height: 58px;
+      flex: 0 0 auto;
+      padding: 2px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
       cursor: pointer;
-      line-height: 1;
-      transition: var(--transition);
     }
 
-    .lightbox-close:hover {
-      color: #fff;
-      transform: scale(1.15);
+    .product-thumbnail[aria-pressed="true"] {
+      border-color: var(--bronze-bright);
+    }
+
+    .product-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 3px;
+    }
+
+    .product-dialog-info {
+      align-self: center;
+    }
+
+    .product-dialog-info h2 {
+      margin: 0 2.5rem 0.5rem 0;
+      font: 700 1.7rem/1.25 var(--font-serif);
+    }
+
+    .product-dialog-price {
+      display: block;
+      margin: 1.25rem 0;
+      color: var(--bronze-bright);
+      font: 700 1.7rem var(--font-serif);
+    }
+
+    .product-dialog-info .specs-list {
+      margin-top: 1.5rem;
+    }
+
+    .product-dialog-close {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.8rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      color: var(--bronze-bright);
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .catalog-empty {
+      grid-column: 1 / -1;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 2rem;
     }
 
     /* Calculator & Form Section */
@@ -673,6 +731,21 @@
         display: none;
       }
     }
+
+    @media (max-width: 640px) {
+      .product-dialog-content {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        padding: 1rem;
+      }
+      .product-dialog-info h2 {
+        font-size: 1.35rem;
+      }
+      .catalog-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+        gap: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -720,10 +793,9 @@
     <div class="container">
       <div class="section-head">
         <h2>Studio Collections</h2>
-        <p>Hand-selected American hardwoods milled and finished for lifetime durability. Click any photo to view full image.</p>
+        <p>Hand-selected hardwoods and handcrafted keepsakes, made to be used, gifted, and treasured.</p>
       </div>
-      
-      <!-- Catalog cards loaded dynamically by PRODUCTS array -->
+      <div class="catalog-filters" id="catalog-filters" aria-label="Filter products by category"></div>
       <div class="catalog-grid" id="catalog-container"></div>
     </div>
   </section>
@@ -869,17 +941,23 @@
     </div>
   </section>
 
-  <!-- Full-Screen Lightbox Modal -->
-  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
-    <div class="lightbox-wrapper" onclick="event.stopPropagation()">
-      <button class="lightbox-close" type="button" onclick="closeLightbox(event)" aria-label="Close image preview">&times;</button>
-      <img id="lightboxImg" src="" alt="Full view preview">
-      <div class="lightbox-caption">
-        <h4 id="lightboxTitle"></h4>
-        <p id="lightboxSubtitle"></p>
+  <dialog class="product-dialog" id="product-dialog" aria-labelledby="product-dialog-title">
+    <button class="product-dialog-close" type="button" data-close-dialog aria-label="Close product details">&times;</button>
+    <div class="product-dialog-content">
+      <div class="product-dialog-gallery">
+        <img class="product-gallery-main" id="product-gallery-main" src="" alt="">
+        <div class="product-thumbnails" id="product-thumbnails" aria-label="Product photos"></div>
+      </div>
+      <div class="product-dialog-info">
+        <p class="species-tag" id="product-dialog-category"></p>
+        <h2 id="product-dialog-title"></h2>
+        <p id="product-dialog-subtitle"></p>
+        <span class="product-dialog-price" id="product-dialog-price"></span>
+        <ul class="specs-list" id="product-dialog-specs"></ul>
+        <button type="button" class="btn btn-primary" id="product-customize-button">Customize this item</button>
       </div>
     </div>
-  </div>
+  </dialog>
 
   <!-- Footer -->
   <footer>
@@ -889,7 +967,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT ENGINE: Catalog Data + Lightbox + Live Estimator + Web3Forms Submission -->
+  <!-- SCRIPT ENGINE: Product Catalog + Live Estimator + Web3Forms Submission -->
   <script>
     /* ==========================================================================
        CATALOG DATA CONFIGURATION
@@ -898,6 +976,7 @@
       {
         id: "walnut-maple-cherry",
         name: "Classic Three-Tone End Grain Board",
+        category: "boards",
         subtitle: "Black Walnut, Hard Maple, & Cherry",
         price: 150,
         image: "images/Ombre Complete.jpg",
@@ -912,6 +991,7 @@
       {
         id: "nursery-round",
         name: "Nursery Name Sign Round",
+        category: "signs",
         subtitle: "Southern Yellow Pine & Additive Script",
         price: 95,
         image: "images/Cami Sign Complete.jpg",
@@ -926,6 +1006,7 @@
       {
         id: "exotic-wood-board",
         name: "Artisanal Exotic Board",
+        category: "boards",
         subtitle: "Purpleheart & Maple",
         price: 110,
         image: "images/Purple Heart Board.png",
@@ -939,6 +1020,7 @@
       {
         id: "picture-box",
         name: "Artisanal 3D Picture Keepsake Box",
+        category: "keepsakes",
         subtitle: "Additive Personalized Picture Shell",
         price: 40,
         image: "images/pic box Final.jpg",
@@ -952,6 +1034,7 @@
       {
         id: "walnut-cherry-chessboard",
         name: "Grandmaster Walnut & Cherry Chessboard",
+        category: "boards",
         subtitle: "Black Walnut & Cherry",
         price: 125,
         image: "images/Chess Final.jpg",
@@ -989,67 +1072,163 @@
       }
     }
 
-    /* ==========================================================================
-       RENDER CATALOG CARDS (With Lightbox Click Trigger)
-       ========================================================================== */
-    function renderCatalog() {
-      const container = document.getElementById('catalog-container');
-      container.innerHTML = PRODUCTS.map((item, index) => `
-        <article class="card">
-          <div class="card-media" onclick="openLightbox(${index})" title="Click to view full, uncropped photo">
-            <img src="${item.image}" alt="${item.alt}" loading="lazy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 300\'><rect width=\'400\' height=\'300\' fill=\'%231f1610\'/><text x=\'200\' y=\'150\' font-size=\'16\' text-anchor=\'middle\' fill=\'%23d4a373\' font-family=\'sans-serif\'>${item.name}</text></svg>'">
-            <span class="view-zoom-hint">🔍 View Full Image</span>
-          </div>
-          <div class="card-content">
-            <div class="card-header">
-              <h3>${item.name}</h3>
-              <span class="price">$${item.price}</span>
-            </div>
-            <p class="species-tag">${item.subtitle}</p>
-            <ul class="specs-list">
-              ${item.specs.map(spec => `<li>${spec}</li>`).join('')}
-            </ul>
-            <button type="button" class="btn btn-outline" style="width: 100%;" onclick="applyPreset(${index})">
-              Configure or Customize
-            </button>
-          </div>
-        </article>
+    const CATEGORY_LABELS = {
+      boards: "Boards & Games",
+      signs: "Signs",
+      keepsakes: "Keepsakes"
+    };
+    let activeCategory = "all";
+    let activeProductIndex = null;
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function categoryLabel(category) {
+      return CATEGORY_LABELS[category] || "Other";
+    }
+
+    function getProductImages(item) {
+      const images = Array.isArray(item.images) && item.images.length
+        ? item.images
+        : [item.image];
+      return images.filter(image => typeof image === "string" && image.length > 0);
+    }
+
+    function renderCatalogFilters() {
+      const filterContainer = document.getElementById('catalog-filters');
+      const categories = [...new Set(PRODUCTS.map(item => item.category || "other"))];
+      const orderedCategories = [
+        ...Object.keys(CATEGORY_LABELS).filter(category => categories.includes(category)),
+        ...categories.filter(category => !CATEGORY_LABELS[category])
+      ];
+      const filters = [["all", "All pieces"], ...orderedCategories.map(category => [category, categoryLabel(category)])];
+
+      filterContainer.innerHTML = filters.map(([category, label]) => `
+        <button type="button" class="filter-button" data-category="${escapeHtml(category)}"
+          aria-pressed="${activeCategory === category}">${escapeHtml(label)}</button>
       `).join('');
     }
 
-    /* ==========================================================================
-       LIGHTBOX LOGIC
-       ========================================================================== */
-    const lightboxModal = document.getElementById('lightboxModal');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lightboxTitle = document.getElementById('lightboxTitle');
-    const lightboxSubtitle = document.getElementById('lightboxSubtitle');
+    function renderCatalog() {
+      const container = document.getElementById('catalog-container');
+      const products = PRODUCTS
+        .map((item, index) => ({ item, index }))
+        .filter(({ item }) => activeCategory === "all" || (item.category || "other") === activeCategory);
 
-    function openLightbox(index) {
+      if (!products.length) {
+        container.innerHTML = '<p class="catalog-empty">No pieces are listed in this collection yet.</p>';
+        return;
+      }
+
+      container.innerHTML = products.map(({ item, index }) => {
+        const image = getProductImages(item)[0] || "";
+        const category = item.category || "other";
+        return `
+          <article class="card">
+            <button type="button" class="card-media" data-product-index="${index}"
+              aria-label="View details for ${escapeHtml(item.name)}">
+              <img src="${escapeHtml(image)}" alt="${escapeHtml(item.alt || item.name)}" loading="lazy">
+              <span class="view-zoom-hint">View piece details</span>
+            </button>
+            <div class="card-content">
+              <div class="card-header">
+                <h3>${escapeHtml(item.name)}</h3>
+                <span class="price">${escapeHtml(formatPrice(item.price))}</span>
+              </div>
+              <p class="species-tag">${escapeHtml(item.subtitle || categoryLabel(category))}</p>
+              <button type="button" class="btn btn-outline" data-product-index="${index}">
+                View details & photos
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    const catalogFilters = document.getElementById('catalog-filters');
+    const catalogContainer = document.getElementById('catalog-container');
+    const productDialog = document.getElementById('product-dialog');
+    const productGalleryMain = document.getElementById('product-gallery-main');
+    const productThumbnails = document.getElementById('product-thumbnails');
+
+    function showProductImage(item, image, selectedIndex) {
+      productGalleryMain.src = image;
+      productGalleryMain.alt = item.alt || item.name;
+      productThumbnails.querySelectorAll('.product-thumbnail').forEach((button, index) => {
+        button.setAttribute('aria-pressed', String(index === selectedIndex));
+      });
+    }
+
+    function openProductDetails(index) {
       const item = PRODUCTS[index];
       if (!item) return;
 
-      lightboxImg.src = item.image;
-      lightboxImg.alt = item.alt;
-      lightboxTitle.textContent = item.name;
-      lightboxSubtitle.textContent = item.subtitle;
-
-      lightboxModal.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Lock background scrolling
+      activeProductIndex = index;
+      const images = getProductImages(item);
+      const productCategory = document.getElementById('product-dialog-category');
+      document.getElementById('product-dialog-title').textContent = item.name;
+      document.getElementById('product-dialog-subtitle').textContent = item.subtitle || "";
+      document.getElementById('product-dialog-price').textContent = formatPrice(item.price);
+      productCategory.textContent = categoryLabel(item.category || "other");
+      document.getElementById('product-dialog-specs').innerHTML = (item.specs || [])
+        .map(spec => `<li>${escapeHtml(spec)}</li>`).join('');
+      productThumbnails.innerHTML = images.length > 1
+        ? images.map((image, imageIndex) => `
+          <button type="button" class="product-thumbnail" data-image-index="${imageIndex}"
+            aria-label="View photo ${imageIndex + 1}" aria-pressed="${imageIndex === 0}">
+            <img src="${escapeHtml(image)}" alt="">
+          </button>
+        `).join('')
+        : '';
+      showProductImage(item, images[0] || "", 0);
+      productDialog.showModal();
     }
 
-    function closeLightbox(e) {
-      if (e) e.stopPropagation();
-      lightboxModal.classList.remove('active');
-      document.body.style.overflow = 'auto'; // Restore background scrolling
-    }
+    catalogFilters.addEventListener('click', event => {
+      const button = event.target.closest('[data-category]');
+      if (!button) return;
+      activeCategory = button.dataset.category;
+      renderCatalogFilters();
+      renderCatalog();
+    });
 
-    // Keyboard support: Escape closes the image
-    window.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && lightboxModal.classList.contains('active')) {
-        closeLightbox();
+    catalogContainer.addEventListener('click', event => {
+      const button = event.target.closest('[data-product-index]');
+      if (button) openProductDetails(Number(button.dataset.productIndex));
+    });
+
+    productThumbnails.addEventListener('click', event => {
+      const button = event.target.closest('[data-image-index]');
+      if (!button || activeProductIndex === null) return;
+      const item = PRODUCTS[activeProductIndex];
+      const imageIndex = Number(button.dataset.imageIndex);
+      const images = getProductImages(item);
+      if (images[imageIndex]) showProductImage(item, images[imageIndex], imageIndex);
+    });
+
+    productDialog.addEventListener('click', event => {
+      if (event.target === productDialog || event.target.closest('[data-close-dialog]')) {
+        productDialog.close();
       }
     });
+
+    document.getElementById('product-customize-button').addEventListener('click', () => {
+      if (activeProductIndex === null) return;
+      const productIndex = activeProductIndex;
+      productDialog.close();
+      applyPreset(productIndex);
+    });
+
+    function formatPrice(price) {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(price) || 0);
+    }
 
     /* ==========================================================================
        DYNAMIC ESTIMATOR LOGIC
@@ -1187,10 +1366,12 @@
     // Run on Initial Load
     loadProducts().then((items) => {
       PRODUCTS = items;
+      renderCatalogFilters();
       renderCatalog();
       updateCalculator();
     }).catch(() => {
       PRODUCTS = FALLBACK_PRODUCTS;
+      renderCatalogFilters();
       renderCatalog();
       updateCalculator();
     });
