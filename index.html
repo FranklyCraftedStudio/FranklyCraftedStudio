@@ -4,7 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Frankly Crafted Studio | Fine Timber Meets 3D Design</title>
-  <meta name="description" content="Artisanal edge-grain cutting boards, nursery signs, and bespoke woodworking paired with modern additive design. Palos Heights, IL." />
+  <meta name="description" content="Handcrafted hardwood cutting boards, charcuterie boards, personalized nursery signs, and keepsakes from Frankly Crafted Studio in Palos Heights, Illinois." />
+  <meta name="theme-color" content="#0e0906" />
+  <link rel="canonical" href="https://franklycraftedstudio.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Frankly Crafted Studio | Handcrafted Wood & Keepsakes" />
+  <meta property="og:description" content="Explore handcrafted hardwood boards, personalized signs, and keepsakes from Frankly Crafted Studio." />
+  <meta property="og:url" content="https://franklycraftedstudio.com/" />
+  <meta property="og:image" content="https://franklycraftedstudio.com/logo.png" />
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,6 +75,7 @@
     }
 
     .nav-container {
+      position: relative;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0.85rem 1.5rem;
@@ -139,6 +147,42 @@
 
     nav a:hover {
       color: var(--bronze-bright);
+    }
+
+    .menu-toggle {
+      display: none;
+      color: var(--bronze-bright);
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.55rem 0.8rem;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      z-index: 1000;
+      padding: 0.65rem 1rem;
+      color: var(--bg-deep);
+      background: var(--bronze-bright);
+      border-radius: 6px;
+      transform: translateY(-150%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--bronze-bright);
+      outline-offset: 3px;
     }
 
     .btn-nav {
@@ -702,6 +746,12 @@
       color: var(--bronze-bright);
     }
 
+    .estimate-note {
+      margin-top: 0.85rem;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
     /* Care Guide */
     .care-section {
       padding: 5rem 0;
@@ -732,6 +782,27 @@
       font-size: 0.9rem;
     }
 
+    .form-status {
+      min-height: 1.5em;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .form-status[data-state="success"] {
+      color: #78d68b;
+    }
+
+    .form-status[data-state="error"] {
+      color: #ff7b72;
+    }
+
+    #product-interest-notice:not([hidden]) {
+      margin: 0 0 1rem;
+      color: var(--bronze-bright);
+      font-weight: 600;
+    }
+
     /* Footer */
     footer {
       background: var(--bg-deep);
@@ -751,8 +822,33 @@
       .calc-container {
         grid-template-columns: 1fr;
       }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
       .nav-links {
         display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.25rem;
+        padding: 0.75rem 1.5rem 1rem;
+        background: var(--bg-walnut);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .nav-links.is-open {
+        display: flex;
+      }
+      .nav-links a {
+        padding: 0.65rem 0;
+      }
+      .nav-links .btn-nav {
+        align-self: flex-start;
+        padding: 0.45rem 1.15rem;
       }
     }
 
@@ -769,10 +865,43 @@
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 320px));
         gap: 1rem;
       }
+      .hero {
+        padding: 3.5rem 0 3rem;
+      }
+      .hero-actions {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .btn {
+        padding: 0.8rem 1.1rem;
+      }
+      .calc-container {
+        padding: 1.25rem;
+        gap: 2rem;
+      }
+      .summary-box {
+        padding: 1rem;
+      }
+      .summary-total .total-price {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <!-- Header -->
   <header>
@@ -786,16 +915,19 @@
           <span>Studio • Est. 2026</span>
         </div>
       </a>
-      <nav class="nav-links">
+      <nav class="nav-links" id="site-navigation" aria-label="Main navigation">
         <a href="#catalog">Catalog</a>
         <a href="#commission">Custom Estimator</a>
         <a href="#care">Board Care</a>
         <a href="#commission" class="btn-nav">Commission Work</a>
       </nav>
+      <button class="menu-toggle" id="menu-toggle" type="button"
+        aria-label="Open navigation" aria-controls="site-navigation" aria-expanded="false">Menu</button>
     </div>
   </header>
 
   <!-- Hero Section -->
+  <main id="main-content">
   <section class="hero">
     <div class="container">
       <div class="hero-badge-wrap">
@@ -854,7 +986,7 @@
 
           <div class="input-row">
             <label for="width-range">Width: <span id="width-val">12</span> inches</label>
-            <input type="range" id="width-range" min="8" max="18" step="1" value="12">
+            <input type="range" id="width-range" min="8" max="24" step="1" value="12">
           </div>
 
           <div class="input-row">
@@ -894,6 +1026,7 @@
               <span>Estimated Total:</span>
               <span class="total-price" id="total-output">$145.00</span>
             </div>
+            <p class="estimate-note">Planning estimate only. Final materials, specifications, and price are confirmed by the studio before work begins.</p>
           </div>
         </div>
 
@@ -901,7 +1034,7 @@
         <div class="form-panel">
           <h3>2. Submit Commission Request</h3>
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-            Submitting this form routes your exact dimensions, lumber choices, and design notes straight to the studio inbox. We reply within 24 hours with a formal design mock-up and payment link.
+            Send your specifications or product question to the studio. We will review your request and follow up by email with availability and next steps.
           </p>
 
           <form id="commission-form" action="https://api.web3forms.com/submit" method="POST">
@@ -917,24 +1050,26 @@
             <input type="hidden" id="form-board-feet" name="Calculated Board Feet">
             <input type="hidden" id="form-addons" name="Add-ons Selected">
             <input type="hidden" id="form-total-price" name="Estimated Price Quote">
+            <input type="hidden" id="form-product-interest" name="Product of Interest">
 
             <div class="input-row">
               <label for="cust-name">Your Full Name</label>
-              <input type="text" id="cust-name" name="Client Name" required placeholder="Frank Cerny">
+              <input type="text" id="cust-name" name="Client Name" autocomplete="name" maxlength="100" required placeholder="Your name">
             </div>
 
             <div class="input-row">
               <label for="cust-email">Email Address</label>
-              <input type="email" id="cust-email" name="replyto" required placeholder="frank@example.com">
+              <input type="email" id="cust-email" name="replyto" autocomplete="email" maxlength="254" required placeholder="you@example.com">
             </div>
 
             <div class="input-row">
               <label for="cust-notes">Design Notes & Personalization</label>
-              <textarea id="cust-notes" name="Commission Notes" rows="4" placeholder="Mention personalized text (e.g. 'Where Our Next Chapter Begins Est 2026'), edge bevel preference, or timeline requirements..."></textarea>
+              <textarea id="cust-notes" name="Commission Notes" rows="4" maxlength="1500" placeholder="Mention personalized text (e.g. 'Where Our Next Chapter Begins Est 2026'), edge bevel preference, or timeline requirements..."></textarea>
             </div>
 
+            <p id="product-interest-notice" hidden></p>
             <button type="submit" class="btn btn-primary" style="width: 100%;" id="submit-btn">Send Commission Request</button>
-            <div id="form-status" style="margin-top: 1rem; font-size: 0.9rem; font-weight: 500;"></div>
+            <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
           </form>
         </div>
       </div>
@@ -964,6 +1099,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <dialog class="product-dialog" id="product-dialog" aria-labelledby="product-dialog-title">
     <button class="product-dialog-close" type="button" data-close-dialog aria-label="Close product details">&times;</button>
@@ -999,7 +1135,7 @@
     const FALLBACK_PRODUCTS = [
       {
         id: "walnut-maple-cherry",
-        name: "Classic Three-Tone End Grain Board",
+        name: "Classic Three-Tone Cutting Board",
         category: "boards",
         subtitle: "Black Walnut, Hard Maple, & Cherry",
         price: 150,
@@ -1066,6 +1202,24 @@
         preset: { length: 16, width: 12, thick: 1, speciesValue: "1.25", groove: true, feet: true, engraving: false }
       },
       {
+        id: "hickory-maple-cumaru-charcuterie",
+        name: "Hickory, Maple & Cumaru Charcuterie Board",
+        category: "boards",
+        subtitle: "Hickory, Hard Maple & Cumaru",
+        price: 75,
+        image: "images/Char Board 1.jpg",
+        images: [
+          "images/Char Board 1.jpg",
+          "images/Char Board 2.jpg"
+        ],
+        alt: "Handcrafted hickory, maple, and Cumaru charcuterie board with a handle",
+        specs: [
+          "Crafted from hickory, hard maple, and Cumaru",
+          "Laser engraveable with your personalized message",
+          "Charcuterie and serving board"
+        ]
+      },
+      {
         id: "picture-box",
         name: "Artisanal 3D Picture Keepsake Box",
         category: "keepsakes",
@@ -1077,12 +1231,11 @@
           "Precision Additive Multi-Tone Enclosure",
           "Four Picture Display"
         ],
-        preset: { length: 10, width: 8, thick: 1, speciesValue: "0.9", groove: false, feet: false, engraving: true }
       },
       {
         id: "walnut-cherry-chessboard",
         name: "Grandmaster Walnut & Cherry Chessboard",
-        category: "boards",
+        category: "games",
         subtitle: "Black Walnut & Cherry",
         price: 125,
         image: "images/Chess Final.jpg",
@@ -1109,8 +1262,20 @@
         }
 
         const data = await response.json();
-        if (!Array.isArray(data) || data.length === 0) {
-          throw new Error('products.json did not contain a valid array');
+        const isValidProduct = item =>
+          item &&
+          typeof item.id === 'string' &&
+          typeof item.name === 'string' &&
+          typeof item.category === 'string' &&
+          typeof item.price === 'number' &&
+          Number.isFinite(item.price) &&
+          item.price >= 0 &&
+          typeof item.image === 'string' &&
+          Array.isArray(item.specs) &&
+          item.specs.every(spec => typeof spec === 'string') &&
+          (!item.images || (Array.isArray(item.images) && item.images.every(image => typeof image === 'string')));
+        if (!Array.isArray(data) || data.length === 0 || !data.every(isValidProduct)) {
+          throw new Error('products.json did not contain valid product records');
         }
 
         return data;
@@ -1121,7 +1286,8 @@
     }
 
     const CATEGORY_LABELS = {
-      boards: "Boards & Games",
+      boards: "Boards",
+      games: "Games",
       signs: "Signs",
       keepsakes: "Keepsakes"
     };
@@ -1235,6 +1401,8 @@
           </button>
         `).join('')
         : '';
+      document.getElementById('product-customize-button').textContent =
+        item.preset ? 'Customize this item' : 'Ask about this item';
       showProductImage(item, images[0] || "", 0);
       productDialog.showModal();
     }
@@ -1267,11 +1435,57 @@
       }
     });
 
+    const productInterestInput = document.getElementById('form-product-interest');
+    const productInterestNotice = document.getElementById('product-interest-notice');
+    const commissionNotes = document.getElementById('cust-notes');
+    const defaultNotesPlaceholder = commissionNotes.placeholder;
+
     document.getElementById('product-customize-button').addEventListener('click', () => {
       if (activeProductIndex === null) return;
       const productIndex = activeProductIndex;
+      const item = PRODUCTS[productIndex];
       productDialog.close();
-      applyPreset(productIndex);
+      if (item.preset) {
+        productInterestInput.value = '';
+        productInterestNotice.hidden = true;
+        productInterestNotice.textContent = '';
+        commissionNotes.placeholder = defaultNotesPlaceholder;
+        applyPreset(productIndex);
+      } else {
+        productInterestInput.value = item.name;
+        productInterestNotice.textContent = `Product inquiry: ${item.name}`;
+        productInterestNotice.hidden = false;
+        commissionNotes.placeholder = item.id === 'hickory-maple-cumaru-charcuterie'
+          ? 'Enter the exact personalized message you would like laser engraved, plus any questions...'
+          : defaultNotesPlaceholder;
+        document.getElementById('commission').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const siteNavigation = document.getElementById('site-navigation');
+
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+      menuToggle.setAttribute('aria-label', isExpanded ? 'Open navigation' : 'Close navigation');
+      siteNavigation.classList.toggle('is-open', !isExpanded);
+    });
+
+    function closeMobileNavigation() {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open navigation');
+      siteNavigation.classList.remove('is-open');
+    }
+
+    siteNavigation.addEventListener('click', event => {
+      if (event.target.closest('a')) {
+        closeMobileNavigation();
+      }
+    });
+
+    window.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeMobileNavigation();
     });
 
     function formatPrice(price) {
@@ -1376,15 +1590,17 @@
     commissionForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      document.getElementById('form-wood-species').value = currentCalculatedData.species;
-      document.getElementById('form-dimensions').value = currentCalculatedData.dimensions;
-      document.getElementById('form-board-feet').value = currentCalculatedData.boardFeet;
-      document.getElementById('form-addons').value = currentCalculatedData.addons;
-      document.getElementById('form-total-price').value = currentCalculatedData.quote;
+      const isProductInquiry = Boolean(productInterestInput.value);
+      document.getElementById('form-wood-species').value = isProductInquiry ? '' : currentCalculatedData.species;
+      document.getElementById('form-dimensions').value = isProductInquiry ? '' : currentCalculatedData.dimensions;
+      document.getElementById('form-board-feet').value = isProductInquiry ? '' : currentCalculatedData.boardFeet;
+      document.getElementById('form-addons').value = isProductInquiry ? '' : currentCalculatedData.addons;
+      document.getElementById('form-total-price').value = isProductInquiry ? '' : currentCalculatedData.quote;
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Transmitting to Studio...';
-      formStatus.innerHTML = '<span style="color: var(--bronze);">Sending your specifications...</span>';
+      formStatus.textContent = 'Sending your request...';
+      formStatus.dataset.state = 'sending';
 
       const formData = new FormData(commissionForm);
 
@@ -1394,16 +1610,23 @@
       })
       .then(async (response) => {
         const json = await response.json();
-        if (response.status === 200) {
-          formStatus.innerHTML = '<span style="color: #4BB543;">✓ Commission inquiry sent directly to Frankly Crafted Studio! We will review your specs and email your design mock-up shortly.</span>';
+        if (response.ok && json.success) {
+          formStatus.textContent = 'Your request was sent to Frankly Crafted Studio. We will review it and reply by email.';
+          formStatus.dataset.state = 'success';
           commissionForm.reset();
+          productInterestInput.value = '';
+          productInterestNotice.hidden = true;
+          productInterestNotice.textContent = '';
+          commissionNotes.placeholder = defaultNotesPlaceholder;
           updateCalculator();
         } else {
-          formStatus.innerHTML = `<span style="color: #FF5252;">Submission issue: ${json.message}</span>`;
+          formStatus.textContent = json.message || 'We could not send your request. Please try again or contact the studio directly.';
+          formStatus.dataset.state = 'error';
         }
       })
-      .catch((error) => {
-        formStatus.innerHTML = '<span style="color: #FF5252;">Network error sending inquiry. Please email directly.</span>';
+      .catch(() => {
+        formStatus.textContent = 'A network error prevented your request from being sent. Please try again.';
+        formStatus.dataset.state = 'error';
       })
       .finally(() => {
         submitBtn.disabled = false;
