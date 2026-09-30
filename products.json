@@ -1,20 +1,20 @@
 [
   {
-    "id": "walnut-maple",
-    "name": "Classic Dual-Tone Board",
-    "subtitle": "Black Walnut & Hard Maple",
-    "price": 145,
-    "image": "images/walnut-maple-board.webp",
-    "alt": "16x12 Walnut and Maple edge-grain cutting board",
+    "id": "walnut-maple-cherry",
+    "name": "Classic Three-Tone End Grain Board",
+    "subtitle": "Black Walnut, Hard Maple, & Cherry",
+    "price": 150,
+    "image": "images/Ombre Complete.jpg",
+    "alt": "16x12 Walnut, Maple and Cherry edge-grain cutting board",
     "specs": [
-      "16\" x 12\" x 1.50\" Edge-Grain",
-      "Continuous Deep Juice Groove",
+      "16\" x 12\" x 1\" Edge-Grain",
+      "Soft roundover and smooth chamfer",
       "Hand-Rubbed Mineral Oil & Beeswax"
     ],
     "preset": {
       "length": 16,
       "width": 12,
-      "thick": 1.5,
+      "thick": 1,
       "speciesValue": "1.0",
       "groove": true,
       "feet": false,
@@ -24,10 +24,10 @@
   {
     "id": "nursery-round",
     "name": "Nursery Name Sign Round",
-    "subtitle": "White Oak & Additive Script",
+    "subtitle": "Southern Yellow Pine & Additive Script",
     "price": 95,
-    "image": "Cami Sign Complete.jpg",
-    "alt": "24-inch White Oak nursery round sign",
+    "image": "images/Cami Sign Complete.jpg",
+    "alt": "24-inch Southern Yellow Pine nursery round sign",
     "specs": [
       "24\" Diameter x 1\" Solid Pine",
       "Precision 3D Printed Script Lettering",
@@ -44,23 +44,63 @@
     }
   },
   {
-    "id": "exotic-brick",
-    "name": "Artisanal Brickwork Board",
-    "subtitle": "Purpleheart, Cherry & Walnut",
-    "price": 175,
-    "image": "images/exotic-brick.webp",
-    "alt": "Staggered brickwork cutting board featuring Purpleheart and Cherry",
+    "id": "exotic-wood-board",
+    "name": "Artisanal Exotic Board",
+    "subtitle": "Purpleheart & Maple",
+    "price": 110,
+    "image": "images/Purple Heart Board.png",
+    "alt": "Exotic wood cutting board featuring Purpleheart and Maple ribbons",
     "specs": [
-      "16\" x 12\" x 1.75\" Staggered Pattern",
-      "Recessed Silicone Rubber Feet",
-      "Dual Finger Grips on Underside"
+      "16\" x 12\" x 1\" Ribbon Pattern",
+      "Hand-Rubbed Mineral Oil & Beeswax"
     ],
     "preset": {
       "length": 16,
       "width": 12,
-      "thick": 1.75,
+      "thick": 1,
       "speciesValue": "1.25",
       "groove": true,
+      "feet": true,
+      "engraving": false
+    }
+  },
+  {
+    "id": "picture-box",
+    "name": "Artisanal 3D Picture Keepsake Box",
+    "subtitle": "Additive Personalized Picture Shell",
+    "price": 40,
+    "image": "images/pic box Final.jpg",
+    "alt": "Custom 3D printed picture box",
+    "specs": [
+      "Precision Additive Multi-Tone Enclosure",
+      "Four Picture Display"
+    ],
+    "preset": {
+      "length": 10,
+      "width": 8,
+      "thick": 1,
+      "speciesValue": "0.9",
+      "groove": false,
+      "feet": false,
+      "engraving": true
+    }
+  },
+  {
+    "id": "walnut-cherry-chessboard",
+    "name": "Grandmaster Walnut & Cherry Chessboard",
+    "subtitle": "Black Walnut & Cherry",
+    "price": 125,
+    "image": "images/Chess Final.jpg",
+    "alt": "16x16 American Cherry and Black Walnut tournament chessboard",
+    "specs": [
+      "16\" x 16\" Field with 2\" Tournament Squares"
+    ],
+    "preset": {
+      "length": 16,
+      "width": 16,
+      "thick": 1,
+      "speciesValue": "1.1",
+      "groove": false,
       "feet": true,
       "engraving": false
     }

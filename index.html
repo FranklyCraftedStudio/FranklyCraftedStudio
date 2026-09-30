@@ -894,7 +894,7 @@
     /* ==========================================================================
        CATALOG DATA CONFIGURATION
        ========================================================================== */
-    const PRODUCTS = [
+    const FALLBACK_PRODUCTS = [
       {
         id: "walnut-maple-cherry",
         name: "Classic Three-Tone End Grain Board",
@@ -910,7 +910,7 @@
         preset: { length: 16, width: 12, thick: 1, speciesValue: "1.0", groove: true, feet: false, engraving: false }
       },
       {
-        id: "Nursery Round",
+        id: "nursery-round",
         name: "Nursery Name Sign Round",
         subtitle: "Southern Yellow Pine & Additive Script",
         price: 95,
@@ -924,12 +924,12 @@
         preset: { length: 24, width: 24, thick: 1, speciesValue: "0.9", groove: false, feet: false, engraving: true }
       },
       {
-        id: "Exotic Wood Board",
+        id: "exotic-wood-board",
         name: "Artisanal Exotic Board",
         subtitle: "Purpleheart & Maple",
         price: 110,
         image: "images/Purple Heart Board.png",
-        alt: "Exotic wood cutting board featuring Purpleheart and Maple Ribbons",
+        alt: "Exotic wood cutting board featuring Purpleheart and Maple ribbons",
         specs: [
           "16\" x 12\" x 1\" Ribbon Pattern",
           "Hand-Rubbed Mineral Oil & Beeswax"
@@ -937,31 +937,57 @@
         preset: { length: 16, width: 12, thick: 1, speciesValue: "1.25", groove: true, feet: true, engraving: false }
       },
       {
-        id: "3d-printed-picture-box",
+        id: "picture-box",
         name: "Artisanal 3D Picture Keepsake Box",
         subtitle: "Additive Personalized Picture Shell",
         price: 40,
-        image: "images/pic box Final.jpg", // Path to your photo in the images folder
+        image: "images/pic box Final.jpg",
         alt: "Custom 3D printed picture box",
         specs: [
           "Precision Additive Multi-Tone Enclosure",
           "Four Picture Display"
         ],
-        preset: { length: 10, width: 8, thick: 1.0, speciesValue: "0.9", groove: false, feet: false, engraving: true }
+        preset: { length: 10, width: 8, thick: 1, speciesValue: "0.9", groove: false, feet: false, engraving: true }
       },
       {
         id: "walnut-cherry-chessboard",
         name: "Grandmaster Walnut & Cherry Chessboard",
         subtitle: "Black Walnut & Cherry",
         price: 125,
-        image: "images/Chess Final.jpg", // Add your photo to the images/ folder
+        image: "images/Chess Final.jpg",
         alt: "16x16 American Cherry and Black Walnut tournament chessboard",
         specs: [
-          "16\" x 16\" Field with 2\" Tournament Squares",
+          "16\" x 16\" Field with 2\" Tournament Squares"
         ],
-        preset: { length: 16, width: 16, thick: 1.0, speciesValue: "1.1", groove: false, feet: true, engraving: false }
+        preset: { length: 16, width: 16, thick: 1, speciesValue: "1.1", groove: false, feet: true, engraving: false }
       }
     ];
+
+    let PRODUCTS = [...FALLBACK_PRODUCTS];
+
+    async function loadProducts() {
+      const useFallback = window.location.protocol === 'file:';
+      if (useFallback) {
+        return FALLBACK_PRODUCTS;
+      }
+
+      try {
+        const response = await fetch('./products.json', { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          throw new Error('products.json did not contain a valid array');
+        }
+
+        return data;
+      } catch (error) {
+        console.warn('Could not load products.json; using embedded fallback catalog.', error);
+        return FALLBACK_PRODUCTS;
+      }
+    }
 
     /* ==========================================================================
        RENDER CATALOG CARDS (With Lightbox Click Trigger)
@@ -1159,8 +1185,15 @@
     });
 
     // Run on Initial Load
-    renderCatalog();
-    updateCalculator();
+    loadProducts().then((items) => {
+      PRODUCTS = items;
+      renderCatalog();
+      updateCalculator();
+    }).catch(() => {
+      PRODUCTS = FALLBACK_PRODUCTS;
+      renderCatalog();
+      updateCalculator();
+    });
   </script>
 </body>
 </html>
