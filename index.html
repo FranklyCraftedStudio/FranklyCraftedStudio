@@ -1090,65 +1090,24 @@
           <div class="addon-group">
             <label class="checkbox-label">
               <input type="checkbox" id="check-groove" checked>
-              Continuous Perimeter Juice Groove (+$20)
+              Continuous Perimeter Juice Groove
             </label>
             <label class="checkbox-label">
               <input type="checkbox" id="check-feet">
-              Recessed Non-Slip Rubber Feet with Stainless Screws (+$15)
+              Recessed Non-Slip Rubber Feet with Stainless Screws
             </label>
             <label class="checkbox-label">
               <input type="checkbox" id="check-engraving">
-              Laser / Scorch-Pen Personalization Stencil (+$25)
+              Laser / Scorch-Pen Personalization Stencil
             </label>
           </div>
 
           <div class="summary-box">
-            <div class="summary-line">
-              <span>Calculated Board Feet:</span>
-              <span id="bf-output">1.33 BF</span>
-            </div>
-            <div class="summary-line">
-              <span>Weighted wood reference ($/BF):</span>
-              <span id="wood-price-output">$0.00</span>
-            </div>
-            <div class="summary-line">
-              <span>Estimated wood cost with 60% yield:</span>
-              <span id="materials-output">$30.00</span>
-            </div>
-            <p class="estimate-note" id="wood-pricing-note" aria-live="polite"></p>
-            <div class="summary-line">
-              <span>Labor (2 hours edge / 3 hours end grain at $25/hour):</span>
-              <span id="labor-output">$50.00</span>
-            </div>
-            <div class="summary-line">
-              <span>Shop supplies:</span>
-              <span id="supplies-output">$5.00</span>
-            </div>
-            <div class="summary-line">
-              <span>Overhead allocation:</span>
-              <span id="overhead-output">$15.00</span>
-            </div>
-            <div class="summary-line">
-              <span>Estimated fully loaded cost:</span>
-              <span id="cost-output">$100.00</span>
-            </div>
-            <div class="summary-line">
-              <span>Target board profit (20% margin):</span>
-              <span id="profit-output">$25.00</span>
-            </div>
-            <div class="summary-line">
-              <span>Board price at target margin:</span>
-              <span id="board-price-output">$125.00</span>
-            </div>
-            <div class="summary-line">
-              <span>Selected add-on charges:</span>
-              <span id="addons-output">$20.00</span>
-            </div>
             <div class="summary-total">
-              <span>Estimated price:</span>
+              <span>Estimated board price:</span>
               <span class="total-price" id="total-output">$145.00</span>
             </div>
-            <p class="estimate-note"><strong>Rough planning estimate, not a fixed quote.</strong> Final pricing can be discussed with the studio. Displayed dollar amounts are rounded to the nearest whole dollar. Wood cost uses the selected blend's weighted lumber-price reference, then divides finished board feet by an assumed 60% usable yield. Blend percentages are estimates, not measured recipes; actual purchase costs, species proportions, defects, and yield will vary. The reference prices are Bell Forest Products' under-10-BF retail snapshot from 2026-10-01, primarily 4/4 stock; verify current prices and thicker stock for a finished 1-inch board. Labor is estimated at 2 hours for edge grain and 3 hours for end grain, at $25/hour, plus $5 in supplies and $15 allocated overhead. The board price targets a 20% margin (fully loaded cost ÷ 0.80). Supplies and overhead are held constant at every size and for both grain types. Add-on charges remain fixed at the amounts shown and have not been costed separately, so overall order margin may differ. Taxes, shipping, payment fees, and other selling costs are not included. Replace these assumptions with your receipts and measured labor before treating the result as a quote. See the <a href="wood-price-library.json">dated wood-price source library</a>.</p>
+            <p class="estimate-note"><strong>Rough estimate only.</strong> Final pricing can be discussed with the studio. For a custom design, <a href="build-your-board/">build your own board</a> and send it to us for a personalized estimate.</p>
           </div>
         </div>
 
@@ -1823,17 +1782,6 @@
     const lengthVal = document.getElementById('length-val');
     const widthVal = document.getElementById('width-val');
     const thickVal = document.getElementById('thick-val');
-    const bfOutput = document.getElementById('bf-output');
-    const materialsOutput = document.getElementById('materials-output');
-    const laborOutput = document.getElementById('labor-output');
-    const suppliesOutput = document.getElementById('supplies-output');
-    const overheadOutput = document.getElementById('overhead-output');
-    const costOutput = document.getElementById('cost-output');
-    const profitOutput = document.getElementById('profit-output');
-    const boardPriceOutput = document.getElementById('board-price-output');
-    const woodPriceOutput = document.getElementById('wood-price-output');
-    const woodPricingNote = document.getElementById('wood-pricing-note');
-    const addonsOutput = document.getElementById('addons-output');
     const totalOutput = document.getElementById('total-output');
 
     const PRICING_ASSUMPTIONS = Object.freeze({
@@ -1929,17 +1877,6 @@
 
       const grandTotal = targetBoardPrice + addonsPrice;
 
-      bfOutput.textContent = `${boardFeet.toFixed(2)} BF`;
-      woodPriceOutput.textContent = `${formatCalculatorPrice(weightedWoodPrice)}/BF`;
-      materialsOutput.textContent = formatCalculatorPrice(materialCost);
-      woodPricingNote.textContent = `${selectedPreset.woodMixNote} Weighted retail reference from ${woodPriceSnapshotDate}; ${requiredLumberBoardFeet.toFixed(2)} BF of lumber budgeted at ${formatCalculatorPrice(weightedWoodPrice)}/BF for ${(PRICING_ASSUMPTIONS.usableWoodYield * 100).toFixed(0)}% usable yield. Prices are before freight and may not match the thickness needed for this design.`;
-      laborOutput.textContent = formatCalculatorPrice(laborCost);
-      suppliesOutput.textContent = formatCalculatorPrice(PRICING_ASSUMPTIONS.supplies);
-      overheadOutput.textContent = formatCalculatorPrice(PRICING_ASSUMPTIONS.overhead);
-      costOutput.textContent = formatCalculatorPrice(fullyLoadedCost);
-      profitOutput.textContent = formatCalculatorPrice(targetProfit);
-      boardPriceOutput.textContent = formatCalculatorPrice(targetBoardPrice);
-      addonsOutput.textContent = formatCalculatorPrice(addonsPrice);
       totalOutput.textContent = formatCalculatorPrice(grandTotal);
 
       currentCalculatedData = {
