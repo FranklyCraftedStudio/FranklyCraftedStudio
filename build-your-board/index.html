@@ -662,7 +662,7 @@
       const button = event.currentTarget;
       const status = document.getElementById('send-design-status');
       button.disabled = true;
-      status.textContent = 'Preparing your design and PNG attachment...';
+      status.textContent = 'Preparing your design and PNG preview...';
       const design = {
         version: 1,
         length: state.length,
@@ -696,13 +696,13 @@
         }
 
         if (pngBlob.size > 900000) {
-          throw new Error('The PNG is too large to attach. Reduce the board preview size and try again.');
+          throw new Error('The PNG is too large to transfer with the design. Reduce the board preview size and try again.');
         }
 
         const pngDataUrl = await new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result);
-          reader.onerror = () => reject(new Error('The PNG could not be prepared for email.'));
+          reader.onerror = () => reject(new Error('The PNG could not be prepared for download.'));
           reader.readAsDataURL(pngBlob);
         });
         sessionStorage.setItem('franklyCraftedBoardDesign', JSON.stringify({ design, png: pngDataUrl }));
