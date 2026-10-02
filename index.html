@@ -1118,7 +1118,7 @@
             Send your specifications or product question to the studio. We will review your request and follow up by email with availability and next steps.
           </p>
 
-          <form id="commission-form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+          <form id="commission-form" action="https://api.web3forms.com/submit" method="POST">
             <!-- Active Web3Forms Access Key for Frankly Crafted Studio -->
             <input type="hidden" name="access_key" value="868257ba-52ad-4a15-a6e1-01ef4e90de9c">
             <input type="hidden" name="from_name" value="Frankly Crafted Studio Web">
@@ -1154,6 +1154,7 @@
             </div>
 
             <p id="product-interest-notice" hidden></p>
+            <button type="button" class="btn btn-outline" id="download-visualizer-png" style="display: none; margin-bottom: 1rem;">Download Design PNG</button>
             <button type="submit" class="btn btn-primary" style="width: 100%;" id="submit-btn">Send Commission Request</button>
             <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
           </form>
@@ -1587,11 +1588,12 @@
     const productInterestNotice = document.getElementById('product-interest-notice');
     const commissionNotes = document.getElementById('cust-notes');
     const visualizerDesignInput = document.getElementById('form-visualizer-design');
+    const downloadVisualizerPngButton = document.getElementById('download-visualizer-png');
     const defaultNotesPlaceholder = commissionNotes.placeholder;
-    let visualizerAttachment = null;
-    let visualizerAttachmentError = '';
+    let visualizerPngDataUrl = '';
+    let visualizerDesignProvided = false;
     let visualizerProductionTime = '';
-    const visualizerAttachmentKey = 'franklyCraftedBoardDesign';
+    const visualizerDesignKey = 'franklyCraftedBoardDesign';
 
     function readVisualizerDesign() {
       const params = new URLSearchParams(window.location.search);
@@ -1667,14 +1669,15 @@
       ].filter(Boolean).join('\n');
 
       visualizerDesignInput.value = designDetails;
+      visualizerDesignProvided = true;
       visualizerProductionTime = `${design.grain === 'end' ? '5-8' : '3-5'} business days after design and materials are confirmed`;
       productInterestInput.value = 'Custom board design from visualizer';
-      productInterestNotice.textContent = 'Your visualizer design details and PNG will be attached to the inquiry email. The estimator above does not price visualizer designs; add your contact details and any notes before sending.';
+      productInterestNotice.textContent = 'Your design details will be included in this request. Download the PNG below, then attach it when you reply to the studio if you would like to share the image.';
       productInterestNotice.hidden = false;
       commissionNotes.value = 'I would like to discuss this board design. Please confirm feasibility, materials, and final pricing.';
 
       try {
-        const savedDesign = JSON.parse(sessionStorage.getItem(visualizerAttachmentKey) || 'null');
+        const savedDesign = JSON.parse(sessionStorage.getItem(visualizerDesignKey) || 'null');
         if (!savedDesign || JSON.stringify(savedDesign.design) !== JSON.stringify(design) ||
           typeof savedDesign.png !== 'string' || !savedDesign.png.startsWith('data:image/png;base64,')) {
           throw new Error('The visualizer PNG is missing. Return to the board designer and send the design again.');
@@ -1682,27 +1685,35 @@
 
         const imageBytes = atob(savedDesign.png.slice('data:image/png;base64,'.length));
         if (imageBytes.length > 900000) {
-          throw new Error('The visualizer PNG is too large to attach. Return to the board designer and send it again.');
+          throw new Error('The visualizer PNG is too large to prepare for download. Return to the board designer and use Save PNG.');
         }
-        const byteArray = Uint8Array.from(imageBytes, character => character.charCodeAt(0));
-        visualizerAttachment = new File([byteArray], 'frankly-crafted-board-design.png', { type: 'image/png' });
-      } catch (error) {
-        visualizerAttachmentError = error.message || 'The visualizer PNG could not be prepared. Return to the board designer and send it again.';
-        productInterestNotice.textContent = `${visualizerAttachmentError} Your inquiry will not be sent without the PNG attachment.`;
+        visualizerPngDataUrl = savedDesign.png;
+        downloadVisualizerPngButton.style.display = 'inline-flex';
+      } catch {
+        productInterestNotice.textContent = 'Your design details will be included in this request, but the PNG is not available here. Return to the board designer and use Save PNG if you would like to email the image separately.';
       }
     }
 
     readVisualizerDesign();
+
+    downloadVisualizerPngButton.addEventListener('click', () => {
+      if (!visualizerPngDataUrl) return;
+      const link = document.createElement('a');
+      link.href = visualizerPngDataUrl;
+      link.download = 'frankly-crafted-board-design.png';
+      link.click();
+    });
 
     document.getElementById('product-customize-button').addEventListener('click', () => {
       if (activeProductIndex === null) return;
       const productIndex = activeProductIndex;
       const item = PRODUCTS[productIndex];
       productDialog.close();
-      visualizerAttachment = null;
-      visualizerAttachmentError = '';
+      visualizerPngDataUrl = '';
+      visualizerDesignProvided = false;
       visualizerProductionTime = '';
-      sessionStorage.removeItem(visualizerAttachmentKey);
+      downloadVisualizerPngButton.style.display = 'none';
+      sessionStorage.removeItem(visualizerDesignKey);
       visualizerDesignInput.value = '';
       if (hasBoardCalculatorPreset(item)) {
         productInterestInput.value = '';
@@ -1946,18 +1957,13 @@
 
     commissionForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (visualizerAttachmentError) {
-        formStatus.textContent = visualizerAttachmentError;
-        formStatus.dataset.state = 'error';
-        return;
-      }
 
       const isProductInquiry = Boolean(productInterestInput.value);
       document.getElementById('form-wood-species').value = isProductInquiry ? '' : currentCalculatedData.species;
       document.getElementById('form-grain-type').value = isProductInquiry ? '' : currentCalculatedData.grain;
       document.getElementById('form-cost-breakdown').value = isProductInquiry ? '' : currentCalculatedData.costBreakdown;
       document.getElementById('form-target-margin').value = isProductInquiry ? '' : currentCalculatedData.targetMargin;
-      document.getElementById('form-production-time').value = visualizerAttachment
+      document.getElementById('form-production-time').value = visualizerDesignProvided
         ? visualizerProductionTime
         : isProductInquiry ? '' : currentCalculatedData.productionTime;
       document.getElementById('form-dimensions').value = isProductInquiry ? '' : currentCalculatedData.dimensions;
@@ -1971,9 +1977,6 @@
       formStatus.dataset.state = 'sending';
 
       const formData = new FormData(commissionForm);
-      if (visualizerAttachment) {
-        formData.append('attachment', visualizerAttachment);
-      }
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -1986,10 +1989,11 @@
           formStatus.dataset.state = 'success';
           commissionForm.reset();
           productInterestInput.value = '';
-          visualizerAttachment = null;
-          visualizerAttachmentError = '';
+          visualizerPngDataUrl = '';
+          visualizerDesignProvided = false;
           visualizerProductionTime = '';
-          sessionStorage.removeItem(visualizerAttachmentKey);
+          downloadVisualizerPngButton.style.display = 'none';
+          sessionStorage.removeItem(visualizerDesignKey);
           productInterestNotice.hidden = true;
           productInterestNotice.textContent = '';
           commissionNotes.placeholder = defaultNotesPlaceholder;
