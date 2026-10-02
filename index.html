@@ -1048,6 +1048,8 @@
       <div class="section-head">
         <h2>Custom Board Commission Estimator</h2>
         <p>Explore dimensions, wood blends, and options for a custom cutting board.</p>
+        <p>These prices are rough estimates, not fixed quotes. Final pricing depends on the design and materials, and can be discussed with the studio.</p>
+        <a href="build-your-board/" class="btn btn-outline">Design Your Own Board</a>
       </div>
 
       <div class="calc-container">
@@ -1062,6 +1064,15 @@
           </div>
 
           <div class="input-row">
+            <label for="grain-type-select">Grain Construction</label>
+            <select id="grain-type-select">
+              <option value="edge">Edge grain</option>
+              <option value="end">End grain</option>
+            </select>
+            <p class="estimate-note" id="turnaround-estimate" aria-live="polite"></p>
+          </div>
+
+          <div class="input-row">
             <label for="length-range">Length: <span id="length-val">16</span> inches</label>
             <input type="range" id="length-range" min="10" max="24" step="1" value="16">
           </div>
@@ -1072,8 +1083,8 @@
           </div>
 
           <div class="input-row">
-            <label for="thick-range">Thickness: <span id="thick-val">1.50</span> inches</label>
-            <input type="range" id="thick-range" min="0.75" max="2.25" step="0.25" value="1.5">
+            <label for="thick-range">Thickness: <span id="thick-val">1.00</span> inches</label>
+            <input type="range" id="thick-range" min="0.75" max="2.25" step="0.25" value="1">
           </div>
 
           <div class="addon-group">
@@ -1094,21 +1105,50 @@
           <div class="summary-box">
             <div class="summary-line">
               <span>Calculated Board Feet:</span>
-              <span id="bf-output">2.00 BF</span>
+              <span id="bf-output">1.33 BF</span>
             </div>
             <div class="summary-line">
-              <span>Milling & Lumber Base:</span>
-              <span id="base-output">$125.00</span>
+              <span>Weighted wood reference ($/BF):</span>
+              <span id="wood-price-output">$0.00</span>
             </div>
             <div class="summary-line">
-              <span>Selected Add-ons:</span>
+              <span>Estimated wood cost with 60% yield:</span>
+              <span id="materials-output">$30.00</span>
+            </div>
+            <p class="estimate-note" id="wood-pricing-note" aria-live="polite"></p>
+            <div class="summary-line">
+              <span>Labor (2 hours edge / 3 hours end grain at $25/hour):</span>
+              <span id="labor-output">$50.00</span>
+            </div>
+            <div class="summary-line">
+              <span>Shop supplies:</span>
+              <span id="supplies-output">$5.00</span>
+            </div>
+            <div class="summary-line">
+              <span>Overhead allocation:</span>
+              <span id="overhead-output">$15.00</span>
+            </div>
+            <div class="summary-line">
+              <span>Estimated fully loaded cost:</span>
+              <span id="cost-output">$100.00</span>
+            </div>
+            <div class="summary-line">
+              <span>Target board profit (20% margin):</span>
+              <span id="profit-output">$25.00</span>
+            </div>
+            <div class="summary-line">
+              <span>Board price at target margin:</span>
+              <span id="board-price-output">$125.00</span>
+            </div>
+            <div class="summary-line">
+              <span>Selected add-on charges:</span>
               <span id="addons-output">$20.00</span>
             </div>
             <div class="summary-total">
-              <span>Estimated Total:</span>
+              <span>Estimated price:</span>
               <span class="total-price" id="total-output">$145.00</span>
             </div>
-            <p class="estimate-note"><strong>Rough planning estimate, not a quote.</strong> This calculator uses a simplified board-foot formula and preset material multipliers; it does not account for every species, labor, finishing, or project detail. The studio will confirm feasibility, materials, options, and final price before work begins.</p>
+            <p class="estimate-note"><strong>Rough planning estimate, not a fixed quote.</strong> Final pricing can be discussed with the studio. Displayed dollar amounts are rounded to the nearest whole dollar. Wood cost uses the selected blend's weighted lumber-price reference, then divides finished board feet by an assumed 60% usable yield. Blend percentages are estimates, not measured recipes; actual purchase costs, species proportions, defects, and yield will vary. The reference prices are Bell Forest Products' under-10-BF retail snapshot from 2026-10-01, primarily 4/4 stock; verify current prices and thicker stock for a finished 1-inch board. Labor is estimated at 2 hours for edge grain and 3 hours for end grain, at $25/hour, plus $5 in supplies and $15 allocated overhead. The board price targets a 20% margin (fully loaded cost ÷ 0.80). Supplies and overhead are held constant at every size and for both grain types. Add-on charges remain fixed at the amounts shown and have not been costed separately, so overall order margin may differ. Taxes, shipping, payment fees, and other selling costs are not included. Replace these assumptions with your receipts and measured labor before treating the result as a quote. See the <a href="wood-price-library.json">dated wood-price source library</a>.</p>
           </div>
         </div>
 
@@ -1119,7 +1159,7 @@
             Send your specifications or product question to the studio. We will review your request and follow up by email with availability and next steps.
           </p>
 
-          <form id="commission-form" action="https://api.web3forms.com/submit" method="POST">
+          <form id="commission-form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
             <!-- Active Web3Forms Access Key for Frankly Crafted Studio -->
             <input type="hidden" name="access_key" value="868257ba-52ad-4a15-a6e1-01ef4e90de9c">
             <input type="hidden" name="from_name" value="Frankly Crafted Studio Web">
@@ -1128,10 +1168,14 @@
 
             <!-- Synced Dynamic Fields -->
             <input type="hidden" id="form-wood-species" name="Hardwood Selection">
+            <input type="hidden" id="form-grain-type" name="Grain Construction">
+            <input type="hidden" id="form-cost-breakdown" name="Estimated Cost Breakdown">
+            <input type="hidden" id="form-target-margin" name="Target Board Margin">
+            <input type="hidden" id="form-production-time" name="Estimated Production Time">
             <input type="hidden" id="form-dimensions" name="Target Dimensions (L x W x T)">
             <input type="hidden" id="form-board-feet" name="Calculated Board Feet">
             <input type="hidden" id="form-addons" name="Add-ons Selected">
-            <input type="hidden" id="form-total-price" name="Rough Planning Estimate (Not a Quote)">
+            <input type="hidden" id="form-total-price" name="Estimated Planning Price (Not a Quote)">
             <input type="hidden" id="form-product-interest" name="Product of Interest">
             <input type="hidden" id="form-visualizer-design" name="Board Design from Visualizer">
 
@@ -1197,7 +1241,7 @@
         <p id="product-dialog-subtitle"></p>
         <span class="product-dialog-price" id="product-dialog-price"></span>
         <ul class="specs-list" id="product-dialog-specs"></ul>
-        <p class="product-detail-note">Need a detail that is not listed? Ask the studio to confirm specifications, finish options, and timing.</p>
+        <p class="product-detail-note" id="product-detail-note">Need a detail that is not listed? Ask the studio to confirm specifications, finish options, and timing.</p>
         <button type="button" class="btn btn-primary" id="product-customize-button">Customize this item</button>
       </div>
     </div>
@@ -1224,13 +1268,13 @@
         subtitle: "Black Walnut, Hard Maple, & Cherry",
         price: 150,
         image: "images/Ombre Complete.jpg",
-        alt: "16x12 Walnut, Maple and Cherry edge-grain cutting board",
+        alt: "16x12 Walnut, Maple and Cherry end-grain cutting board",
         specs: [
-          "16\" x 12\" x 1\" Edge-Grain",
+          "16\" x 12\" x 1\" End-Grain",
           "Soft roundover and smooth chamfer",
           "Hand-Rubbed Mineral Oil & Beeswax"
         ],
-        preset: { length: 16, width: 12, thick: 1, speciesValue: "1.0", speciesName: "Black Walnut, Hard Maple & Cherry", groove: true, feet: false, engraving: false }
+        preset: { length: 16, width: 12, thick: 1, speciesName: "Black Walnut, Hard Maple & Cherry", grain: "end", woodMix: [{ speciesId: "black-walnut", share: 0.34 }, { speciesId: "hard-maple", share: 0.33 }, { speciesId: "black-cherry", share: 0.33 }], woodMixNote: "Estimated blend: 34% walnut, 33% maple, 33% cherry.", groove: true, feet: false, engraving: false }
       },
       {
         id: "nursery-round",
@@ -1263,7 +1307,7 @@
           "16\" x 12\" x 1\" Purpleheart cutting board with a contrasting hard maple center",
           "Hand-Rubbed Mineral Oil & Beeswax"
         ],
-        preset: { length: 16, width: 12, thick: 1, speciesValue: "1.25", speciesName: "Purpleheart & Hard Maple", groove: true, feet: true, engraving: false }
+        preset: { length: 16, width: 12, thick: 1, speciesName: "Purpleheart & Hard Maple - Center Board", grain: "edge", woodMix: [{ speciesId: "purpleheart", share: 0.6 }, { speciesId: "hard-maple", share: 0.4 }], woodMixNote: "Estimated blend: 60% purpleheart, 40% maple.", groove: true, feet: true, engraving: false }
       },
       {
         id: "purpleheart-ribbon-board",
@@ -1282,7 +1326,7 @@
           "16\" x 12\" x 1\" Purpleheart cutting board with contrasting maple ribbon accents",
           "Hand-Rubbed Mineral Oil & Beeswax"
         ],
-        preset: { length: 16, width: 12, thick: 1, speciesValue: "1.25", speciesName: "Purpleheart & Hard Maple", groove: true, feet: true, engraving: false }
+        preset: { length: 16, width: 12, thick: 1, speciesName: "Purpleheart & Hard Maple - Ribbon Board", grain: "edge", woodMix: [{ speciesId: "purpleheart", share: 0.8 }, { speciesId: "hard-maple", share: 0.2 }], woodMixNote: "Estimated blend: 80% purpleheart, 20% maple.", groove: true, feet: true, engraving: false }
       },
       {
         id: "hickory-maple-cumaru-charcuterie",
@@ -1331,6 +1375,16 @@
 
     let PRODUCTS = [...FALLBACK_PRODUCTS];
 
+    const FALLBACK_BOARD_WOOD_PRICES = {
+      "black-walnut": { name: "Black walnut", pricePerBf: 14.70 },
+      "hard-maple": { name: "Hard maple", pricePerBf: 6.00 },
+      "black-cherry": { name: "Black cherry", pricePerBf: 4.95 },
+      purpleheart: { name: "Purpleheart", pricePerBf: 14.50 }
+    };
+    const WOOD_PRICE_SNAPSHOT_DATE = "2026-10-01";
+    const WOOD_PRICE_SOURCE_URL = "https://www.bellforestproducts.com/exotic-lumber/prices/";
+    let BOARD_WOOD_PRICES = FALLBACK_BOARD_WOOD_PRICES;
+
     async function loadProducts() {
       const useFallback = window.location.protocol === 'file:';
       if (useFallback) {
@@ -1364,6 +1418,52 @@
       } catch (error) {
         console.warn('Could not load products.json; using embedded fallback catalog.', error);
         return FALLBACK_PRODUCTS;
+      }
+    }
+
+    async function loadBoardWoodPrices() {
+      if (window.location.protocol === 'file:') {
+        return {
+          prices: FALLBACK_BOARD_WOOD_PRICES,
+          snapshotDate: WOOD_PRICE_SNAPSHOT_DATE,
+          sourceUrl: WOOD_PRICE_SOURCE_URL
+        };
+      }
+
+      try {
+        const response = await fetch('./wood-price-library.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const library = await response.json();
+        if (!Array.isArray(library.species) || !library.price_method ||
+          typeof library.snapshot_date !== 'string') {
+          throw new Error('wood-price-library.json has an invalid structure');
+        }
+
+        const prices = Object.fromEntries(library.species
+          .filter(item => typeof item.id === 'string' &&
+            typeof item.name === 'string' &&
+            Number.isFinite(item.reference_price_usd_per_bf) &&
+            item.reference_price_usd_per_bf > 0)
+          .map(item => [item.id, {
+            name: item.name,
+            pricePerBf: item.reference_price_usd_per_bf,
+            priceBasis: item.price_basis,
+            vendorUrl: item.vendor_product_url
+          }]));
+
+        return {
+          prices,
+          snapshotDate: library.snapshot_date,
+          sourceUrl: library.price_method.price_list_url
+        };
+      } catch (error) {
+        console.warn('Could not load the wood price library; using the embedded researched board-wood prices.', error);
+        return {
+          prices: FALLBACK_BOARD_WOOD_PRICES,
+          snapshotDate: WOOD_PRICE_SNAPSHOT_DATE,
+          sourceUrl: WOOD_PRICE_SOURCE_URL
+        };
       }
     }
 
@@ -1473,6 +1573,13 @@
       document.getElementById('product-dialog-subtitle').textContent = item.subtitle || "";
       document.getElementById('product-dialog-price').textContent = formatPrice(item.price);
       productCategory.textContent = categoryLabel(item.category || "other");
+      const productDetailNote = document.getElementById('product-detail-note');
+      if (hasBoardCalculatorPreset(item)) {
+        const turnaround = item.preset.grain === 'end' ? '5-8 business days' : '3-5 business days';
+        productDetailNote.textContent = `Typical production time: ${turnaround} after the design and materials are confirmed. Timing can vary with material availability and the current order queue; the studio will confirm the expected schedule. Ask the studio to confirm any other unlisted details.`;
+      } else {
+        productDetailNote.textContent = 'Production time depends on the item, material availability, and current order queue. Ask the studio to confirm the expected schedule and any unlisted specifications.';
+      }
       document.getElementById('product-dialog-specs').innerHTML = (item.specs || [])
         .map(spec => `<li>${escapeHtml(spec)}</li>`).join('');
       productThumbnails.innerHTML = images.length > 1
@@ -1522,6 +1629,10 @@
     const commissionNotes = document.getElementById('cust-notes');
     const visualizerDesignInput = document.getElementById('form-visualizer-design');
     const defaultNotesPlaceholder = commissionNotes.placeholder;
+    let visualizerAttachment = null;
+    let visualizerAttachmentError = '';
+    let visualizerProductionTime = '';
+    const visualizerAttachmentKey = 'franklyCraftedBoardDesign';
 
     function readVisualizerDesign() {
       const params = new URLSearchParams(window.location.search);
@@ -1597,10 +1708,29 @@
       ].filter(Boolean).join('\n');
 
       visualizerDesignInput.value = designDetails;
+      visualizerProductionTime = `${design.grain === 'end' ? '5-8' : '3-5'} business days after design and materials are confirmed`;
       productInterestInput.value = 'Custom board design from visualizer';
-      productInterestNotice.textContent = 'Your visualizer design is attached. The estimator above does not price visualizer designs; add your contact details and any notes before sending.';
+      productInterestNotice.textContent = 'Your visualizer design details and PNG will be attached to the inquiry email. The estimator above does not price visualizer designs; add your contact details and any notes before sending.';
       productInterestNotice.hidden = false;
       commissionNotes.value = 'I would like to discuss this board design. Please confirm feasibility, materials, and final pricing.';
+
+      try {
+        const savedDesign = JSON.parse(sessionStorage.getItem(visualizerAttachmentKey) || 'null');
+        if (!savedDesign || JSON.stringify(savedDesign.design) !== JSON.stringify(design) ||
+          typeof savedDesign.png !== 'string' || !savedDesign.png.startsWith('data:image/png;base64,')) {
+          throw new Error('The visualizer PNG is missing. Return to the board designer and send the design again.');
+        }
+
+        const imageBytes = atob(savedDesign.png.slice('data:image/png;base64,'.length));
+        if (imageBytes.length > 900000) {
+          throw new Error('The visualizer PNG is too large to attach. Return to the board designer and send it again.');
+        }
+        const byteArray = Uint8Array.from(imageBytes, character => character.charCodeAt(0));
+        visualizerAttachment = new File([byteArray], 'frankly-crafted-board-design.png', { type: 'image/png' });
+      } catch (error) {
+        visualizerAttachmentError = error.message || 'The visualizer PNG could not be prepared. Return to the board designer and send it again.';
+        productInterestNotice.textContent = `${visualizerAttachmentError} Your inquiry will not be sent without the PNG attachment.`;
+      }
     }
 
     readVisualizerDesign();
@@ -1610,12 +1740,15 @@
       const productIndex = activeProductIndex;
       const item = PRODUCTS[productIndex];
       productDialog.close();
+      visualizerAttachment = null;
+      visualizerAttachmentError = '';
+      visualizerProductionTime = '';
+      sessionStorage.removeItem(visualizerAttachmentKey);
       visualizerDesignInput.value = '';
       if (hasBoardCalculatorPreset(item)) {
         productInterestInput.value = '';
         productInterestNotice.hidden = true;
         productInterestNotice.textContent = '';
-        visualizerDesignInput.value = '';
         commissionNotes.placeholder = defaultNotesPlaceholder;
         applyPreset(productIndex);
       } else {
@@ -1659,11 +1792,20 @@
       return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(price) || 0);
     }
 
+    function formatCalculatorPrice(price) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
+      }).format(Number(price) || 0);
+    }
+
     function hasBoardCalculatorPreset(item) {
       return item?.category === 'boards' &&
         item.preset &&
         typeof item.preset.speciesName === 'string' &&
-        Number.isFinite(Number(item.preset.speciesValue));
+        Array.isArray(item.preset.woodMix) &&
+        item.preset.woodMix.length > 0;
     }
 
     /* ==========================================================================
@@ -1673,6 +1815,7 @@
     const widthRange = document.getElementById('width-range');
     const thickRange = document.getElementById('thick-range');
     const speciesSelect = document.getElementById('species-select');
+    const grainTypeSelect = document.getElementById('grain-type-select');
     const checkGroove = document.getElementById('check-groove');
     const checkFeet = document.getElementById('check-feet');
     const checkEngraving = document.getElementById('check-engraving');
@@ -1681,25 +1824,44 @@
     const widthVal = document.getElementById('width-val');
     const thickVal = document.getElementById('thick-val');
     const bfOutput = document.getElementById('bf-output');
-    const baseOutput = document.getElementById('base-output');
+    const materialsOutput = document.getElementById('materials-output');
+    const laborOutput = document.getElementById('labor-output');
+    const suppliesOutput = document.getElementById('supplies-output');
+    const overheadOutput = document.getElementById('overhead-output');
+    const costOutput = document.getElementById('cost-output');
+    const profitOutput = document.getElementById('profit-output');
+    const boardPriceOutput = document.getElementById('board-price-output');
+    const woodPriceOutput = document.getElementById('wood-price-output');
+    const woodPricingNote = document.getElementById('wood-pricing-note');
     const addonsOutput = document.getElementById('addons-output');
     const totalOutput = document.getElementById('total-output');
 
+    const PRICING_ASSUMPTIONS = Object.freeze({
+      usableWoodYield: 0.60,
+      edgeGrainLaborHours: 2,
+      endGrainLaborHours: 3,
+      laborRate: 25,
+      supplies: 5,
+      overhead: 15,
+      targetMargin: 0.20
+    });
+
+    let woodPriceSnapshotDate = WOOD_PRICE_SNAPSHOT_DATE;
+    let woodPriceSourceUrl = WOOD_PRICE_SOURCE_URL;
     let currentCalculatedData = {};
 
     function populateSpeciesOptions() {
       const blends = new Map();
-      PRODUCTS.filter(hasBoardCalculatorPreset).forEach(item => {
-        const { speciesName, speciesValue } = item.preset;
-        if (!blends.has(speciesName)) blends.set(speciesName, speciesValue);
+      PRODUCTS.filter(item => hasBoardCalculatorPreset(item) && Array.isArray(item.preset.woodMix)).forEach(item => {
+        blends.set(item.preset.speciesName, item.preset.woodMix);
       });
 
       if (blends.size === 0) {
         throw new Error('No cutting board material blends are configured in the product catalog');
       }
 
-      speciesSelect.innerHTML = [...blends].map(([name, multiplier]) =>
-        `<option value="${escapeHtml(multiplier)}" data-name="${escapeHtml(name)}">${escapeHtml(name)}</option>`
+      speciesSelect.innerHTML = [...blends.keys()].map(name =>
+        `<option value="${escapeHtml(name)}" data-name="${escapeHtml(name)}">${escapeHtml(name)}</option>`
       ).join('');
     }
 
@@ -1707,15 +1869,47 @@
       const L = parseFloat(lengthRange.value);
       const W = parseFloat(widthRange.value);
       const T = parseFloat(thickRange.value);
-      const speciesMultiplier = parseFloat(speciesSelect.value);
       const speciesName = speciesSelect.options[speciesSelect.selectedIndex].getAttribute('data-name');
+      const grainType = grainTypeSelect.value;
+      document.getElementById('turnaround-estimate').textContent =
+        `Typical production time: ${grainType === 'end' ? '5-8' : '3-5'} business days after the design and materials are confirmed. Timing can vary with material availability and current workload; the studio confirms the expected schedule.`;
 
       lengthVal.textContent = L;
       widthVal.textContent = W;
       thickVal.textContent = T.toFixed(2);
 
       const boardFeet = (L * W * T) / 144;
-      const baseLumberPrice = 45 + (boardFeet * 40 * speciesMultiplier);
+      const selectedPreset = PRODUCTS.find(item =>
+        hasBoardCalculatorPreset(item) && item.preset.speciesName === speciesName
+      )?.preset;
+      if (!selectedPreset || !Array.isArray(selectedPreset.woodMix) || selectedPreset.woodMix.length === 0) {
+        throw new Error(`No estimated wood proportions are configured for ${speciesName}`);
+      }
+
+      const mixShareTotal = selectedPreset.woodMix.reduce((total, item) => total + item.share, 0);
+      if (Math.abs(mixShareTotal - 1) > 0.001) {
+        throw new Error(`Estimated wood proportions for ${speciesName} must add up to 100%`);
+      }
+
+      const weightedWoodPrice = selectedPreset.woodMix.reduce((total, item) => {
+        const woodPrice = BOARD_WOOD_PRICES[item.speciesId];
+        if (!woodPrice || !Number.isFinite(woodPrice.pricePerBf)) {
+          throw new Error(`No researched price is available for ${item.speciesId}`);
+        }
+        return total + woodPrice.pricePerBf * item.share;
+      }, 0);
+      const requiredLumberBoardFeet = boardFeet / PRICING_ASSUMPTIONS.usableWoodYield;
+      const materialCost = requiredLumberBoardFeet * weightedWoodPrice;
+      const laborHours = grainType === 'end'
+        ? PRICING_ASSUMPTIONS.endGrainLaborHours
+        : PRICING_ASSUMPTIONS.edgeGrainLaborHours;
+      const laborCost = laborHours * PRICING_ASSUMPTIONS.laborRate;
+      const fullyLoadedCost = materialCost + laborCost +
+        PRICING_ASSUMPTIONS.supplies + PRICING_ASSUMPTIONS.overhead;
+      const targetBoardPrice = Math.ceil(
+        (fullyLoadedCost / (1 - PRICING_ASSUMPTIONS.targetMargin)) * 100
+      ) / 100;
+      const targetProfit = targetBoardPrice - fullyLoadedCost;
 
       let addonsPrice = 0;
       const addonsArray = [];
@@ -1733,19 +1927,54 @@
         addonsArray.push('Laser/Stencil Engraving (+$25)');
       }
 
-      const grandTotal = Math.round(baseLumberPrice + addonsPrice);
+      const grandTotal = targetBoardPrice + addonsPrice;
 
       bfOutput.textContent = `${boardFeet.toFixed(2)} BF`;
-      baseOutput.textContent = `$${Math.round(baseLumberPrice)}.00`;
-      addonsOutput.textContent = `$${addonsPrice}.00`;
-      totalOutput.textContent = `$${grandTotal}.00`;
+      woodPriceOutput.textContent = `${formatCalculatorPrice(weightedWoodPrice)}/BF`;
+      materialsOutput.textContent = formatCalculatorPrice(materialCost);
+      woodPricingNote.textContent = `${selectedPreset.woodMixNote} Weighted retail reference from ${woodPriceSnapshotDate}; ${requiredLumberBoardFeet.toFixed(2)} BF of lumber budgeted at ${formatCalculatorPrice(weightedWoodPrice)}/BF for ${(PRICING_ASSUMPTIONS.usableWoodYield * 100).toFixed(0)}% usable yield. Prices are before freight and may not match the thickness needed for this design.`;
+      laborOutput.textContent = formatCalculatorPrice(laborCost);
+      suppliesOutput.textContent = formatCalculatorPrice(PRICING_ASSUMPTIONS.supplies);
+      overheadOutput.textContent = formatCalculatorPrice(PRICING_ASSUMPTIONS.overhead);
+      costOutput.textContent = formatCalculatorPrice(fullyLoadedCost);
+      profitOutput.textContent = formatCalculatorPrice(targetProfit);
+      boardPriceOutput.textContent = formatCalculatorPrice(targetBoardPrice);
+      addonsOutput.textContent = formatCalculatorPrice(addonsPrice);
+      totalOutput.textContent = formatCalculatorPrice(grandTotal);
 
       currentCalculatedData = {
         dimensions: `${L}" x ${W}" x ${T.toFixed(2)}"`,
         species: speciesName,
+        grain: grainType === 'end' ? 'End grain' : 'Edge grain',
+        productionTime: `${grainType === 'end' ? '5-8' : '3-5'} business days after design and materials are confirmed`,
         boardFeet: boardFeet.toFixed(2),
+        weightedWoodPricePerBf: formatCalculatorPrice(weightedWoodPrice),
+        estimatedLumberBoardFeet: requiredLumberBoardFeet.toFixed(2),
         addons: addonsArray.length > 0 ? addonsArray.join(', ') : 'None',
-        quote: `$${grandTotal}.00`
+        materialCost: formatCalculatorPrice(materialCost),
+        laborCost: formatCalculatorPrice(laborCost),
+        suppliesCost: formatCalculatorPrice(PRICING_ASSUMPTIONS.supplies),
+        overheadCost: formatCalculatorPrice(PRICING_ASSUMPTIONS.overhead),
+        fullyLoadedCost: formatCalculatorPrice(fullyLoadedCost),
+        laborHours,
+        targetMargin: `${(PRICING_ASSUMPTIONS.targetMargin * 100).toFixed(0)}%`,
+        targetProfit: formatCalculatorPrice(targetProfit),
+        quote: formatCalculatorPrice(grandTotal),
+        costBreakdown: [
+          `Estimated wood: ${formatCalculatorPrice(materialCost)}`,
+          `Weighted ${woodPriceSnapshotDate} wood reference: ${formatCalculatorPrice(weightedWoodPrice)}/BF`,
+          `Estimated lumber requirement: ${requiredLumberBoardFeet.toFixed(2)} BF at ${(PRICING_ASSUMPTIONS.usableWoodYield * 100).toFixed(0)}% yield`,
+          `Blend proportions: ${selectedPreset.woodMixNote}`,
+          `Wood price source: ${woodPriceSourceUrl}`,
+          `Labor (${laborHours} hours at ${formatCalculatorPrice(PRICING_ASSUMPTIONS.laborRate)}/hour): ${formatCalculatorPrice(laborCost)}`,
+          `Shop supplies: ${formatCalculatorPrice(PRICING_ASSUMPTIONS.supplies)}`,
+          `Overhead allocation: ${formatCalculatorPrice(PRICING_ASSUMPTIONS.overhead)}`,
+          `Fully loaded board cost: ${formatCalculatorPrice(fullyLoadedCost)}`,
+          `Target board margin: ${(PRICING_ASSUMPTIONS.targetMargin * 100).toFixed(0)}%`,
+          `Estimated labor hours: ${laborHours}`,
+          `Target board price: ${formatCalculatorPrice(targetBoardPrice)}`,
+          `Fixed add-on charges: ${formatCalculatorPrice(addonsPrice)}`
+        ].join('; ')
       };
     }
 
@@ -1757,7 +1986,8 @@
       lengthRange.value = p.length;
       widthRange.value = p.width;
       thickRange.value = p.thick;
-      speciesSelect.value = p.speciesValue;
+      speciesSelect.value = p.speciesName;
+      grainTypeSelect.value = p.grain || 'edge';
       checkGroove.checked = p.groove;
       checkFeet.checked = p.feet;
       checkEngraving.checked = p.engraving;
@@ -1766,7 +1996,7 @@
       document.getElementById('commission').scrollIntoView({ behavior: 'smooth' });
     }
 
-    [lengthRange, widthRange, thickRange, speciesSelect, checkGroove, checkFeet, checkEngraving].forEach(el => {
+    [lengthRange, widthRange, thickRange, speciesSelect, grainTypeSelect, checkGroove, checkFeet, checkEngraving].forEach(el => {
       el.addEventListener('input', updateCalculator);
     });
 
@@ -1779,9 +2009,20 @@
 
     commissionForm.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (visualizerAttachmentError) {
+        formStatus.textContent = visualizerAttachmentError;
+        formStatus.dataset.state = 'error';
+        return;
+      }
 
       const isProductInquiry = Boolean(productInterestInput.value);
       document.getElementById('form-wood-species').value = isProductInquiry ? '' : currentCalculatedData.species;
+      document.getElementById('form-grain-type').value = isProductInquiry ? '' : currentCalculatedData.grain;
+      document.getElementById('form-cost-breakdown').value = isProductInquiry ? '' : currentCalculatedData.costBreakdown;
+      document.getElementById('form-target-margin').value = isProductInquiry ? '' : currentCalculatedData.targetMargin;
+      document.getElementById('form-production-time').value = visualizerAttachment
+        ? visualizerProductionTime
+        : isProductInquiry ? '' : currentCalculatedData.productionTime;
       document.getElementById('form-dimensions').value = isProductInquiry ? '' : currentCalculatedData.dimensions;
       document.getElementById('form-board-feet').value = isProductInquiry ? '' : currentCalculatedData.boardFeet;
       document.getElementById('form-addons').value = isProductInquiry ? '' : currentCalculatedData.addons;
@@ -1793,6 +2034,9 @@
       formStatus.dataset.state = 'sending';
 
       const formData = new FormData(commissionForm);
+      if (visualizerAttachment) {
+        formData.append('attachment', visualizerAttachment);
+      }
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -1805,6 +2049,10 @@
           formStatus.dataset.state = 'success';
           commissionForm.reset();
           productInterestInput.value = '';
+          visualizerAttachment = null;
+          visualizerAttachmentError = '';
+          visualizerProductionTime = '';
+          sessionStorage.removeItem(visualizerAttachmentKey);
           productInterestNotice.hidden = true;
           productInterestNotice.textContent = '';
           commissionNotes.placeholder = defaultNotesPlaceholder;
@@ -1825,14 +2073,20 @@
     });
 
     // Run on Initial Load
-    loadProducts().then((items) => {
+    Promise.all([loadProducts(), loadBoardWoodPrices()]).then(([items, priceLibrary]) => {
       PRODUCTS = items;
+      BOARD_WOOD_PRICES = priceLibrary.prices;
+      woodPriceSnapshotDate = priceLibrary.snapshotDate;
+      woodPriceSourceUrl = priceLibrary.sourceUrl;
       populateSpeciesOptions();
       renderCatalogFilters();
       renderCatalog();
       updateCalculator();
     }).catch(() => {
       PRODUCTS = FALLBACK_PRODUCTS;
+      BOARD_WOOD_PRICES = FALLBACK_BOARD_WOOD_PRICES;
+      woodPriceSnapshotDate = WOOD_PRICE_SNAPSHOT_DATE;
+      woodPriceSourceUrl = WOOD_PRICE_SOURCE_URL;
       populateSpeciesOptions();
       renderCatalogFilters();
       renderCatalog();

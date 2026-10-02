@@ -230,8 +230,9 @@
           <li>Explore edge or end grain, board shape, and juice groove.</li>
           <li>Send your design details to the studio for review, or save a PNG to share.</li>
         </ol>
-        <p class="visualizer-note">This visualizer is a design preview, not a final quote or manufacturing drawing. We will confirm materials, feasibility, and pricing with you before any work begins.</p>
+        <p class="visualizer-note">This visualizer is a design preview, not an instant price or manufacturing drawing. Send your design to the studio for a personalized estimate; final pricing can be discussed after materials and feasibility are confirmed.</p>
         <button type="button" class="btn btn-primary" id="btnSendDesign" style="width:100%; margin-top:0.8rem;">Send design to studio</button>
+        <p id="send-design-status" role="status" aria-live="polite" style="margin-top:0.5rem; font-size:0.75rem; color:var(--text-muted);"></p>
       </div>
     </div>
   </div>
@@ -657,7 +658,11 @@
     document.getElementById('btnExportImage').onclick = (e) => {
       e.preventDefault(); const a = document.createElement('a'); a.download = `frankly-crafted-board.png`; a.href = canvas.toDataURL(); a.click();
     };
-    document.getElementById('btnSendDesign').onclick = () => {
+    document.getElementById('btnSendDesign').onclick = async (event) => {
+      const button = event.currentTarget;
+      const status = document.getElementById('send-design-status');
+      button.disabled = true;
+      status.textContent = 'Preparing your design and PNG attachment...';
       const design = {
         version: 1,
         length: state.length,
@@ -672,10 +677,44 @@
         endGrainPattern: state.endGrainPattern,
         alternateRings: state.alternateRings
       };
-      const target = new URL('../', window.location.href);
-      target.searchParams.set('boardDesign', JSON.stringify(design));
-      target.hash = 'commission';
-      window.location.assign(target);
+      try {
+        let scale = 1;
+        let pngCanvas = canvas;
+        let pngBlob = await new Promise((resolve, reject) => {
+          canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('The PNG could not be created.')), 'image/png');
+        });
+
+        while (pngBlob.size > 900000 && scale > 0.1) {
+          scale *= 0.75;
+          pngCanvas = document.createElement('canvas');
+          pngCanvas.width = Math.max(1, Math.round(canvas.width * scale));
+          pngCanvas.height = Math.max(1, Math.round(canvas.height * scale));
+          pngCanvas.getContext('2d').drawImage(canvas, 0, 0, pngCanvas.width, pngCanvas.height);
+          pngBlob = await new Promise((resolve, reject) => {
+            pngCanvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('The PNG could not be created.')), 'image/png');
+          });
+        }
+
+        if (pngBlob.size > 900000) {
+          throw new Error('The PNG is too large to attach. Reduce the board preview size and try again.');
+        }
+
+        const pngDataUrl = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = () => reject(new Error('The PNG could not be prepared for email.'));
+          reader.readAsDataURL(pngBlob);
+        });
+        sessionStorage.setItem('franklyCraftedBoardDesign', JSON.stringify({ design, png: pngDataUrl }));
+
+        const target = new URL('../', window.location.href);
+        target.searchParams.set('boardDesign', JSON.stringify(design));
+        target.hash = 'commission';
+        window.location.assign(target);
+      } catch (error) {
+        status.textContent = `${error.message} Your design has not been sent.`;
+        button.disabled = false;
+      }
     };
     document.getElementById('btnAddRibbon').onclick = (e) => {
       e.preventDefault(); state.ribbons.push({ id: Date.now(), wood: 'walnut', width: 1.0 }); renderRibbonList(); updateAll();
