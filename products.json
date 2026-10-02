@@ -33,13 +33,14 @@
     "id": "nursery-round",
     "name": "Nursery Name Sign Round",
     "category": "signs",
-    "subtitle": "Southern Yellow Pine & Additive Script",
+    "subtitle": "Pine Round & Custom 3D-Printed Script",
     "price": 95,
     "image": "images/Cami Sign Complete.jpg",
-    "alt": "24-inch Southern Yellow Pine nursery round sign",
+    "alt": "24-inch pine nursery round sign with custom 3D-printed lettering",
     "specs": [
-      "24\" Diameter x 1\" Solid Pine",
-      "Precision 3D Printed Script Lettering",
+      "24\" Diameter x 1\" Pine Round (Not Southern Yellow Pine)",
+      "Customizable Name and Precision 3D-Printed Script Lettering",
+      "Discuss lettering and design choices with the studio before ordering",
       "Keyhole & Sawtooth Hanger Installed"
     ]
   },
@@ -131,13 +132,14 @@
     "id": "picture-box",
     "name": "Artisanal 3D Picture Keepsake Box",
     "category": "keepsakes",
-    "subtitle": "Additive Personalized Picture Shell",
+    "subtitle": "Customizable 3D-Printed Picture Keepsake",
     "price": 40,
     "image": "images/pic box Final.jpg",
     "alt": "Custom 3D printed picture box",
     "specs": [
-      "Precision Additive Multi-Tone Enclosure",
-      "Four Picture Display"
+      "Customizable 3D-Printed Multi-Tone Enclosure",
+      "Four Picture Display; customer-supplied pictures can be discussed with the studio",
+      "Contact the studio to confirm image format, fit, and personalization before ordering"
     ]
   },
   {
