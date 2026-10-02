@@ -212,9 +212,10 @@
           <button type="button" class="opt-btn active" data-pattern="stripes" aria-pressed="true">Classic Stripes</button>
           <button type="button" class="opt-btn" data-pattern="checkerboard" aria-pressed="false">Checkerboard</button>
           <button type="button" class="opt-btn" data-pattern="brick" aria-pressed="false">Brick</button>
-          <button type="button" class="opt-btn" data-pattern="herringbone" aria-pressed="false">Herringbone</button>
+          <button type="button" class="opt-btn" data-pattern="herringbone" aria-pressed="false">Herringbone (WIP)</button>
         </div>
         <p style="font-size:0.72rem; color:var(--text-muted); margin-top:0.55rem;">Patterns use the species selected in your strips. A second wood is added for contrast if only one species is selected.</p>
+        <p style="font-size:0.72rem; color:var(--accent-hover); margin-top:0.45rem;"><strong>Herringbone is a work in progress.</strong> Its preview may not render the pattern correctly.</p>
       </div>
     </div>
 
@@ -225,11 +226,12 @@
         <ol>
           <li>Set your board length and thickness.</li>
           <li>Choose woods and adjust the ribbon widths and order.</li>
-          <li>Choose a classic, checkerboard, brick, or herringbone face pattern.</li>
+          <li>Choose a classic, checkerboard, brick, or herringbone face pattern (herringbone is a work in progress).</li>
           <li>Explore edge or end grain, board shape, and juice groove.</li>
-          <li>Save a PNG of your design to share with the studio.</li>
+          <li>Send your design details to the studio for review, or save a PNG to share.</li>
         </ol>
         <p class="visualizer-note">This visualizer is a design preview, not a final quote or manufacturing drawing. We will confirm materials, feasibility, and pricing with you before any work begins.</p>
+        <button type="button" class="btn btn-primary" id="btnSendDesign" style="width:100%; margin-top:0.8rem;">Send design to studio</button>
       </div>
     </div>
   </div>
@@ -654,6 +656,26 @@
     document.getElementById('btnRotateView').onclick = (e) => { e.preventDefault(); state.rotation = (state.rotation + 90) % 180; renderCanvas(); };
     document.getElementById('btnExportImage').onclick = (e) => {
       e.preventDefault(); const a = document.createElement('a'); a.download = `frankly-crafted-board.png`; a.href = canvas.toDataURL(); a.click();
+    };
+    document.getElementById('btnSendDesign').onclick = () => {
+      const design = {
+        version: 1,
+        length: state.length,
+        thickness: state.thickness,
+        grain: state.grainType,
+        shape: state.shape,
+        cornerRadius: state.cornerRadius,
+        pattern: state.facePattern,
+        juiceGroove: state.juiceGroove,
+        ribbons: state.ribbons.map(({ wood, width }) => ({ wood, width })),
+        sliceThickness: state.sliceThickness,
+        endGrainPattern: state.endGrainPattern,
+        alternateRings: state.alternateRings
+      };
+      const target = new URL('../', window.location.href);
+      target.searchParams.set('boardDesign', JSON.stringify(design));
+      target.hash = 'commission';
+      window.location.assign(target);
     };
     document.getElementById('btnAddRibbon').onclick = (e) => {
       e.preventDefault(); state.ribbons.push({ id: Date.now(), wood: 'walnut', width: 1.0 }); renderRibbonList(); updateAll();

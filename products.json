@@ -17,6 +17,7 @@
       "width": 12,
       "thick": 1,
       "speciesValue": "1.0",
+      "speciesName": "Black Walnut, Hard Maple & Cherry",
       "groove": true,
       "feet": false,
       "engraving": false
@@ -34,16 +35,7 @@
       "24\" Diameter x 1\" Solid Pine",
       "Precision 3D Printed Script Lettering",
       "Keyhole & Sawtooth Hanger Installed"
-    ],
-    "preset": {
-      "length": 24,
-      "width": 24,
-      "thick": 1,
-      "speciesValue": "0.9",
-      "groove": false,
-      "feet": false,
-      "engraving": true
-    }
+    ]
   },
   {
     "id": "purpleheart-maple-center-board",
@@ -51,15 +43,15 @@
     "category": "boards",
     "subtitle": "Purpleheart Ribbons with a Maple Center",
     "price": 110,
-    "image": "images/Purple_Heart_Maple_Center_(1).jpg",
+    "image": "images/optimized/purpleheart-center-main.jpg",
     "images": [
-      "images/Purple_Heart_Maple_Center_(1).jpg",
-      "images/Purple_Heart_Maple_Center_(2).jpg",
-      "images/Purple_Heart_Maple_Center_(3).jpg"
+      "images/optimized/purpleheart-center-main.jpg",
+      "images/optimized/purpleheart-center-2.jpg",
+      "images/optimized/purpleheart-center-3.jpg"
     ],
     "alt": "Purpleheart cutting board with a wide hard maple center stripe",
     "specs": [
-      "Purpleheart with a contrasting hard maple center",
+      "16\" x 12\" x 1\" Purpleheart cutting board with a contrasting hard maple center",
       "Hand-Rubbed Mineral Oil & Beeswax"
     ],
     "preset": {
@@ -67,6 +59,7 @@
       "width": 12,
       "thick": 1,
       "speciesValue": "1.25",
+      "speciesName": "Purpleheart & Hard Maple",
       "groove": true,
       "feet": true,
       "engraving": false
@@ -78,15 +71,15 @@
     "category": "boards",
     "subtitle": "Purpleheart & Maple Ribbon Inlay",
     "price": 110,
-    "image": "images/Purple_Heart_Ribbon_1_(1).jpg",
+    "image": "images/optimized/purpleheart-ribbon-main.jpg",
     "images": [
-      "images/Purple_Heart_Ribbon_1_(1).jpg",
-      "images/Purple_Heart_Ribbon_1_(2).jpg",
-      "images/Purple_Heart_Ribbon_1_(3).jpg"
+      "images/optimized/purpleheart-ribbon-main.jpg",
+      "images/optimized/purpleheart-ribbon-2.jpg",
+      "images/optimized/purpleheart-ribbon-3.jpg"
     ],
     "alt": "Purpleheart cutting board with narrow maple ribbon accents",
     "specs": [
-      "Purpleheart with contrasting maple ribbon accents",
+      "16\" x 12\" x 1\" Purpleheart cutting board with contrasting maple ribbon accents",
       "Hand-Rubbed Mineral Oil & Beeswax"
     ],
     "preset": {
@@ -94,6 +87,7 @@
       "width": 12,
       "thick": 1,
       "speciesValue": "1.25",
+      "speciesName": "Purpleheart & Hard Maple",
       "groove": true,
       "feet": true,
       "engraving": false
@@ -140,15 +134,6 @@
     "alt": "16x16 American Cherry and Black Walnut tournament chessboard",
     "specs": [
       "16\" x 16\" Field with 2\" Tournament Squares"
-    ],
-    "preset": {
-      "length": 16,
-      "width": 16,
-      "thick": 1,
-      "speciesValue": "1.1",
-      "groove": false,
-      "feet": true,
-      "engraving": false
-    }
+    ]
   }
 ]
