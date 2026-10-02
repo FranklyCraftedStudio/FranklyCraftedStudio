@@ -6,9 +6,9 @@
     "subtitle": "Black Walnut, Hard Maple, & Cherry",
     "price": 150,
     "image": "images/Ombre Complete.jpg",
-    "alt": "16x12 Walnut, Maple and Cherry edge-grain cutting board",
+    "alt": "16x12 Walnut, Maple and Cherry end-grain cutting board",
     "specs": [
-      "16\" x 12\" x 1\" Edge-Grain",
+      "16\" x 12\" x 1\" End-Grain",
       "Soft roundover and smooth chamfer",
       "Hand-Rubbed Mineral Oil & Beeswax"
     ],
@@ -16,8 +16,14 @@
       "length": 16,
       "width": 12,
       "thick": 1,
-      "speciesValue": "1.0",
       "speciesName": "Black Walnut, Hard Maple & Cherry",
+      "grain": "end",
+      "woodMix": [
+        { "speciesId": "black-walnut", "share": 0.34 },
+        { "speciesId": "hard-maple", "share": 0.33 },
+        { "speciesId": "black-cherry", "share": 0.33 }
+      ],
+      "woodMixNote": "Estimated blend: 34% walnut, 33% maple, 33% cherry.",
       "groove": true,
       "feet": false,
       "engraving": false
@@ -58,8 +64,13 @@
       "length": 16,
       "width": 12,
       "thick": 1,
-      "speciesValue": "1.25",
-      "speciesName": "Purpleheart & Hard Maple",
+      "speciesName": "Purpleheart & Hard Maple - Center Board",
+      "grain": "edge",
+      "woodMix": [
+        { "speciesId": "purpleheart", "share": 0.6 },
+        { "speciesId": "hard-maple", "share": 0.4 }
+      ],
+      "woodMixNote": "Estimated blend: 60% purpleheart, 40% maple.",
       "groove": true,
       "feet": true,
       "engraving": false
@@ -86,8 +97,13 @@
       "length": 16,
       "width": 12,
       "thick": 1,
-      "speciesValue": "1.25",
-      "speciesName": "Purpleheart & Hard Maple",
+      "speciesName": "Purpleheart & Hard Maple - Ribbon Board",
+      "grain": "edge",
+      "woodMix": [
+        { "speciesId": "purpleheart", "share": 0.8 },
+        { "speciesId": "hard-maple", "share": 0.2 }
+      ],
+      "woodMixNote": "Estimated blend: 80% purpleheart, 20% maple.",
       "groove": true,
       "feet": true,
       "engraving": false
