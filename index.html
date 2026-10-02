@@ -6,6 +6,7 @@
   <title>Frankly Crafted Studio | Fine Timber Meets 3D Design</title>
   <meta name="description" content="Handcrafted hardwood cutting boards, charcuterie boards, personalized nursery signs, and keepsakes from Frankly Crafted Studio in Palos Heights, Illinois." />
   <meta name="theme-color" content="#0e0906" />
+  <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="canonical" href="https://franklycraftedstudio.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Frankly Crafted Studio | Handcrafted Wood & Keepsakes" />
@@ -339,6 +340,55 @@
       justify-content: center;
     }
 
+    .story-section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .story-copy h2 {
+      margin-bottom: 1rem;
+      color: var(--bronze-bright);
+      font: 700 2rem/1.25 var(--font-serif);
+    }
+
+    .story-copy p {
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+    }
+
+    .story-photos {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .story-photos figure {
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius);
+    }
+
+    .story-photos img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+    }
+
+    .story-photos figcaption {
+      padding: 0.7rem;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
     .catalog-filters {
       display: flex;
       justify-content: center;
@@ -596,6 +646,12 @@
       margin-top: 1.5rem;
     }
 
+    .product-detail-note {
+      margin: 1rem 0;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
     .product-dialog-close {
       position: absolute;
       top: 0.7rem;
@@ -822,6 +878,9 @@
       .calc-container {
         grid-template-columns: 1fr;
       }
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
       .menu-toggle {
         display: inline-flex;
         align-items: center;
@@ -864,6 +923,9 @@
       .catalog-grid {
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 320px));
         gap: 1rem;
+      }
+      .story-photos {
+        gap: 0.55rem;
       }
       .hero {
         padding: 3.5rem 0 3rem;
@@ -917,6 +979,7 @@
       </a>
       <nav class="nav-links" id="site-navigation" aria-label="Main navigation">
         <a href="#catalog">Catalog</a>
+        <a href="#our-craft">Our Craft</a>
         <a href="build-your-board/">Build Your Own Board</a>
         <a href="#commission">Custom Estimator</a>
         <a href="#care">Board Care</a>
@@ -957,12 +1020,34 @@
     </div>
   </section>
 
+  <section class="story-section" id="our-craft">
+    <div class="container story-grid">
+      <div class="story-copy">
+        <p class="species-tag">Palos Heights, Illinois</p>
+        <h2>Made with care, designed for real life</h2>
+        <p>Frankly Crafted Studio brings together hardwood cutting boards, personalized pine signs, and 3D-printed keepsakes. The catalog shares the confirmed materials and specifications for each piece.</p>
+        <p>Have a particular size, engraving, or idea in mind? Send a note to the studio. We will confirm availability, feasibility, and final details with you before work begins.</p>
+        <a href="#commission" class="btn btn-outline">Ask about a custom piece</a>
+      </div>
+      <div class="story-photos" aria-label="Examples of studio work">
+        <figure>
+          <img src="images/optimized/purpleheart-center-main.jpg" alt="Purpleheart and maple cutting board made by Frankly Crafted Studio" loading="lazy" decoding="async">
+          <figcaption>Purpleheart and hard maple cutting board</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Cami Sign Complete.jpg" alt="Pine nursery sign with personalized lettering" loading="lazy" decoding="async">
+          <figcaption>Personalized pine nursery sign</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- Interactive Commission Estimator & Direct Order Section -->
   <section class="commission-section" id="commission">
     <div class="container">
       <div class="section-head">
         <h2>Custom Board Commission Estimator</h2>
-        <p>Configure your exact specifications. Board feet and pricing calculate live.</p>
+        <p>Explore dimensions, wood blends, and options for a custom cutting board.</p>
       </div>
 
       <div class="calc-container">
@@ -971,12 +1056,8 @@
           <h3>1. Choose Specifications</h3>
           
           <div class="input-row">
-            <label for="species-select">Primary Hardwood Blend</label>
+            <label for="species-select">Cutting Board Wood Blend</label>
             <select id="species-select">
-              <option value="1.0" data-name="Walnut & Maple">Black Walnut & Hard Maple (Standard)</option>
-              <option value="1.1" data-name="All Black Walnut">Select Prime Black Walnut</option>
-              <option value="1.25" data-name="Exotic Accent (Purpleheart / Cherry)">Exotic Accent (Walnut, Cherry, Purpleheart)</option>
-              <option value="0.9" data-name="White Oak">White Oak (Signs / Displays)</option>
             </select>
           </div>
 
@@ -1027,7 +1108,7 @@
               <span>Estimated Total:</span>
               <span class="total-price" id="total-output">$145.00</span>
             </div>
-            <p class="estimate-note">Planning estimate only. Final materials, specifications, and price are confirmed by the studio before work begins.</p>
+            <p class="estimate-note"><strong>Rough planning estimate, not a quote.</strong> This calculator uses a simplified board-foot formula and preset material multipliers; it does not account for every species, labor, finishing, or project detail. The studio will confirm feasibility, materials, options, and final price before work begins.</p>
           </div>
         </div>
 
@@ -1050,8 +1131,9 @@
             <input type="hidden" id="form-dimensions" name="Target Dimensions (L x W x T)">
             <input type="hidden" id="form-board-feet" name="Calculated Board Feet">
             <input type="hidden" id="form-addons" name="Add-ons Selected">
-            <input type="hidden" id="form-total-price" name="Estimated Price Quote">
+            <input type="hidden" id="form-total-price" name="Rough Planning Estimate (Not a Quote)">
             <input type="hidden" id="form-product-interest" name="Product of Interest">
+            <input type="hidden" id="form-visualizer-design" name="Board Design from Visualizer">
 
             <div class="input-row">
               <label for="cust-name">Your Full Name</label>
@@ -1115,6 +1197,7 @@
         <p id="product-dialog-subtitle"></p>
         <span class="product-dialog-price" id="product-dialog-price"></span>
         <ul class="specs-list" id="product-dialog-specs"></ul>
+        <p class="product-detail-note">Need a detail that is not listed? Ask the studio to confirm specifications, finish options, and timing.</p>
         <button type="button" class="btn btn-primary" id="product-customize-button">Customize this item</button>
       </div>
     </div>
@@ -1147,7 +1230,7 @@
           "Soft roundover and smooth chamfer",
           "Hand-Rubbed Mineral Oil & Beeswax"
         ],
-        preset: { length: 16, width: 12, thick: 1, speciesValue: "1.0", groove: true, feet: false, engraving: false }
+        preset: { length: 16, width: 12, thick: 1, speciesValue: "1.0", speciesName: "Black Walnut, Hard Maple & Cherry", groove: true, feet: false, engraving: false }
       },
       {
         id: "nursery-round",
@@ -1161,8 +1244,7 @@
           "24\" Diameter x 1\" Solid Pine",
           "Precision 3D Printed Script Lettering",
           "Keyhole & Sawtooth Hanger Installed"
-        ],
-        preset: { length: 24, width: 24, thick: 1, speciesValue: "0.9", groove: false, feet: false, engraving: true }
+        ]
       },
       {
         id: "purpleheart-maple-center-board",
@@ -1170,18 +1252,18 @@
         category: "boards",
         subtitle: "Purpleheart Ribbons with a Maple Center",
         price: 110,
-        image: "images/Purple_Heart_Maple_Center_(1).jpg",
+        image: "images/optimized/purpleheart-center-main.jpg",
         images: [
-          "images/Purple_Heart_Maple_Center_(1).jpg",
-          "images/Purple_Heart_Maple_Center_(2).jpg",
-          "images/Purple_Heart_Maple_Center_(3).jpg"
+          "images/optimized/purpleheart-center-main.jpg",
+          "images/optimized/purpleheart-center-2.jpg",
+          "images/optimized/purpleheart-center-3.jpg"
         ],
         alt: "Purpleheart cutting board with a wide hard maple center stripe",
         specs: [
-          "Purpleheart with a contrasting hard maple center",
+          "16\" x 12\" x 1\" Purpleheart cutting board with a contrasting hard maple center",
           "Hand-Rubbed Mineral Oil & Beeswax"
         ],
-        preset: { length: 16, width: 12, thick: 1, speciesValue: "1.25", groove: true, feet: true, engraving: false }
+        preset: { length: 16, width: 12, thick: 1, speciesValue: "1.25", speciesName: "Purpleheart & Hard Maple", groove: true, feet: true, engraving: false }
       },
       {
         id: "purpleheart-ribbon-board",
@@ -1189,18 +1271,18 @@
         category: "boards",
         subtitle: "Purpleheart & Maple Ribbon Inlay",
         price: 110,
-        image: "images/Purple_Heart_Ribbon_1_(1).jpg",
+        image: "images/optimized/purpleheart-ribbon-main.jpg",
         images: [
-          "images/Purple_Heart_Ribbon_1_(1).jpg",
-          "images/Purple_Heart_Ribbon_1_(2).jpg",
-          "images/Purple_Heart_Ribbon_1_(3).jpg"
+          "images/optimized/purpleheart-ribbon-main.jpg",
+          "images/optimized/purpleheart-ribbon-2.jpg",
+          "images/optimized/purpleheart-ribbon-3.jpg"
         ],
         alt: "Purpleheart cutting board with narrow maple ribbon accents",
         specs: [
-          "Purpleheart with contrasting maple ribbon accents",
+          "16\" x 12\" x 1\" Purpleheart cutting board with contrasting maple ribbon accents",
           "Hand-Rubbed Mineral Oil & Beeswax"
         ],
-        preset: { length: 16, width: 12, thick: 1, speciesValue: "1.25", groove: true, feet: true, engraving: false }
+        preset: { length: 16, width: 12, thick: 1, speciesValue: "1.25", speciesName: "Purpleheart & Hard Maple", groove: true, feet: true, engraving: false }
       },
       {
         id: "hickory-maple-cumaru-charcuterie",
@@ -1231,7 +1313,7 @@
         specs: [
           "Precision Additive Multi-Tone Enclosure",
           "Four Picture Display"
-        ],
+        ]
       },
       {
         id: "walnut-cherry-chessboard",
@@ -1243,8 +1325,7 @@
         alt: "16x16 American Cherry and Black Walnut tournament chessboard",
         specs: [
           "16\" x 16\" Field with 2\" Tournament Squares"
-        ],
-        preset: { length: 16, width: 16, thick: 1, speciesValue: "1.1", groove: false, feet: true, engraving: false }
+        ]
       }
     ];
 
@@ -1349,7 +1430,7 @@
           <article class="card" data-category="${escapeHtml(category)}">
             <button type="button" class="card-media" data-product-index="${index}"
               aria-label="View details for ${escapeHtml(item.name)}">
-              <img src="${escapeHtml(item.image || image)}" alt="${escapeHtml(item.alt || item.name)}" loading="lazy">
+              <img src="${escapeHtml(item.image || image)}" alt="${escapeHtml(item.alt || item.name)}" loading="lazy" decoding="async">
               <span class="view-zoom-hint">View piece details</span>
             </button>
             <div class="card-content">
@@ -1398,12 +1479,12 @@
         ? images.map((image, imageIndex) => `
           <button type="button" class="product-thumbnail" data-image-index="${imageIndex}"
             aria-label="View photo ${imageIndex + 1}" aria-pressed="${imageIndex === 0}">
-            <img src="${escapeHtml(image)}" alt="">
+            <img src="${escapeHtml(image)}" alt="" loading="lazy" decoding="async">
           </button>
         `).join('')
         : '';
       document.getElementById('product-customize-button').textContent =
-        item.preset ? 'Customize this item' : 'Ask about this item';
+        hasBoardCalculatorPreset(item) ? 'Customize this board' : 'Ask about this item';
       showProductImage(item, images[0] || "", 0);
       productDialog.showModal();
     }
@@ -1439,17 +1520,102 @@
     const productInterestInput = document.getElementById('form-product-interest');
     const productInterestNotice = document.getElementById('product-interest-notice');
     const commissionNotes = document.getElementById('cust-notes');
+    const visualizerDesignInput = document.getElementById('form-visualizer-design');
     const defaultNotesPlaceholder = commissionNotes.placeholder;
+
+    function readVisualizerDesign() {
+      const params = new URLSearchParams(window.location.search);
+      const encodedDesign = params.get('boardDesign');
+      if (!encodedDesign) return;
+
+      let design;
+      try {
+        design = JSON.parse(encodedDesign);
+      } catch {
+        productInterestNotice.textContent = 'We could not read the visualizer design link. Please return to the board designer and send it again.';
+        productInterestNotice.hidden = false;
+        return;
+      }
+
+      const validPatterns = ['stripes', 'checkerboard', 'brick', 'herringbone'];
+      const validShapes = ['rect', 'rounded', 'paddle', 'capsule', 'circle'];
+      const validGrain = ['edge', 'end'];
+      const validEndGrainPatterns = ['flipped', 'aligned', 'offset'];
+      const isNumberInRange = (value, min, max) => Number.isFinite(value) && value >= min && value <= max;
+      const validDesign = design && design.version === 1 &&
+        isNumberInRange(design.length, 4, 48) &&
+        isNumberInRange(design.thickness, 0.5, 4) &&
+        validPatterns.includes(design.pattern) &&
+        validShapes.includes(design.shape) &&
+        validGrain.includes(design.grain) &&
+        isNumberInRange(design.cornerRadius, 0.25, 2.5) &&
+        typeof design.juiceGroove === 'boolean' &&
+        Array.isArray(design.ribbons) && design.ribbons.length > 0 && design.ribbons.length <= 60 &&
+        design.ribbons.every(ribbon =>
+          ribbon && typeof ribbon.wood === 'string' && /^[a-z_]+$/.test(ribbon.wood) &&
+          isNumberInRange(ribbon.width, 0.125, 48)
+        ) &&
+        (design.grain !== 'end' || (
+          isNumberInRange(design.sliceThickness, 0.75, 3) &&
+          validEndGrainPatterns.includes(design.endGrainPattern) &&
+          typeof design.alternateRings === 'boolean'
+        ));
+
+      if (!validDesign) {
+        productInterestNotice.textContent = 'The visualizer design link has incomplete or unsupported settings. Please return to the board designer and send it again.';
+        productInterestNotice.hidden = false;
+        return;
+      }
+
+      const woodNames = {
+        maple: 'Hard Maple', walnut: 'Black Walnut', cherry: 'Cherry', white_oak: 'White Oak',
+        purpleheart: 'Purpleheart', padauk: 'Padauk', yellowheart: 'Yellowheart'
+      };
+      if (!design.ribbons.every(ribbon => woodNames[ribbon.wood])) {
+        productInterestNotice.textContent = 'The visualizer design link contains an unknown wood selection. Please return to the board designer and send it again.';
+        productInterestNotice.hidden = false;
+        return;
+      }
+
+      const patternNames = {
+        stripes: 'Classic Stripes', checkerboard: 'Checkerboard', brick: 'Brick', herringbone: 'Herringbone (work in progress)'
+      };
+      const shapeNames = { rect: 'Rectangle', rounded: 'Rounded', paddle: 'Paddle', capsule: 'Oval', circle: 'Circle' };
+      const ribbonDetails = design.ribbons.map((ribbon, index) =>
+        `${index + 1}. ${woodNames[ribbon.wood]} (${ribbon.width.toFixed(3).replace(/0+$/, '').replace(/\.$/, '')} in)`
+      ).join('; ');
+      const designDetails = [
+        `Dimensions (L x W x T): ${design.length.toFixed(1)} x ${design.ribbons.reduce((sum, ribbon) => sum + ribbon.width, 0).toFixed(2)} x ${design.thickness.toFixed(2)} in`,
+        `Grain: ${design.grain === 'end' ? 'End' : 'Edge'}`,
+        `Shape: ${shapeNames[design.shape]}`,
+        `Face pattern: ${patternNames[design.pattern]}`,
+        `Juice groove: ${design.juiceGroove ? 'Yes' : 'No'}`,
+        `Wood strips, in order: ${ribbonDetails}`,
+        design.grain === 'end'
+          ? `End-grain slice: ${design.sliceThickness.toFixed(2)} in; row arrangement: ${design.endGrainPattern}; alternate ring curvature: ${design.alternateRings ? 'Yes' : 'No'}`
+          : ''
+      ].filter(Boolean).join('\n');
+
+      visualizerDesignInput.value = designDetails;
+      productInterestInput.value = 'Custom board design from visualizer';
+      productInterestNotice.textContent = 'Your visualizer design is attached. The estimator above does not price visualizer designs; add your contact details and any notes before sending.';
+      productInterestNotice.hidden = false;
+      commissionNotes.value = 'I would like to discuss this board design. Please confirm feasibility, materials, and final pricing.';
+    }
+
+    readVisualizerDesign();
 
     document.getElementById('product-customize-button').addEventListener('click', () => {
       if (activeProductIndex === null) return;
       const productIndex = activeProductIndex;
       const item = PRODUCTS[productIndex];
       productDialog.close();
-      if (item.preset) {
+      visualizerDesignInput.value = '';
+      if (hasBoardCalculatorPreset(item)) {
         productInterestInput.value = '';
         productInterestNotice.hidden = true;
         productInterestNotice.textContent = '';
+        visualizerDesignInput.value = '';
         commissionNotes.placeholder = defaultNotesPlaceholder;
         applyPreset(productIndex);
       } else {
@@ -1493,6 +1659,13 @@
       return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(price) || 0);
     }
 
+    function hasBoardCalculatorPreset(item) {
+      return item?.category === 'boards' &&
+        item.preset &&
+        typeof item.preset.speciesName === 'string' &&
+        Number.isFinite(Number(item.preset.speciesValue));
+    }
+
     /* ==========================================================================
        DYNAMIC ESTIMATOR LOGIC
        ========================================================================== */
@@ -1513,6 +1686,22 @@
     const totalOutput = document.getElementById('total-output');
 
     let currentCalculatedData = {};
+
+    function populateSpeciesOptions() {
+      const blends = new Map();
+      PRODUCTS.filter(hasBoardCalculatorPreset).forEach(item => {
+        const { speciesName, speciesValue } = item.preset;
+        if (!blends.has(speciesName)) blends.set(speciesName, speciesValue);
+      });
+
+      if (blends.size === 0) {
+        throw new Error('No cutting board material blends are configured in the product catalog');
+      }
+
+      speciesSelect.innerHTML = [...blends].map(([name, multiplier]) =>
+        `<option value="${escapeHtml(multiplier)}" data-name="${escapeHtml(name)}">${escapeHtml(name)}</option>`
+      ).join('');
+    }
 
     function updateCalculator() {
       const L = parseFloat(lengthRange.value);
@@ -1562,7 +1751,7 @@
 
     function applyPreset(productIndex) {
       const item = PRODUCTS[productIndex];
-      if (!item || !item.preset) return;
+      if (!item || !hasBoardCalculatorPreset(item)) return;
 
       const p = item.preset;
       lengthRange.value = p.length;
@@ -1638,11 +1827,13 @@
     // Run on Initial Load
     loadProducts().then((items) => {
       PRODUCTS = items;
+      populateSpeciesOptions();
       renderCatalogFilters();
       renderCatalog();
       updateCalculator();
     }).catch(() => {
       PRODUCTS = FALLBACK_PRODUCTS;
+      populateSpeciesOptions();
       renderCatalogFilters();
       renderCatalog();
       updateCalculator();
