@@ -129,6 +129,31 @@
     ]
   },
   {
+    "id": "five-wood-charcuterie",
+    "name": "Five-Wood Charcuterie Board",
+    "category": "boards",
+    "subtitle": "Hickory, Cumaru, Walnut, Maple & Cherry",
+    "price": 100,
+    "image": "images/optimized/five-wood-charcuterie-main.jpg",
+    "images": [
+      "images/optimized/five-wood-charcuterie-main.jpg",
+      "images/optimized/five-wood-charcuterie-2.jpg",
+      "images/optimized/five-wood-charcuterie-3.jpg",
+      "images/optimized/five-wood-charcuterie-4.jpg",
+      "images/optimized/five-wood-charcuterie-5.jpg",
+      "images/optimized/five-wood-charcuterie-6.jpg",
+      "images/optimized/five-wood-charcuterie-7.jpg",
+      "images/optimized/five-wood-charcuterie-8.jpg"
+    ],
+    "alt": "Charcuterie board made with hickory, Cumaru, walnut, maple, and cherry",
+    "specs": [
+      "Handcrafted from hickory, Cumaru, walnut, maple, and cherry",
+      "A distinctive five-wood blend with varied natural colors and grain",
+      "Made for serving charcuterie, cheeses, fruit, and appetizers",
+      "Natural wood grain and color vary from board to board"
+    ]
+  },
+  {
     "id": "picture-box",
     "name": "Artisanal 3D Picture Keepsake Box",
     "category": "keepsakes",
