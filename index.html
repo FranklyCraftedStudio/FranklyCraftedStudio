@@ -673,7 +673,7 @@
       padding: 2rem;
     }
 
-    /* Calculator & Form Section */
+    /* Commission Request Section */
     .commission-section {
       padding: 5rem 0;
       background: var(--bg-walnut);
@@ -681,10 +681,9 @@
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    .calc-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+    .form-panel {
+      max-width: 760px;
+      margin: 0 auto;
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius);
@@ -692,7 +691,7 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.4);
     }
 
-    .calc-panel h3, .form-panel h3 {
+    .form-panel h3 {
       font-family: var(--font-serif);
       color: var(--bronze-bright);
       font-size: 1.4rem;
@@ -711,20 +710,6 @@
       margin-bottom: 0.5rem;
     }
 
-    .input-row label span {
-      color: var(--bronze-bright);
-      font-weight: 600;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      height: 6px;
-      border-radius: 3px;
-      background: var(--border-subtle);
-      outline: none;
-      accent-color: var(--bronze);
-    }
-
     select, input[type="text"], input[type="email"], textarea {
       width: 100%;
       padding: 0.75rem 1rem;
@@ -740,72 +725,6 @@
 
     select:focus, input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
       border-color: var(--bronze);
-    }
-
-    .addon-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-
-    .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .checkbox-label input {
-      accent-color: var(--bronze);
-      width: 16px;
-      height: 16px;
-    }
-
-    .summary-box {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background: var(--bg-card);
-      border: 1px dashed var(--bronze);
-      border-radius: 8px;
-    }
-
-    .summary-line {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    .summary-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 0.75rem;
-      margin-top: 0.75rem;
-    }
-
-    .summary-total span:first-child {
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      color: var(--text-main);
-    }
-
-    .summary-total .total-price {
-      font-family: var(--font-serif);
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--bronze-bright);
-    }
-
-    .estimate-note {
-      margin-top: 0.85rem;
-      color: var(--text-muted);
-      font-size: 0.78rem;
     }
 
     /* Care Guide */
@@ -885,9 +804,6 @@
 
     /* Mobile Responsive */
     @media (max-width: 860px) {
-      .calc-container {
-        grid-template-columns: 1fr;
-      }
       .story-grid {
         grid-template-columns: 1fr;
       }
@@ -947,15 +863,8 @@
       .btn {
         padding: 0.8rem 1.1rem;
       }
-      .calc-container {
+      .form-panel {
         padding: 1.25rem;
-        gap: 2rem;
-      }
-      .summary-box {
-        padding: 1rem;
-      }
-      .summary-total .total-price {
-        font-size: 1.5rem;
       }
     }
 
@@ -991,7 +900,7 @@
         <a href="#catalog">Catalog</a>
         <a href="#our-craft">Our Craft</a>
         <a href="build-your-board/">Build Your Own Board</a>
-        <a href="#commission">Custom Estimator</a>
+        <a href="#commission">Custom Commissions</a>
         <a href="#care">Board Care</a>
         <a href="#commission" class="btn-nav">Commission Work</a>
       </nav>
@@ -1052,138 +961,68 @@
     </div>
   </section>
 
-  <!-- Interactive Commission Estimator & Direct Order Section -->
+  <!-- Commission Request Section -->
   <section class="commission-section" id="commission">
     <div class="container">
       <div class="section-head">
-        <h2>Custom Board Commission Estimator</h2>
-        <p>Explore dimensions, wood blends, and options for a custom cutting board.</p>
-        <p>These prices are rough estimates, not fixed quotes. Final pricing depends on the design and materials, and can be discussed with the studio.</p>
+        <h2>Custom Commissions</h2>
+        <p>Interested in a listed piece or have a custom idea? Send a request and the studio will follow up to discuss details, availability, and pricing.</p>
         <a href="build-your-board/" class="btn btn-outline">Design Your Own Board</a>
       </div>
 
-      <div class="calc-container">
-        <!-- Interactive Controls -->
-        <div class="calc-panel">
-          <h3>1. Choose Specifications</h3>
-          
+      <div class="form-panel">
+        <h3>Submit Commission Request</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Send your specifications or product question to the studio. We will review your request and follow up by email with availability and next steps.
+        </p>
+
+        <form id="commission-form" action="https://api.web3forms.com/submit" method="POST">
+          <!-- Active Web3Forms Access Key for Frankly Crafted Studio -->
+          <input type="hidden" name="access_key" value="868257ba-52ad-4a15-a6e1-01ef4e90de9c">
+          <input type="hidden" name="from_name" value="Frankly Crafted Studio Web">
+          <input type="hidden" name="subject" value="New Commission Request — Frankly Crafted Studio">
+          <input type="checkbox" name="botcheck" style="display: none;">
+
+          <!-- Board design details are included when sent from the visualizer. -->
+          <input type="hidden" id="form-visualizer-design" name="Board Design from Visualizer">
+
           <div class="input-row">
-            <label for="species-select">Cutting Board Wood Blend</label>
-            <select id="species-select">
+            <label for="form-product-interest">Product or Project of Interest</label>
+            <select id="form-product-interest" name="Product of Interest">
+              <option value="">Custom cutting board or general commission</option>
+              <option value="Classic Three-Tone Cutting Board">Classic Three-Tone Cutting Board</option>
+              <option value="Nursery Name Sign Round">Nursery Name Sign Round</option>
+              <option value="Purpleheart & Maple Center Board">Purpleheart & Maple Center Board</option>
+              <option value="Purpleheart Ribbon Board">Purpleheart Ribbon Board</option>
+              <option value="Hickory, Maple & Cumaru Charcuterie Board">Hickory, Maple & Cumaru Charcuterie Board</option>
+              <option value="Five-Wood Charcuterie Board">Five-Wood Charcuterie Board</option>
+              <option value="Artisanal 3D Picture Keepsake Box">Artisanal 3D Picture Keepsake Box (Picture Box)</option>
+              <option value="Grandmaster Walnut & Cherry Chessboard">Grandmaster Walnut & Cherry Chessboard</option>
+              <option value="Custom board design from visualizer">Custom board design from visualizer</option>
             </select>
           </div>
 
           <div class="input-row">
-            <label for="grain-type-select">Grain Construction</label>
-            <select id="grain-type-select">
-              <option value="edge">Edge grain</option>
-              <option value="end">End grain</option>
-            </select>
-            <p class="estimate-note" id="turnaround-estimate" aria-live="polite"></p>
+            <label for="cust-name">Your Full Name</label>
+            <input type="text" id="cust-name" name="Client Name" autocomplete="name" maxlength="100" required placeholder="Your name">
           </div>
 
           <div class="input-row">
-            <label for="length-range">Length: <span id="length-val">16</span> inches</label>
-            <input type="range" id="length-range" min="10" max="24" step="1" value="16">
+            <label for="cust-email">Email Address</label>
+            <input type="email" id="cust-email" name="replyto" autocomplete="email" maxlength="254" required placeholder="you@example.com">
           </div>
 
           <div class="input-row">
-            <label for="width-range">Width: <span id="width-val">12</span> inches</label>
-            <input type="range" id="width-range" min="8" max="24" step="1" value="12">
+            <label for="cust-notes">Design Notes & Personalization</label>
+            <textarea id="cust-notes" name="Commission Notes" rows="4" maxlength="1500" placeholder="Mention personalized text (e.g. 'Where Our Next Chapter Begins Est 2026'), edge bevel preference, or timeline requirements..."></textarea>
           </div>
 
-          <div class="input-row">
-            <label for="thick-range">Thickness: <span id="thick-val">1.00</span> inches</label>
-            <input type="range" id="thick-range" min="0.75" max="2.25" step="0.25" value="1">
-          </div>
-
-          <div class="addon-group">
-            <label class="checkbox-label">
-              <input type="checkbox" id="check-groove" checked>
-              Continuous Perimeter Juice Groove
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="check-feet">
-              Recessed Non-Slip Rubber Feet with Stainless Screws
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="check-engraving">
-              Laser / Scorch-Pen Personalization Stencil
-            </label>
-          </div>
-
-          <div class="summary-box">
-            <div class="summary-total">
-              <span>Estimated board price:</span>
-              <span class="total-price" id="total-output">$145.00</span>
-            </div>
-            <p class="estimate-note"><strong>Rough estimate only.</strong> Final pricing can be discussed with the studio. For a custom design, <a href="build-your-board/">build your own board</a> and send it to us for a personalized estimate.</p>
-          </div>
-        </div>
-
-        <!-- Direct Email Form -->
-        <div class="form-panel">
-          <h3>2. Submit Commission Request</h3>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
-            Send your specifications or product question to the studio. We will review your request and follow up by email with availability and next steps.
-          </p>
-
-          <form id="commission-form" action="https://api.web3forms.com/submit" method="POST">
-            <!-- Active Web3Forms Access Key for Frankly Crafted Studio -->
-            <input type="hidden" name="access_key" value="868257ba-52ad-4a15-a6e1-01ef4e90de9c">
-            <input type="hidden" name="from_name" value="Frankly Crafted Studio Web">
-            <input type="hidden" name="subject" value="New Commission Request — Frankly Crafted Studio">
-            <input type="checkbox" name="botcheck" style="display: none;">
-
-            <!-- Synced Dynamic Fields -->
-            <input type="hidden" id="form-wood-species" name="Hardwood Selection">
-            <input type="hidden" id="form-grain-type" name="Grain Construction">
-            <input type="hidden" id="form-cost-breakdown" name="Estimated Cost Breakdown">
-            <input type="hidden" id="form-target-margin" name="Target Board Margin">
-            <input type="hidden" id="form-production-time" name="Estimated Production Time">
-            <input type="hidden" id="form-dimensions" name="Target Dimensions (L x W x T)">
-            <input type="hidden" id="form-board-feet" name="Calculated Board Feet">
-            <input type="hidden" id="form-addons" name="Add-ons Selected">
-            <input type="hidden" id="form-total-price" name="Estimated Planning Price (Not a Quote)">
-            <input type="hidden" id="form-visualizer-design" name="Board Design from Visualizer">
-
-            <div class="input-row">
-              <label for="form-product-interest">Product or Project of Interest</label>
-              <select id="form-product-interest" name="Product of Interest">
-                <option value="">Custom cutting board or general commission</option>
-                <option value="Classic Three-Tone Cutting Board">Classic Three-Tone Cutting Board</option>
-                <option value="Nursery Name Sign Round">Nursery Name Sign Round</option>
-                <option value="Purpleheart & Maple Center Board">Purpleheart & Maple Center Board</option>
-                <option value="Purpleheart Ribbon Board">Purpleheart Ribbon Board</option>
-                <option value="Hickory, Maple & Cumaru Charcuterie Board">Hickory, Maple & Cumaru Charcuterie Board</option>
-                <option value="Five-Wood Charcuterie Board">Five-Wood Charcuterie Board</option>
-                <option value="Artisanal 3D Picture Keepsake Box">Artisanal 3D Picture Keepsake Box (Picture Box)</option>
-                <option value="Grandmaster Walnut & Cherry Chessboard">Grandmaster Walnut & Cherry Chessboard</option>
-              </select>
-            </div>
-
-            <div class="input-row">
-              <label for="cust-name">Your Full Name</label>
-              <input type="text" id="cust-name" name="Client Name" autocomplete="name" maxlength="100" required placeholder="Your name">
-            </div>
-
-            <div class="input-row">
-              <label for="cust-email">Email Address</label>
-              <input type="email" id="cust-email" name="replyto" autocomplete="email" maxlength="254" required placeholder="you@example.com">
-            </div>
-
-            <div class="input-row">
-              <label for="cust-notes">Design Notes & Personalization</label>
-              <textarea id="cust-notes" name="Commission Notes" rows="4" maxlength="1500" placeholder="Mention personalized text (e.g. 'Where Our Next Chapter Begins Est 2026'), edge bevel preference, or timeline requirements..."></textarea>
-            </div>
-
-            <p id="product-interest-notice" hidden></p>
-            <button type="button" class="btn btn-outline" id="download-visualizer-png" style="display: none; margin-bottom: 1rem;">Download Design PNG</button>
-            <button type="submit" class="btn btn-primary" style="width: 100%;" id="submit-btn">Send Commission Request</button>
-            <p class="privacy-note">Your inquiry and any selected product, estimate, or board-design details are sent through Web3Forms so the studio can respond. Do not include sensitive information. Board preview images are not uploaded. <a href="privacy.html">Read the privacy notice</a>.</p>
-            <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
-          </form>
-        </div>
+          <p id="product-interest-notice" hidden></p>
+          <button type="button" class="btn btn-outline" id="download-visualizer-png" style="display: none; margin-bottom: 1rem;">Download Design PNG</button>
+          <button type="submit" class="btn btn-primary" style="width: 100%;" id="submit-btn">Send Commission Request</button>
+          <p class="privacy-note">Your inquiry and any selected product or board-design details are sent through Web3Forms so the studio can respond. Do not include sensitive information. Board preview images are not uploaded. <a href="privacy.html">Read the privacy notice</a>.</p>
+          <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+        </form>
       </div>
     </div>
   </section>
@@ -1227,7 +1066,7 @@
         <span class="product-dialog-price" id="product-dialog-price"></span>
         <ul class="specs-list" id="product-dialog-specs"></ul>
         <p class="product-detail-note" id="product-detail-note">Need a detail that is not listed? Ask the studio to confirm specifications, finish options, and timing.</p>
-        <button type="button" class="btn btn-primary" id="product-customize-button">Customize this item</button>
+        <button type="button" class="btn btn-primary" id="product-customize-button">Ask about this item</button>
       </div>
     </div>
   </dialog>
@@ -1241,7 +1080,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT ENGINE: Product Catalog + Live Estimator + Web3Forms Submission -->
+  <!-- SCRIPT ENGINE: Product Catalog + Commission Request Form -->
   <script>
     /* ==========================================================================
        CATALOG DATA CONFIGURATION
@@ -1259,8 +1098,7 @@
           "16\" x 12\" x 1\" End-Grain",
           "Soft roundover and smooth chamfer",
           "Hand-Rubbed Mineral Oil & Beeswax"
-        ],
-        preset: { length: 16, width: 12, thick: 1, speciesName: "Black Walnut, Hard Maple & Cherry", grain: "end", woodMix: [{ speciesId: "black-walnut", share: 0.34 }, { speciesId: "hard-maple", share: 0.33 }, { speciesId: "black-cherry", share: 0.33 }], woodMixNote: "Estimated blend: 34% walnut, 33% maple, 33% cherry.", groove: true, feet: false, engraving: false }
+        ]
       },
       {
         id: "nursery-round",
@@ -1293,8 +1131,7 @@
         specs: [
           "16\" x 12\" x 1\" Purpleheart cutting board with a contrasting hard maple center",
           "Hand-Rubbed Mineral Oil & Beeswax"
-        ],
-        preset: { length: 16, width: 12, thick: 1, speciesName: "Purpleheart & Hard Maple - Center Board", grain: "edge", woodMix: [{ speciesId: "purpleheart", share: 0.6 }, { speciesId: "hard-maple", share: 0.4 }], woodMixNote: "Estimated blend: 60% purpleheart, 40% maple.", groove: true, feet: true, engraving: false }
+        ]
       },
       {
         id: "purpleheart-ribbon-board",
@@ -1312,8 +1149,7 @@
         specs: [
           "16\" x 12\" x 1\" Purpleheart cutting board with contrasting maple ribbon accents",
           "Hand-Rubbed Mineral Oil & Beeswax"
-        ],
-        preset: { length: 16, width: 12, thick: 1, speciesName: "Purpleheart & Hard Maple - Ribbon Board", grain: "edge", woodMix: [{ speciesId: "purpleheart", share: 0.8 }, { speciesId: "hard-maple", share: 0.2 }], woodMixNote: "Estimated blend: 80% purpleheart, 20% maple.", groove: true, feet: true, engraving: false }
+        ]
       },
       {
         id: "hickory-maple-cumaru-charcuterie",
@@ -1387,16 +1223,6 @@
 
     let PRODUCTS = [...FALLBACK_PRODUCTS];
 
-    const FALLBACK_BOARD_WOOD_PRICES = {
-      "black-walnut": { name: "Black walnut", pricePerBf: 14.70 },
-      "hard-maple": { name: "Hard maple", pricePerBf: 6.00 },
-      "black-cherry": { name: "Black cherry", pricePerBf: 4.95 },
-      purpleheart: { name: "Purpleheart", pricePerBf: 14.50 }
-    };
-    const WOOD_PRICE_SNAPSHOT_DATE = "2026-10-01";
-    const WOOD_PRICE_SOURCE_URL = "https://www.bellforestproducts.com/exotic-lumber/prices/";
-    let BOARD_WOOD_PRICES = FALLBACK_BOARD_WOOD_PRICES;
-
     async function loadProducts() {
       const useFallback = window.location.protocol === 'file:';
       if (useFallback) {
@@ -1430,52 +1256,6 @@
       } catch (error) {
         console.warn('Could not load products.json; using embedded fallback catalog.', error);
         return FALLBACK_PRODUCTS;
-      }
-    }
-
-    async function loadBoardWoodPrices() {
-      if (window.location.protocol === 'file:') {
-        return {
-          prices: FALLBACK_BOARD_WOOD_PRICES,
-          snapshotDate: WOOD_PRICE_SNAPSHOT_DATE,
-          sourceUrl: WOOD_PRICE_SOURCE_URL
-        };
-      }
-
-      try {
-        const response = await fetch('./wood-price-library.json', { cache: 'no-store' });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-        const library = await response.json();
-        if (!Array.isArray(library.species) || !library.price_method ||
-          typeof library.snapshot_date !== 'string') {
-          throw new Error('wood-price-library.json has an invalid structure');
-        }
-
-        const prices = Object.fromEntries(library.species
-          .filter(item => typeof item.id === 'string' &&
-            typeof item.name === 'string' &&
-            Number.isFinite(item.reference_price_usd_per_bf) &&
-            item.reference_price_usd_per_bf > 0)
-          .map(item => [item.id, {
-            name: item.name,
-            pricePerBf: item.reference_price_usd_per_bf,
-            priceBasis: item.price_basis,
-            vendorUrl: item.vendor_product_url
-          }]));
-
-        return {
-          prices,
-          snapshotDate: library.snapshot_date,
-          sourceUrl: library.price_method.price_list_url
-        };
-      } catch (error) {
-        console.warn('Could not load the wood price library; using the embedded researched board-wood prices.', error);
-        return {
-          prices: FALLBACK_BOARD_WOOD_PRICES,
-          snapshotDate: WOOD_PRICE_SNAPSHOT_DATE,
-          sourceUrl: WOOD_PRICE_SOURCE_URL
-        };
       }
     }
 
@@ -1586,10 +1366,7 @@
       document.getElementById('product-dialog-price').textContent = formatPrice(item.price);
       productCategory.textContent = categoryLabel(item.category || "other");
       const productDetailNote = document.getElementById('product-detail-note');
-      if (hasBoardCalculatorPreset(item)) {
-        const turnaround = item.preset.grain === 'end' ? '5-8 business days' : '3-5 business days';
-        productDetailNote.textContent = `Typical production time: ${turnaround} after the design and materials are confirmed. Timing can vary with material availability and the current order queue; the studio will confirm the expected schedule. Ask the studio to confirm any other unlisted details.`;
-      } else if (item.id === 'nursery-round') {
+      if (item.id === 'nursery-round') {
         productDetailNote.textContent = 'This sign is made from pine, not Southern Yellow Pine. Names and lettering can be customized. Send your preferred wording and design ideas to the studio to confirm options.';
       } else if (item.id === 'picture-box') {
         productDetailNote.textContent = 'The picture box can be personalized. Contact the studio to discuss your pictures, colors, and design; image files can be shared by email after the initial inquiry.';
@@ -1606,8 +1383,7 @@
           </button>
         `).join('')
         : '';
-      document.getElementById('product-customize-button').textContent =
-        hasBoardCalculatorPreset(item) ? 'Customize this board' : 'Ask about this item';
+      document.getElementById('product-customize-button').textContent = 'Ask about this item';
       showProductImage(item, images[0] || "", 0);
       productDialog.showModal();
     }
@@ -1647,8 +1423,6 @@
     const downloadVisualizerPngButton = document.getElementById('download-visualizer-png');
     const defaultNotesPlaceholder = commissionNotes.placeholder;
     let visualizerPngDataUrl = '';
-    let visualizerDesignProvided = false;
-    let visualizerProductionTime = '';
     const visualizerDesignKey = 'franklyCraftedBoardDesign';
 
     function readVisualizerDesign() {
@@ -1725,8 +1499,6 @@
       ].filter(Boolean).join('\n');
 
       visualizerDesignInput.value = designDetails;
-      visualizerDesignProvided = true;
-      visualizerProductionTime = `${design.grain === 'end' ? '5-8' : '3-5'} business days after design and materials are confirmed`;
       productInterestInput.value = 'Custom board design from visualizer';
       productInterestNotice.textContent = 'Your design details will be included in this request. Download the PNG below, then attach it when you reply to the studio if you would like to share the image.';
       productInterestNotice.hidden = false;
@@ -1766,35 +1538,25 @@
       const item = PRODUCTS[productIndex];
       productDialog.close();
       visualizerPngDataUrl = '';
-      visualizerDesignProvided = false;
-      visualizerProductionTime = '';
       downloadVisualizerPngButton.style.display = 'none';
       sessionStorage.removeItem(visualizerDesignKey);
       visualizerDesignInput.value = '';
-      if (hasBoardCalculatorPreset(item)) {
-        productInterestInput.value = '';
-        productInterestNotice.hidden = true;
-        productInterestNotice.textContent = '';
-        commissionNotes.placeholder = defaultNotesPlaceholder;
-        applyPreset(productIndex);
-      } else {
-        productInterestInput.value = item.name;
-        const inquiryGuidance = item.id === 'nursery-round'
-          ? 'Pine nursery sign, not Southern Yellow Pine. Add the name, wording, or lettering ideas you would like to discuss.'
+      productInterestInput.value = item.name;
+      const inquiryGuidance = item.id === 'nursery-round'
+        ? 'Pine nursery sign, not Southern Yellow Pine. Add the name, wording, or lettering ideas you would like to discuss.'
+        : item.id === 'picture-box'
+          ? 'Customizable picture box. Send an initial inquiry with your personalization ideas; the studio will reply so you can share image files by email.'
+          : `Product inquiry: ${item.name}`;
+      productInterestNotice.textContent = inquiryGuidance;
+      productInterestNotice.hidden = false;
+      commissionNotes.placeholder = item.id === 'hickory-maple-cumaru-charcuterie'
+        ? 'Enter the exact personalized message you would like laser engraved, plus any questions...'
+        : item.id === 'nursery-round'
+          ? 'Enter the name, wording, and lettering or design preferences you would like to discuss...'
           : item.id === 'picture-box'
-            ? 'Customizable picture box. Send an initial inquiry with your personalization ideas; the studio will reply so you can share image files by email.'
-            : `Product inquiry: ${item.name}`;
-        productInterestNotice.textContent = inquiryGuidance;
-        productInterestNotice.hidden = false;
-        commissionNotes.placeholder = item.id === 'hickory-maple-cumaru-charcuterie'
-          ? 'Enter the exact personalized message you would like laser engraved, plus any questions...'
-          : item.id === 'nursery-round'
-            ? 'Enter the name, wording, and lettering or design preferences you would like to discuss...'
-            : item.id === 'picture-box'
-              ? 'Describe your picture box personalization, colors, and image ideas. We will reply with a way to share image files...'
-              : defaultNotesPlaceholder;
-        document.getElementById('commission').scrollIntoView({ behavior: 'smooth' });
-      }
+            ? 'Describe your picture box personalization, colors, and image ideas. We will reply with a way to share image files...'
+            : defaultNotesPlaceholder;
+      document.getElementById('commission').scrollIntoView({ behavior: 'smooth' });
     });
 
     const menuToggle = document.getElementById('menu-toggle');
@@ -1827,192 +1589,6 @@
       return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(price) || 0);
     }
 
-    function formatCalculatorPrice(price) {
-      return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        maximumFractionDigits: 0
-      }).format(Number(price) || 0);
-    }
-
-    function hasBoardCalculatorPreset(item) {
-      return item?.category === 'boards' &&
-        item.preset &&
-        typeof item.preset.speciesName === 'string' &&
-        Array.isArray(item.preset.woodMix) &&
-        item.preset.woodMix.length > 0;
-    }
-
-    /* ==========================================================================
-       DYNAMIC ESTIMATOR LOGIC
-       ========================================================================== */
-    const lengthRange = document.getElementById('length-range');
-    const widthRange = document.getElementById('width-range');
-    const thickRange = document.getElementById('thick-range');
-    const speciesSelect = document.getElementById('species-select');
-    const grainTypeSelect = document.getElementById('grain-type-select');
-    const checkGroove = document.getElementById('check-groove');
-    const checkFeet = document.getElementById('check-feet');
-    const checkEngraving = document.getElementById('check-engraving');
-
-    const lengthVal = document.getElementById('length-val');
-    const widthVal = document.getElementById('width-val');
-    const thickVal = document.getElementById('thick-val');
-    const totalOutput = document.getElementById('total-output');
-
-    const PRICING_ASSUMPTIONS = Object.freeze({
-      usableWoodYield: 0.60,
-      edgeGrainLaborHours: 2,
-      endGrainLaborHours: 3,
-      laborRate: 25,
-      supplies: 5,
-      overhead: 15,
-      targetMargin: 0.20
-    });
-
-    let woodPriceSnapshotDate = WOOD_PRICE_SNAPSHOT_DATE;
-    let woodPriceSourceUrl = WOOD_PRICE_SOURCE_URL;
-    let currentCalculatedData = {};
-
-    function populateSpeciesOptions() {
-      const blends = new Map();
-      PRODUCTS.filter(item => hasBoardCalculatorPreset(item) && Array.isArray(item.preset.woodMix)).forEach(item => {
-        blends.set(item.preset.speciesName, item.preset.woodMix);
-      });
-
-      if (blends.size === 0) {
-        throw new Error('No cutting board material blends are configured in the product catalog');
-      }
-
-      speciesSelect.innerHTML = [...blends.keys()].map(name =>
-        `<option value="${escapeHtml(name)}" data-name="${escapeHtml(name)}">${escapeHtml(name)}</option>`
-      ).join('');
-    }
-
-    function updateCalculator() {
-      const L = parseFloat(lengthRange.value);
-      const W = parseFloat(widthRange.value);
-      const T = parseFloat(thickRange.value);
-      const speciesName = speciesSelect.options[speciesSelect.selectedIndex].getAttribute('data-name');
-      const grainType = grainTypeSelect.value;
-      document.getElementById('turnaround-estimate').textContent =
-        `Typical production time: ${grainType === 'end' ? '5-8' : '3-5'} business days after the design and materials are confirmed. Timing can vary with material availability and current workload; the studio confirms the expected schedule.`;
-
-      lengthVal.textContent = L;
-      widthVal.textContent = W;
-      thickVal.textContent = T.toFixed(2);
-
-      const boardFeet = (L * W * T) / 144;
-      const selectedPreset = PRODUCTS.find(item =>
-        hasBoardCalculatorPreset(item) && item.preset.speciesName === speciesName
-      )?.preset;
-      if (!selectedPreset || !Array.isArray(selectedPreset.woodMix) || selectedPreset.woodMix.length === 0) {
-        throw new Error(`No estimated wood proportions are configured for ${speciesName}`);
-      }
-
-      const mixShareTotal = selectedPreset.woodMix.reduce((total, item) => total + item.share, 0);
-      if (Math.abs(mixShareTotal - 1) > 0.001) {
-        throw new Error(`Estimated wood proportions for ${speciesName} must add up to 100%`);
-      }
-
-      const weightedWoodPrice = selectedPreset.woodMix.reduce((total, item) => {
-        const woodPrice = BOARD_WOOD_PRICES[item.speciesId];
-        if (!woodPrice || !Number.isFinite(woodPrice.pricePerBf)) {
-          throw new Error(`No researched price is available for ${item.speciesId}`);
-        }
-        return total + woodPrice.pricePerBf * item.share;
-      }, 0);
-      const requiredLumberBoardFeet = boardFeet / PRICING_ASSUMPTIONS.usableWoodYield;
-      const materialCost = requiredLumberBoardFeet * weightedWoodPrice;
-      const laborHours = grainType === 'end'
-        ? PRICING_ASSUMPTIONS.endGrainLaborHours
-        : PRICING_ASSUMPTIONS.edgeGrainLaborHours;
-      const laborCost = laborHours * PRICING_ASSUMPTIONS.laborRate;
-      const fullyLoadedCost = materialCost + laborCost +
-        PRICING_ASSUMPTIONS.supplies + PRICING_ASSUMPTIONS.overhead;
-      const targetBoardPrice = Math.ceil(
-        (fullyLoadedCost / (1 - PRICING_ASSUMPTIONS.targetMargin)) * 100
-      ) / 100;
-      const targetProfit = targetBoardPrice - fullyLoadedCost;
-
-      let addonsPrice = 0;
-      const addonsArray = [];
-
-      if (checkGroove.checked) {
-        addonsPrice += 20;
-        addonsArray.push('Juice Groove (+$20)');
-      }
-      if (checkFeet.checked) {
-        addonsPrice += 15;
-        addonsArray.push('Silicone Feet (+$15)');
-      }
-      if (checkEngraving.checked) {
-        addonsPrice += 25;
-        addonsArray.push('Laser/Stencil Engraving (+$25)');
-      }
-
-      const grandTotal = targetBoardPrice + addonsPrice;
-
-      totalOutput.textContent = formatCalculatorPrice(grandTotal);
-
-      currentCalculatedData = {
-        dimensions: `${L}" x ${W}" x ${T.toFixed(2)}"`,
-        species: speciesName,
-        grain: grainType === 'end' ? 'End grain' : 'Edge grain',
-        productionTime: `${grainType === 'end' ? '5-8' : '3-5'} business days after design and materials are confirmed`,
-        boardFeet: boardFeet.toFixed(2),
-        weightedWoodPricePerBf: formatCalculatorPrice(weightedWoodPrice),
-        estimatedLumberBoardFeet: requiredLumberBoardFeet.toFixed(2),
-        addons: addonsArray.length > 0 ? addonsArray.join(', ') : 'None',
-        materialCost: formatCalculatorPrice(materialCost),
-        laborCost: formatCalculatorPrice(laborCost),
-        suppliesCost: formatCalculatorPrice(PRICING_ASSUMPTIONS.supplies),
-        overheadCost: formatCalculatorPrice(PRICING_ASSUMPTIONS.overhead),
-        fullyLoadedCost: formatCalculatorPrice(fullyLoadedCost),
-        laborHours,
-        targetMargin: `${(PRICING_ASSUMPTIONS.targetMargin * 100).toFixed(0)}%`,
-        targetProfit: formatCalculatorPrice(targetProfit),
-        quote: formatCalculatorPrice(grandTotal),
-        costBreakdown: [
-          `Estimated wood: ${formatCalculatorPrice(materialCost)}`,
-          `Weighted ${woodPriceSnapshotDate} wood reference: ${formatCalculatorPrice(weightedWoodPrice)}/BF`,
-          `Estimated lumber requirement: ${requiredLumberBoardFeet.toFixed(2)} BF at ${(PRICING_ASSUMPTIONS.usableWoodYield * 100).toFixed(0)}% yield`,
-          `Blend proportions: ${selectedPreset.woodMixNote}`,
-          `Wood price source: ${woodPriceSourceUrl}`,
-          `Labor (${laborHours} hours at ${formatCalculatorPrice(PRICING_ASSUMPTIONS.laborRate)}/hour): ${formatCalculatorPrice(laborCost)}`,
-          `Shop supplies: ${formatCalculatorPrice(PRICING_ASSUMPTIONS.supplies)}`,
-          `Overhead allocation: ${formatCalculatorPrice(PRICING_ASSUMPTIONS.overhead)}`,
-          `Fully loaded board cost: ${formatCalculatorPrice(fullyLoadedCost)}`,
-          `Target board margin: ${(PRICING_ASSUMPTIONS.targetMargin * 100).toFixed(0)}%`,
-          `Estimated labor hours: ${laborHours}`,
-          `Target board price: ${formatCalculatorPrice(targetBoardPrice)}`,
-          `Fixed add-on charges: ${formatCalculatorPrice(addonsPrice)}`
-        ].join('; ')
-      };
-    }
-
-    function applyPreset(productIndex) {
-      const item = PRODUCTS[productIndex];
-      if (!item || !hasBoardCalculatorPreset(item)) return;
-
-      const p = item.preset;
-      lengthRange.value = p.length;
-      widthRange.value = p.width;
-      thickRange.value = p.thick;
-      speciesSelect.value = p.speciesName;
-      grainTypeSelect.value = p.grain || 'edge';
-      checkGroove.checked = p.groove;
-      checkFeet.checked = p.feet;
-      checkEngraving.checked = p.engraving;
-
-      updateCalculator();
-      document.getElementById('commission').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    [lengthRange, widthRange, thickRange, speciesSelect, grainTypeSelect, checkGroove, checkFeet, checkEngraving].forEach(el => {
-      el.addEventListener('input', updateCalculator);
-    });
-
     /* ==========================================================================
        DIRECT FORM SUBMISSION (Web3Forms Asynchronous AJAX)
        ========================================================================== */
@@ -2022,19 +1598,6 @@
 
     commissionForm.addEventListener('submit', function (e) {
       e.preventDefault();
-
-      const isProductInquiry = Boolean(productInterestInput.value);
-      document.getElementById('form-wood-species').value = isProductInquiry ? '' : currentCalculatedData.species;
-      document.getElementById('form-grain-type').value = isProductInquiry ? '' : currentCalculatedData.grain;
-      document.getElementById('form-cost-breakdown').value = isProductInquiry ? '' : currentCalculatedData.costBreakdown;
-      document.getElementById('form-target-margin').value = isProductInquiry ? '' : currentCalculatedData.targetMargin;
-      document.getElementById('form-production-time').value = visualizerDesignProvided
-        ? visualizerProductionTime
-        : isProductInquiry ? '' : currentCalculatedData.productionTime;
-      document.getElementById('form-dimensions').value = isProductInquiry ? '' : currentCalculatedData.dimensions;
-      document.getElementById('form-board-feet').value = isProductInquiry ? '' : currentCalculatedData.boardFeet;
-      document.getElementById('form-addons').value = isProductInquiry ? '' : currentCalculatedData.addons;
-      document.getElementById('form-total-price').value = isProductInquiry ? '' : currentCalculatedData.quote;
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Transmitting to Studio...';
@@ -2055,14 +1618,11 @@
           commissionForm.reset();
           productInterestInput.value = '';
           visualizerPngDataUrl = '';
-          visualizerDesignProvided = false;
-          visualizerProductionTime = '';
           downloadVisualizerPngButton.style.display = 'none';
           sessionStorage.removeItem(visualizerDesignKey);
           productInterestNotice.hidden = true;
           productInterestNotice.textContent = '';
           commissionNotes.placeholder = defaultNotesPlaceholder;
-          updateCalculator();
         } else {
           formStatus.textContent = json.message || 'We could not send your request. Please try again or contact the studio directly.';
           formStatus.dataset.state = 'error';
@@ -2079,24 +1639,15 @@
     });
 
     // Run on Initial Load
-    Promise.all([loadProducts(), loadBoardWoodPrices()]).then(([items, priceLibrary]) => {
+    loadProducts().then(items => {
       PRODUCTS = items;
-      BOARD_WOOD_PRICES = priceLibrary.prices;
-      woodPriceSnapshotDate = priceLibrary.snapshotDate;
-      woodPriceSourceUrl = priceLibrary.sourceUrl;
-      populateSpeciesOptions();
       renderCatalogFilters();
       renderCatalog();
-      updateCalculator();
-    }).catch(() => {
+    }).catch(error => {
+      console.error('Could not initialize the product catalog.', error);
       PRODUCTS = FALLBACK_PRODUCTS;
-      BOARD_WOOD_PRICES = FALLBACK_BOARD_WOOD_PRICES;
-      woodPriceSnapshotDate = WOOD_PRICE_SNAPSHOT_DATE;
-      woodPriceSourceUrl = WOOD_PRICE_SOURCE_URL;
-      populateSpeciesOptions();
       renderCatalogFilters();
       renderCatalog();
-      updateCalculator();
     });
   </script>
 </body>
